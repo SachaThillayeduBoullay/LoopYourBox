@@ -28,7 +28,7 @@ app.use(methodOverride("_method"));
 
 //app.use("/api/", backendRoutes);
 
-//app.use("/", frontendRoutes);
+app.use("/", frontendRoutes);
 
 
 module.exports = app;

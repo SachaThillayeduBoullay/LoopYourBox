@@ -7,7 +7,6 @@ const partnerSchema = mongoose.Schema({
     address: { type: String, required: true, unique: true },
     website: { type: String, required: true, default:"NoWebsite" },
     image: { type: String, required: true, default:"NoImage" },
-    description: { type: String, required: true, default:"NoDescription" },
     schedule: {
         monday: { type: String, required: true },
         tuesday: { type: String, required: true },
@@ -19,8 +18,8 @@ const partnerSchema = mongoose.Schema({
     },
     
     idUser: { type: String, required: true },
-    description: { type: String }
-
+    lat: { type: String, required: true },
+    long: { type: String, required: true },
 });
 
 partnerSchema.plugin(uniqueValidator);
