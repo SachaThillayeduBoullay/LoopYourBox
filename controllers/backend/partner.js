@@ -13,10 +13,17 @@ exports.createPartner = (req, res, next) => {
         sunday: joi.string().trim().required()
     });
 
+    const schemaAddress = joi.object().keys({
+        street: joi.string().trim().required(),
+        zip: joi.number().trim().required(),
+        city: joi.string().trim().required(),
+        country: joi.string().trim().required(),
+    });
+
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         phoneNumber: joi.string().trim().required(),
-        address: joi.string().trim().required(),
+        address: schemaAddress,
         website: joi.string().trim().required(),
         image: joi.string().trim().required(),
         schedule: schemaSchedule, //not working

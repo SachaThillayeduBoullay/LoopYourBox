@@ -4,7 +4,12 @@ const uniqueValidator = require('mongoose-unique-validator');
 const partnerSchema = mongoose.Schema({
     name: { type: String, required: true },
     phoneNumber: { type: String, required: true },
-    address: { type: String, required: true, unique: true },
+    address: { 
+        street: { type: String, required: true },
+        zip: { type: Number, required: true },
+        city: { type: String, required: true },
+        country:{ type: String, required: true, default:"Belgique" },
+    },
     website: { type: String, required: true, default:"NoWebsite" },
     image: { type: String, required: true, default:"NoImage" },
     schedule: {
