@@ -15,23 +15,22 @@ exports.createPartner = (req, res, next) => {
 
     const schemaAddress = joi.object().keys({
         street: joi.string().trim().required(),
-        zip: joi.number().trim().required(),
+        zip: joi.number().required(),
         city: joi.string().trim().required(),
-        country: joi.string().trim().required(),
+        country: joi.string().trim(),
     });
 
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         phoneNumber: joi.string().trim().required(),
         address: schemaAddress,
-        website: joi.string().trim().required(),
-        image: joi.string().trim().required(),
+        website: joi.string().trim(),
         schedule: schemaSchedule, //not working
-        foodType: joi.string().trim().required(),
+        foodType: joi.string().trim(),
         idUser: joi.string().trim().required(),
         lat: joi.string().trim().required(),
         long: joi.string().trim().required(),
-        chain: joi.string().trim().required()
+        chain: joi.string().trim()
     });
 
     const result = schema.validate(req.body, { allowUnknown: true }); //need to change

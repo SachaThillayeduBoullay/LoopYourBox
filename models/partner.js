@@ -8,9 +8,9 @@ const partnerSchema = mongoose.Schema({
         street: { type: String, required: true },
         zip: { type: Number, required: true },
         city: { type: String, required: true },
-        country:{ type: String, required: true, default:"Belgique" },
+        country:{ type: String, default:"Belgique" },
     },
-    website: { type: String, required: true, default:"NoWebsite" },
+    website: { type: String, default:"NoWebsite" },
     image: { type: String, required: true, default:"NoImage" },
     schedule: {
         monday: { type: String, required: true },
@@ -21,11 +21,11 @@ const partnerSchema = mongoose.Schema({
         saturday:{ type: String, required: true },
         sunday:{ type: String, required: true },
     },
-    foodType: { type: String, required: true },
+    foodType: { type: String, default:"noType" },
     idUser: { type: String, required: true },
     lat: { type: String, required: true },
     long: { type: String, required: true },
-    chain: { type: String, required: true, default:"noChain" }
+    chain: { type: String, default:"noChain" }
 });
 
 partnerSchema.plugin(uniqueValidator);
