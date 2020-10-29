@@ -20,6 +20,7 @@ const partnerSchema = mongoose.Schema({
     idUser: { type: String, required: true },
     lat: { type: String, required: true },
     long: { type: String, required: true },
+    chain: { type: String, required: true, default:"noChain" }
 });
 
 partnerSchema.plugin(uniqueValidator);
