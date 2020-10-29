@@ -1,0 +1,1 @@
+exports.partnerPage = (req, res) => { res.render('pages/partner')};

@@ -4,8 +4,8 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const methodOverride = require("method-override");
 
-const backendRoutes = require("./routes/backend/router");
-const frontendRoutes = require("./routes/frontend/router");
+const backendRoutes = require("./routes/backend");
+const frontendRoutes = require("./routes/frontend");
 
 mongoose
   .connect(
@@ -19,15 +19,15 @@ const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 
+app.set('view engine', 'ejs');
+
 app.use(express.static("./public"));
 
 app.use(cookieParser());
 
 app.use(methodOverride("_method"));
 
-
-//app.use("/api/", backendRoutes);
-
+app.use("/api/", backendRoutes);
 app.use("/", frontendRoutes);
 
 
