@@ -1,55 +1,8 @@
 
+<div class="collection"></div>
+    <% partnerInfo.forEach((partner) => { %>
 
-            <form action="api/partner" method="POST" enctype="multipart/form-data">
-                <label for="name">Name</label>
-                <input type="text" name="name" class="validate" required>
-                <label for="phoneNumber">phoneNumber</label>
-                <input type="text" name="phoneNumber" class="validate" required>
-                <label for="address.street">Street</label>
-                <input type="text" name="address.street" class="validate" required>
-                <label for="address.street">ZIP</label>
-                <input type="text" name="address.zip" class="validate" required>
-                <label for="address.city">City</label>
-                <input type="text" name="address.city" class="validate" required>
-                <input type="hidden" name="address.country" class="validate" value="Belgique" required>
-                <label for="website">Website</label>
-                <input type="text" name="website" class="validate">
-                <label for="lat">Lattitude</label>
-                <input type="text" name="lat" class="validate" required>
-                <label for="long">Longitude</label>
-                <input type="text" name="long" class="validate" required>
-                <input type="hidden" name="idUser" value="noId" required>
-                <label for="chain">Chain</label>
-                <input type="text" name="chain" class="validate">
-                <p><label for="sport">Food Type</label></p>
-                <select name="foodType" required>
-                    <option value="" disabled selected></option>
-                    <option value="vietnamien">Vietnamien</option>
-                    <option value="belge">Belge</option>
-                    <option value="thailandais">Thaïlandais</option>
-                    <option value="italien">Italien</option>
-                    <option value="francais">Français</option>
-                    <option value="notype">No Type</option>
-                </select>
-                <label for="image">Image</label>
-                <input type="file" name="image">
-                
-                <label for="monday">Monday</label>
-                <input type="text" name="schedule.monday" class="validate" required>
-                <label for="tuesday">tuesday</label>
-                <input type="text" name="schedule.tuesday" class="validate" required>
-                <label for="wednesday">wednesday</label>
-                <input type="text" name="schedule.wednesday" class="validate" required>
-                <label for="thursday">thursday</label>
-                <input type="text" name="schedule.thursday" class="validate" required>
-                <label for="friday">friday</label>
-                <input type="text" name="schedule.friday" class="validate" required>
-                <label for="saturday">saturday</label>
-                <input type="text" name="schedule.saturday" class="validate" required>
-                <label for="sunday">sunday</label>
-                <input type="text" name="schedule.sunday" class="validate" required>
-                
-            <button class="waves-effect waves-light btn blue-grey darken-3">Create</button>
-            </form>
+        <a href="/partner/<%= partner._id %>" class="collection-item"><%= partner.name %></a>
 
-
+    <% }); %>
+</div>

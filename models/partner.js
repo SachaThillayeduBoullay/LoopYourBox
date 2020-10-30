@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+//const uniqueValidator = require('mongoose-unique-validator');
 
 const partnerSchema = mongoose.Schema({
     name: { type: String, required: true },
@@ -10,16 +10,16 @@ const partnerSchema = mongoose.Schema({
         city: { type: String, required: true },
         country:{ type: String, default:"Belgique" },
     },
-    website: { type: String, default:"NoWebsite" },
-    image: { type: String, required: true, default:"NoImage" },
+    website: { type: String, default:"noWebsite" },
+    image: { type: String, required: true, default:"noImage" },
     schedule: {
-        monday: { type: String, required: true },
-        tuesday: { type: String, required: true },
-        wednesday: { type: String, required: true },
-        thursday:{ type: String, required: true },
-        friday:{ type: String, required: true },
-        saturday:{ type: String, required: true },
-        sunday:{ type: String, required: true },
+        monday: { type: String, default:"none" },
+        tuesday: { type: String, default:"none" },
+        wednesday: { type: String, default:"none" },
+        thursday:{ type: String, default:"none" },
+        friday:{ type: String, default:"none" },
+        saturday:{ type: String, default:"none" },
+        sunday:{ type: String, default:"none" },
     },
     foodType: { type: String, default:"noType" },
     idUser: { type: String, required: true },
@@ -28,6 +28,6 @@ const partnerSchema = mongoose.Schema({
     chain: { type: String, default:"noChain" }
 });
 
-partnerSchema.plugin(uniqueValidator);
+//partnerSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Partner', partnerSchema);

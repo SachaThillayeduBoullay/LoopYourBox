@@ -4,6 +4,9 @@ const router = express.Router();
 
 const partnerCtrl = require("../controllers/frontend/partner");
 
-router.get("/", partnerCtrl.partnerPage);
+router.get("/partner", partnerCtrl.partnerPage);
+router.get("/partner/:id", partnerCtrl.partnerDetailsPage);
+router.get("/createPartner", partnerCtrl.createPartnerPage);
+router.get("/updatePartner/:id", partnerCtrl.updatePartnerPage);
 
 module.exports = router;

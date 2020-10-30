@@ -1,0 +1,24 @@
+<% if (partnerInfo.image!="noImage") {%>
+    <img src="http://localhost:3000/img/partner/<%= partnerInfo.image.filename %>" alt="<%= partnerInfo.name %>">
+<% } %>
+
+<ul class="collection with-header">
+    <li class="collection-header"><h4><%= partnerInfo.name %></h4></li>
+    <li class="collection-item"><%= partnerInfo.phoneNumber %></li>
+    <li class="collection-item"><%= partnerInfo.address.street %></li>
+    <li class="collection-item"><%= partnerInfo.address.zip %></li>
+    <li class="collection-item"><%= partnerInfo.address.city %></li>
+    <li class="collection-item"><%= partnerInfo.address.country %></li>
+    <% if (partnerInfo.schedule != ""){ %><li class="collection-item"><a href="<%= partnerInfo.website %>">Website</a></li>
+    <li class="collection-item"><%= partnerInfo.schedule.monday %></li>
+    <li class="collection-item"><%= partnerInfo.schedule.tuesday %></li>
+    <li class="collection-item"><%= partnerInfo.schedule.wednesday %></li>
+    <li class="collection-item"><%= partnerInfo.schedule.thursday %></li>
+    <li class="collection-item"><%= partnerInfo.schedule.friday %></li>
+    <li class="collection-item"><%= partnerInfo.schedule.saturday %></li>
+    <li class="collection-item"><%= partnerInfo.schedule.sunday %></li><% } %>
+    <% if (partnerInfo.foodType != "noType"){ %><li class="collection-item"><%= partnerInfo.foodType %></li><% } %>
+    <% if (partnerInfo.chain != "noChain"){ %><li class="collection-item"><%= partnerInfo.chain %></li><% } %>
+</ul>
+
+<a href="/updatePartner/<%= partnerInfo._id %>">Edit</a>
