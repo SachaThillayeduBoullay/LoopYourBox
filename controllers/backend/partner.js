@@ -23,15 +23,15 @@ exports.createPartner = (req, res, next) => {
 
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
-        phoneNumber: joi.string().trim().required(),
+        phoneNumber: joi.string().trim().empty(''),
         address: schemaAddress,
-        website: joi.string().trim().allow(null),
+        website: joi.string().trim().empty(''),
         schedule: schemaSchedule, //not working
         foodType: joi.string().trim(),
         idUser: joi.string().trim().required(),
         lat: joi.string().trim().required(),
         long: joi.string().trim().required(),
-        chain: joi.string().trim().allow(null)
+        chain: joi.string().trim().empty('')
     });
 
     const result = schema.validate(req.body, { allowUnknown: true }); //need to change
@@ -41,6 +41,18 @@ exports.createPartner = (req, res, next) => {
         }
         res.status(400).send(result.error.details[0].message);
         return;
+    }
+
+    if (req.body.phoneNumber == "") {
+        req.body.phoneNumber = undefined;
+    }
+
+    if (req.body.website == "") {
+        req.body.website = undefined;
+    }
+
+    if (req.body.chain == "") {
+        req.body.chain = undefined;
     }
 
     const partner = new Partner({

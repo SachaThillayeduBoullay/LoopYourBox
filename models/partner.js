@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const partnerSchema = mongoose.Schema({
     name: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: { type: String, default:"noNumber" },
     address: { 
         street: { type: String, required: true },
         zip: { type: Number, required: true },
@@ -11,7 +11,7 @@ const partnerSchema = mongoose.Schema({
         country:{ type: String, default:"Belgique" },
     },
     website: { type: String, default:"noWebsite" },
-    image: { type: String, required: true, default:"noImage" },
+    image: { type: String, default:"noImage" },
     schedule: {
         monday: { type: String, default:"none" },
         tuesday: { type: String, default:"none" },

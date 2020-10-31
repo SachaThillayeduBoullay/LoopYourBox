@@ -20,7 +20,9 @@ exports.partnerDetailsPage = async (req, res) => {
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
-        partnerInfo.image = JSON.parse(partnerInfo.image);
+        if (partnerInfo.image != "noImage") {
+            partnerInfo.image = JSON.parse(partnerInfo.image);
+        }
 
         res.render('pages/partnerDetails', {partnerInfo});
     } catch {
