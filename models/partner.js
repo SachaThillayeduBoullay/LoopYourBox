@@ -4,12 +4,7 @@ const mongoose = require('mongoose');
 const partnerSchema = mongoose.Schema({
     name: { type: String, required: true },
     phoneNumber: { type: String, default:"noNumber" },
-    address: { 
-        street: { type: String, required: true },
-        zip: { type: Number, required: true },
-        city: { type: String, required: true },
-        country:{ type: String, default:"Belgique" },
-    },
+    address: { type: Object, required: true },
     website: { type: String, default:"noWebsite" },
     image: { type: String, default:"noImage" },
     schedule: {
@@ -22,9 +17,7 @@ const partnerSchema = mongoose.Schema({
         sunday:{ type: String, default:"none" },
     },
     foodType: { type: String, default:"noType" },
-    idUser: { type: String, required: true },
-    lat: { type: String, required: true },
-    long: { type: String, required: true },
+    idUser: { type: String, required: true }, //change to ObjectId
     chain: { type: String, default:"noChain" }
 });
 

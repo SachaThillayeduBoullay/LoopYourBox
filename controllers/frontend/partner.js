@@ -46,7 +46,9 @@ exports.updatePartnerPage = async (req, res) => {
         let partnerInfo = await fetch(url /*, myInit*/);
         partnerInfo = await partnerInfo.json();
 
-        partnerInfo.image = JSON.parse(partnerInfo.image);
+        if (partnerInfo.image != "noImage") {
+            partnerInfo.image = JSON.parse(partnerInfo.image);
+        }
 
         res.render('pages/updatePartner', {partnerInfo})
     } catch {

@@ -1,21 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Use the geocoder without a map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+<link
+rel="stylesheet"
+href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+type="text/css"
+/>
+
+
+</head>
+<body>
 <form action="api/partner" method="POST" enctype="multipart/form-data">
     <label for="name">Name</label>
     <input type="text" name="name" class="validate" required>
     <label for="phoneNumber">phoneNumber</label>
     <input type="text" name="phoneNumber" class="validate">
-    <label for="address.street">Street</label>
-    <input type="text" name="address.street" class="validate" required>
-    <label for="address.street">ZIP</label>
-    <input type="text" name="address.zip" class="validate" required>
-    <label for="address.city">City</label>
-    <input type="text" name="address.city" class="validate" required>
-    <input type="hidden" name="address.country" class="validate" value="Belgique" required>
     <label for="website">Website</label>
     <input type="text" name="website" class="validate">
-    <label for="lat">Lattitude</label>
-    <input type="text" name="lat" class="validate" required>
-    <label for="long">Longitude</label>
-    <input type="text" name="long" class="validate" required>
     <input type="hidden" name="idUser" value="noId" required>
     <label for="chain">Chain</label>
     <input type="text" name="chain" class="validate">
@@ -45,8 +50,15 @@
     <input type="text" name="schedule.saturday" class="validate">
     <label for="sunday">Sunday</label>
     <input type="text" name="schedule.sunday" class="validate">
-    
+    <p>Address</p>
+    <div id="geocoder"></div>
+    <input type="hidden" name="address" id="address" required>
 <button class="waves-effect waves-light btn blue-grey darken-3">Create</button>
 </form>
 
-
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<script src="/js/geocoder.js"></script>
+<body>
+</body>
+</html>

@@ -14,23 +14,14 @@ exports.createPartner = (req, res, next) => {
         sunday: joi.string().trim()
     });
 
-    const schemaAddress = joi.object().keys({
-        street: joi.string().trim().required(),
-        zip: joi.number().required(),
-        city: joi.string().trim().required(),
-        country: joi.string().trim(),
-    });
-
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         phoneNumber: joi.string().trim().empty(''),
-        address: schemaAddress,
+        //address: schemaAddress,
         website: joi.string().trim().empty(''),
         schedule: schemaSchedule, //not working
         foodType: joi.string().trim(),
         idUser: joi.string().trim().required(),
-        lat: joi.string().trim().required(),
-        long: joi.string().trim().required(),
         chain: joi.string().trim().empty('')
     });
 
@@ -57,8 +48,8 @@ exports.createPartner = (req, res, next) => {
 
     const partner = new Partner({
         ...req.body,
-        image: JSON.stringify(req.file)
-        
+        image: JSON.stringify(req.file),
+        address: JSON.parse(req.body.address)
     });
     partner.save()
         .then(() => res.status(201).redirect('/partner'))
