@@ -1,0 +1,28 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+
+    a {
+        text-decoration: none;
+        &:visited {
+            color: $link-color;
+        }
+
+        &:link {
+            color: $link-color;
+        }
+    }
+
+    li {
+        list-style: none;
+    }
+
+    &:focus {
+        outline: none;
+    }
+    
+}
+
+

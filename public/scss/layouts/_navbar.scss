@@ -1,0 +1,34 @@
+
+
+#navbar {
+    height: 50px;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background-color: $primary-color;
+
+    ul {
+        @include flex(row, space-around, center);
+        height: 100%;
+
+        li:nth-child(3) {
+            width: 3rem;
+            height: 2rem;
+            border-radius: 50px;
+            background-color: $secondary-color;
+            @include flex(row, center, center);
+
+            i {
+                color: $primary-color;
+            }
+            a {
+                height: 19.2px;
+            }
+        }
+
+        i {
+            color: $secondary-color;
+            font-size: 1.2rem;
+        }
+    }
+}
