@@ -6,14 +6,14 @@
     bottom: 0px;
     width: 100%;
     background-color: $primary-color;
-
+    z-index: 999;
     ul {
         @include flex(row, space-around, center);
         height: 100%;
 
         li:nth-child(3) {
             width: 3rem;
-            height: 2rem;
+            height: 2.2rem;
             border-radius: 50px;
             background-color: $secondary-color;
             @include flex(row, center, center);
@@ -22,7 +22,8 @@
                 color: $primary-color;
             }
             a {
-                height: 19.2px;
+                @include flex(row, center, center);
+                height: 19px;
             }
         }
 
