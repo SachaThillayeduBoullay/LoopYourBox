@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Local search app</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='/css/style.css' rel='stylesheet' />
+
+
+</head>
+
+<body>
+
+    <a href="/createpartner">Add partner</a>
+    <div class="collection"></div>
+
+    <select name="foodType">
+        <option value="" disabled selected></option>
+        <option value="vietnamien">Vietnamien</option>
+        <option value="belge">Belge</option>
+        <option value="thailandais">Thaïlandais</option>
+        <option value="italien">Italien</option>
+        <option value="francais">Français</option>
+    </select>
+
+
+    
+    <% partnerInfo.forEach((partner) => { %>
+
+    <a href="/partner/<%= partner._id %>" class="collection-item"><%= partner.name %></a>
+
+    <% }); %>
+    </div>
+
+    <div id='map'></div>
+    <script>
+    let partnerInfo = <%- JSON.stringify(partnerInfo) %>; //Outputs the unescaped value into the template
+    </script>
+    <script src="/js/map.js"></script>
+
+</body>
+
+</html>

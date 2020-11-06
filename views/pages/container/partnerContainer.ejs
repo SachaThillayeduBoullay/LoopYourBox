@@ -1,0 +1,12 @@
+<% if (containerInfo.image!="noImage") {%>
+    <img src="http://localhost:3000/img/container/<%= containerInfo.image.filename %>" alt="<%= containerInfo.name %>">
+<% } %>
+
+<ul class="collection with-header">
+    <li class="collection-header"><h4><%= containerInfo.name %></h4></li>
+    <li class="collection-item"><%= containerInfo.credit %></li>
+    <li class="collection-item"><%= containerInfo.material %></li>
+</ul>
+
+<a href="/updatePartner/<%= containerInfo._id %>">Edit</a>
+<a href="/api/container/delete/<%= containerInfo._id %>">Delete</a>

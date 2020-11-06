@@ -7,7 +7,7 @@ exports.partnerPage = async (req, res) => {
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
-        res.render('pages/partner', {partnerInfo})
+        res.render('pages/partner/partner', {partnerInfo})
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }
@@ -24,7 +24,7 @@ exports.partnerDetailsPage = async (req, res) => {
             partnerInfo.image = JSON.parse(partnerInfo.image);
         }
         console.log(partnerInfo)
-        res.render('pages/partnerDetails', {partnerInfo});
+        res.render('pages/partner/partnerDetails', {partnerInfo});
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }
@@ -50,7 +50,7 @@ exports.updatePartnerPage = async (req, res) => {
             partnerInfo.image = JSON.parse(partnerInfo.image);
         }
 
-        res.render('pages/updatePartner', {partnerInfo})
+        res.render('pages/partner/updatePartner', {partnerInfo})
     } catch {
         res.status(401).json({error: 'Unauthenticated Request'});
     }

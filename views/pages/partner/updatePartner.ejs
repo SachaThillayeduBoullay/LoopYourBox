@@ -27,7 +27,7 @@ type="text/css"
     <input value="<%= partnerInfo.chain %>" type="text" name="chain" class="validate">
     <p><label for="sport">Food Type</label></p>
     <select name="foodType">
-        <option disabled <% if (partnerInfo.foodType == "noType"){ %> selected <% } %> ></option>
+        <option  <% if (partnerInfo.foodType == "noType"){ %> selected <% } %> ></option>
         <option <% if (partnerInfo.foodType == "vietnamien"){ %> selected <% } %>value="vietnamien">Vietnamien</option>
         <option <% if (partnerInfo.foodType == "belge"){ %> selected <% } %> value="belge">Belge</option>
         <option <% if (partnerInfo.foodType == "thailandais"){ %> selected <% } %>value="thailandais">Thaïlandais</option>
