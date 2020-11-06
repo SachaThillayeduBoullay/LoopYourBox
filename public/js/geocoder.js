@@ -10,18 +10,14 @@ const address = document.getElementById('address');
 
 geocoder.on('result', function(data) {
 
-    let context = data.result.context.map( element => {
+    let cleanContext = data.result.context.map( element => {
         if (element.id.split('.')[0] == "postcode" || 
             element.id.split('.')[0] == "place" || 
-            element.id.split('.')[0] == "country" ){
-            return element.text
-        }
-    });
+            element.id.split('.')[0] == "country" )
+                element.text})
+        .filter(element=> {if(element) element});
 
-    let cleanContext = context.filter(element=> {if(element) return element});
-
-
-    const addressInfo = {
+    let addressInfo = {
         coordinates : data.result.center,
         street: data.result.place_name.split(',')[0],
         postcode: cleanContext[0],
