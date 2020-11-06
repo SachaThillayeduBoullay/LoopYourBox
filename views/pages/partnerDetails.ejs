@@ -6,7 +6,7 @@
     <li class="collection-header"><h4><%= partnerInfo.name %></h4></li>
     <li class="collection-item"><%= partnerInfo.phoneNumber %></li>
     <li class="collection-item"><%= partnerInfo.address.street %></li>
-    <li class="collection-item"><%= partnerInfo.address.zip %></li>
+    <li class="collection-item"><%= partnerInfo.address.postcode %></li>
     <li class="collection-item"><%= partnerInfo.address.city %></li>
     <li class="collection-item"><%= partnerInfo.address.country %></li>
     <% if (partnerInfo.website != "noWebsite"){ %><li class="collection-item"><a href="<%= partnerInfo.website %>">Website</a></li><% } %>
@@ -22,3 +22,4 @@
 </ul>
 
 <a href="/updatePartner/<%= partnerInfo._id %>">Edit</a>
+<a href="/api/partner/delete/<%= partnerInfo._id %>">Delete</a>

@@ -78,11 +78,14 @@ exports.updatePartner = (req, res, next) => {
         partner =  {
             ...req.body,
             image: JSON.stringify(req.file)
+
         }
     }
     Partner.updateOne({_id: req.params.id}, {        
         ...partner, 
-        _id: req.params.id})
+        _id: req.params.id,
+        address: JSON.parse(req.body.address)
+    })
     .then(() => {
         res.status(200).redirect(`/partner/${req.params.id}`);
     })
@@ -96,7 +99,7 @@ exports.deletePartner = (req, res, next) => {
             fs.unlink(`./public/img/partner/${JSON.parse(partner.image).filename}`, () => {});
         } 
         Partner.deleteOne({_id: req.params.id})
-                .then(()=> res.status(200).redirect('/'))
+                .then(()=> res.status(200).redirect('/partner'))
                 .catch(error => res.status(400).json({error}));
     })
     .catch(error => res.status(404).json({error}));

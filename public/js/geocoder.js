@@ -14,8 +14,10 @@ geocoder.on('result', function(data) {
         if (element.id.split('.')[0] == "postcode" || 
             element.id.split('.')[0] == "place" || 
             element.id.split('.')[0] == "country" )
-                element.text})
-        .filter(element=> {if(element) element});
+               {return element.text}
+            })
+
+        .filter(element=> {if(element) return element});
 
     let addressInfo = {
         coordinates : data.result.center,
@@ -25,9 +27,9 @@ geocoder.on('result', function(data) {
         country: cleanContext[2],
         place_name: data.result.place_name
     }
-
+    //console.log(addressInfo)
+    //console.log(data.result)
     address.value = JSON.stringify(addressInfo); 
-    //console.log(data.result);
 })
 
 let url = window.location.href;
