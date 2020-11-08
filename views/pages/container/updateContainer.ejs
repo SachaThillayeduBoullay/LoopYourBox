@@ -20,9 +20,17 @@ type="text/css"
     <input value="<%= containerInfo.name %>" type="text" name="name" class="validate" required>
     <label for="material">material</label>
     <input value="<%= containerInfo.material %>" type="text" name="material" class="validate">
-    <label for="website">Website</label>
-    <input value="<%= containerInfo.website %>"  type="number" name="website" class="validate">
-
+    <label for="credit">Credit</label>
+    <input value="<%= containerInfo.credit %>"  type="number" name="credit" class="validate">
+    <div class="file-field input-field">
+        <div class="btn blue-grey darken-3">
+          <span>Image</span>
+          <input type="file" name="image">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" value="<%= containerInfo.image.filename %>">
+        </div>
+    </div>
 
 
 <button class="waves-effect waves-light btn blue-grey darken-3">Edit</button>
