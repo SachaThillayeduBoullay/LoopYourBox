@@ -30,7 +30,7 @@ exports.partnerDetailsPage = async (req, res) => {
     }
 };
 
-exports.createPartnerPage = (req, res) => { res.render('pages/createPartner')};
+exports.createPartnerPage = (req, res) => { res.render('pages/partner/createPartner')};
 
 exports.updatePartnerPage = async (req, res) => { 
     try {

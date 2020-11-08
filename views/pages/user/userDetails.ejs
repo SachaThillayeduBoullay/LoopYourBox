@@ -1,0 +1,9 @@
+
+<ul class="collection with-header">
+    <li class="collection-header"><h4><%= userInfo.firstname %></h4></li>
+    <li class="collection-item"><%= userInfo.lastname %></li>
+    <li class="collection-item"><%= userInfo.email %></li>
+</ul>
+
+<a href="/updateUser/<%= userInfo._id %>">Edit</a>
+<a href="/api/user/delete/<%= userInfo._id %>">Delete</a>
