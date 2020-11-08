@@ -64,22 +64,24 @@ exports.getOneUser = (req, res, next) => {
 };
 
 exports.updateUser = (req, res, next) => {
-    let user = {...req.body}
-    if (req.file) {
-        fs.unlink(`./public/img/user/${req.body.oldImage}`, () => {});
-        user =  {
-            ...req.body,
-            image: JSON.stringify(req.file)
 
-        }
+    if (req.body.password) {
+        bcrypt.hash(req.body.password, 10)
+        .then(hash => {
+            //console.log(hash);
+            User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id, password: hash})
+            .then(() => {
+                res.status(200).redirect('/myprofile');
+            })
+            .catch(error => res.status(400).json({ error }));
+            }
+        )
+        .catch(error => res.json({error}));
     }
-    User.updateOne({_id: req.params.id}, {        
-        ...user, 
-        _id: req.params.id,
-        address: JSON.parse(req.body.address)
-    })
+
+    User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
     .then(() => {
-        res.status(200).redirect(`/user/${req.params.id}`);
+        res.status(200).redirect('/user');
     })
     .catch(error => res.status(400).json({ error }));
 };
@@ -106,7 +108,7 @@ exports.signup = (req, res, next) => {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             email: req.body.email,
-           password: hash,
+            password: hash,
         });
         user.save()
             .then(() => res.status(201).redirect('/user'))

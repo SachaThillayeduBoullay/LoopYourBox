@@ -1,4 +1,5 @@
 global.fetch = require("node-fetch");
+const jwt = require('jsonwebtoken');
 
 exports.partnerPage = async (req, res) => { 
     try {
@@ -19,7 +20,7 @@ exports.partnerPage = async (req, res) => {
             city: city
         };
 
-        console.log(selectInfo)
+        //console.log(selectInfo)
 
         res.render('pages/partner/partner', {partnerInfo, selectInfo})
     } catch {
@@ -44,20 +45,25 @@ exports.partnerDetailsPage = async (req, res) => {
     }
 };
 
-exports.createPartnerPage = (req, res) => { res.render('pages/partner/createPartner')};
+exports.createPartnerPage = (req, res) => { 
+    const token = req.cookies["token"];
+    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+    const userId = decodedToken.userId;
+    res.render('pages/partner/createPartner', {userId})
+};
 
 exports.updatePartnerPage = async (req, res) => { 
     try {
-        //const token = req.cookies['token'];
+        const token = req.cookies['token'];
         let url = `http://localhost:3000/api/partner/${req.params.id}`;
 
-        /*let myInit = {
+        let myInit = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-        };*/
+        };
 
-        let partnerInfo = await fetch(url /*, myInit*/);
+        let partnerInfo = await fetch(url, myInit);
         partnerInfo = await partnerInfo.json();
 
         if (partnerInfo.image != "noImage") {

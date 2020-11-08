@@ -20,10 +20,6 @@ exports.userDetailsPage = async (req, res) => {
         let userInfo = await fetch(url);
         userInfo = await userInfo.json();
 
-        if (userInfo.image != "noImage") {
-            userInfo.image = JSON.parse(userInfo.image);
-        }
-        console.log(userInfo)
         res.render('pages/user/userDetails', {userInfo});
     } catch {
         res.status(401).json({error: 'Failed Request'});
@@ -45,10 +41,6 @@ exports.updateUserPage = async (req, res) => {
 
         let userInfo = await fetch(url /*, myInit*/);
         userInfo = await userInfo.json();
-
-        if (userInfo.image != "noImage") {
-            userInfo.image = JSON.parse(userInfo.image);
-        }
 
         res.render('pages/user/updateUser', {userInfo})
     } catch {
