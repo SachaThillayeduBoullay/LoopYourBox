@@ -17,7 +17,7 @@ exports.createPartner = (req, res, next) => {
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         phoneNumber: joi.string().trim().empty(''),
-        //address: schemaAddress,
+        address: joi.string().trim().required(),
         website: joi.string().trim().empty(''),
         schedule: schemaSchedule, //not working
         foodType: joi.string().trim(),

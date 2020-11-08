@@ -7,7 +7,21 @@ exports.partnerPage = async (req, res) => {
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
-        res.render('pages/partner/partner', {partnerInfo})
+        let foodType = Array.from(new Set(partnerInfo.map(element => element.foodType)));
+        let chain = Array.from(new Set(partnerInfo.map(element => element.chain)));
+        let postcode = Array.from(new Set(partnerInfo.map(element => element.address.postcode)));
+        let city = Array.from(new Set(partnerInfo.map(element => element.address.city)));
+
+        let selectInfo = {
+            foodType: foodType,
+            chain: chain,
+            postcode: postcode,
+            city: city
+        };
+
+        console.log(selectInfo)
+
+        res.render('pages/partner/partner', {partnerInfo, selectInfo})
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }
@@ -30,7 +44,7 @@ exports.partnerDetailsPage = async (req, res) => {
     }
 };
 
-exports.createPartnerPage = (req, res) => { res.render('pages/createPartner')};
+exports.createPartnerPage = (req, res) => { res.render('pages/partner/createPartner')};
 
 exports.updatePartnerPage = async (req, res) => { 
     try {

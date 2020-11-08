@@ -15,24 +15,49 @@
 <body>
 
     <a href="/createpartner">Add partner</a>
-    <div class="collection"></div>
+    <div class="collection">
+        <% partnerInfo.forEach((partner) => { %>
+        <a href="/partner/<%= partner._id %>" class="collection-item"><%= partner.name %></a>
+        <% }); %>
+    </div>
 
-    <select name="foodType">
-        <option value="" disabled selected></option>
-        <option value="vietnamien">Vietnamien</option>
-        <option value="belge">Belge</option>
-        <option value="thailandais">Thaïlandais</option>
-        <option value="italien">Italien</option>
-        <option value="francais">Français</option>
-    </select>
+    <div>
+        <label for="foodType">Type de cuisine</label>
+        <select name="foodType">
+                <option value="all">Tous</option>
+            <% selectInfo.foodType.forEach(option => { %>
+                <option value="<%= option %>>"><%= option.charAt(0).toUpperCase() + option.slice(1) %></option>
+            <%})%>
+        </select>
 
+        <label for="chain">Chaîne</label>
+        <select name="chain">
+            <option value="all">Tous</option>
+        <% selectInfo.chain.forEach(option => { %>
+            <option value="<%= option %>>"><%= option.charAt(0).toUpperCase() + option.slice(1) %></option>
+        <%})%>
+        </select>
 
-    
-    <% partnerInfo.forEach((partner) => { %>
+        <label for="postcode">Code postal</label>
+        <select name="postcode">
+                <option value="all">Tous</option>
+            <% selectInfo.postcode.forEach(option => { %>
+                <option value="<%= option %>>"><%= option.charAt(0).toUpperCase() + option.slice(1) %></option>
+            <%})%>
+        </select>
 
-    <a href="/partner/<%= partner._id %>" class="collection-item"><%= partner.name %></a>
+        <label for="city">Ville</label>
+        <select name="city">
+                <option value="all">Tous</option>
+            <% selectInfo.city.forEach(option => { %>
+                <option value="<%= option %>>"><%= option.charAt(0).toUpperCase() + option.slice(1) %></option>
+            <%})%>
+        </select>
 
-    <% }); %>
+        <label for="contenant">Contenant</label>
+        <select name="contenant">
+            <option value="all">Tous</option>
+        </select>
     </div>
 
     <div id='map'></div>
