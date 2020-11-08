@@ -3,6 +3,7 @@ const router = express.Router();
 const partnerCtrl = require('../controllers/backend/partner');
 const multer = require('../middleware/multer-config');
 const containerCtrl = require('../controllers/backend/container');
+const userCtrl = require('../controllers/backend/user');
 
 
 router.post('/partner', multer, partnerCtrl.createPartner);
@@ -18,6 +19,12 @@ router.get('/container/:id', containerCtrl.getOneContainer);
 router.put('/container/:id', multer, containerCtrl.updateContainer);
 router.get('/container/delete/:id', containerCtrl.deleteContainer);
 
+router.post('/signup', userCtrl.signup);
+router.post('/login', userCtrl.login);
+router.get('/user', userCtrl.getAllUser);
+router.get('/user/:id', userCtrl.getOneUser);
+router.put('/user/:id', multer, userCtrl.updateUser);
+router.get('/user/delete/:id', userCtrl.deleteUser);
 
 
 module.exports = router;

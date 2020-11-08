@@ -8,12 +8,11 @@ exports.createContainer = (req, res, next) => {
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         number: joi.string().trim().empty(''),
-        //address: schemaAddress,
-        credit: joi.string().trim().empty(''),
+        //credit: joi.string().trim().empty(''),
 
     });
 
-    const result = schema.validate(req.body, { allowUnknown: true }); //need to change
+    const result = schema.validate(req.body, { allowUnknown: true }); //Attentino multer middleware met les images dans partner
     if (result.error) {
         if (req.file) {
             fs.unlink(`./public/img/container/${req.file.filename}`, () => {});
@@ -22,22 +21,10 @@ exports.createContainer = (req, res, next) => {
         return;
     }
 
-    if (req.body.phoneNumber == "") {
-        req.body.phoneNumber = undefined;
-    }
-
-    if (req.body.website == "") {
-        req.body.website = undefined;
-    }
-
-    if (req.body.chain == "") {
-        req.body.chain = undefined;
-    }
 
     const container = new Container({
         ...req.body,
         image: JSON.stringify(req.file),
-        address: JSON.parse(req.body.address)
     });
     container.save()
         .then(() => res.status(201).redirect('/container'))
@@ -72,7 +59,7 @@ exports.updateContainer = (req, res, next) => {
     Container.updateOne({_id: req.params.id}, {        
         ...container, 
         _id: req.params.id,
-        address: JSON.parse(req.body.address)
+        
     })
     .then(() => {
         res.status(200).redirect(`/container/${req.params.id}`);
