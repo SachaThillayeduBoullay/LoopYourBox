@@ -89,9 +89,6 @@ exports.updateUser = (req, res, next) => {
 exports.deleteUser = (req, res, next) => {
     User.findOne({_id:req.params.id})
     .then(user => {
-        if (user.image != "noImage") {
-            fs.unlink(`./public/img/user/${JSON.parse(user.image).filename}`, () => {});
-        } 
         User.deleteOne({_id: req.params.id})
                 .then(()=> res.status(200).redirect('/user'))
                 .catch(error => res.status(400).json({error}));

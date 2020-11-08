@@ -23,7 +23,7 @@ router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/user', userCtrl.getAllUser);
 router.get('/user/:id', userCtrl.getOneUser);
-router.put('/user/:id', multer, userCtrl.updateUser);
+router.put('/user/:id', userCtrl.updateUser);
 router.get('/user/delete/:id', userCtrl.deleteUser);
 
 
