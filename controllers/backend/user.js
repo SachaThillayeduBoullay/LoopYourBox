@@ -4,51 +4,6 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-/*
-exports.createUser = (req, res, next) => {
-
-    const schemaSchedule = joi.object().keys({
-        monday: joi.string().trim(),
-        tuesday: joi.string().trim(),
-        wednesday: joi.string().trim(),
-        thursday: joi.string().trim(),
-        friday: joi.string().trim(),
-        saturday: joi.string().trim(),
-        sunday: joi.string().trim()
-    });
-
-    const schema = joi.object().keys({
-        name: joi.string().trim().required(),
-        phoneNumber: joi.string().trim().empty(''),
-        //address: schemaAddress,
-        website: joi.string().trim().empty(''),
-        schedule: schemaSchedule, //not working
-        foodType: joi.string().trim(),
-        idUser: joi.string().trim().required(),
-        chain: joi.string().trim().empty('')
-    });
-
-    const result = schema.validate(req.body, { allowUnknown: true }); //need to change
-    if (result.error) {
-        if (req.file) {
-            fs.unlink(`./public/img/user/${req.file.filename}`, () => {});
-        }
-        res.status(400).send(result.error.details[0].message);
-        return;
-    }
-
-
-    const user = new User({
-        ...req.body,
-        image: JSON.stringify(req.file),
-        address: JSON.parse(req.body.address)
-    });
-    user.save()
-        .then(() => res.status(201).redirect('/user'))
-        .catch(error => res.status(400).json({ error }));
-};
-*/
-
 exports.getAllUser = (req, res, next) => {
 
     User.find()
@@ -68,10 +23,9 @@ exports.updateUser = (req, res, next) => {
     if (req.body.password) {
         bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            //console.log(hash);
             User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id, password: hash})
             .then(() => {
-                res.status(200).redirect('/myprofile');
+                res.status(200).redirect('/user');
             })
             .catch(error => res.status(400).json({ error }));
             }
@@ -132,9 +86,11 @@ exports.login = (req, res, next) => {
                 {expiresIn: '24h'}
                 );
             res.cookie('token', token);
-            res.status(200).redirect('/my-account');
+            res.status(200).redirect('/user');
         })
         .catch(error => res.status(500).json({error}));
     })
     .catch (error => res.status(500).json({error}));
 };
+
+exports.getLogout = (req, res) => {res.clearCookie('token'); res.redirect('/user');};

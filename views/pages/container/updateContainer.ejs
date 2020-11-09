@@ -19,7 +19,11 @@ type="text/css"
     <label for="name">Name</label>
     <input value="<%= containerInfo.name %>" type="text" name="name" class="validate" required>
     <label for="material">material</label>
-    <input value="<%= containerInfo.material %>" type="text" name="material" class="validate">
+    <select name="material">
+      <option value="Plastique" <% if(containerInfo.material=="Plastique") {%> selected <%} %>></option>
+      <option value="Verre" <% if(containerInfo.material=="Verre") {%> selected <%} %>></option>
+      <option value="Inox" <% if(containerInfo.material=="Inox") {%> selected <%} %>></option>
+    </select>
     <label for="credit">Credit</label>
     <input value="<%= containerInfo.credit %>"  type="number" name="credit" class="validate">
     <div class="file-field input-field">

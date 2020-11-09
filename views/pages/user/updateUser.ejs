@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<form action="/api/user/<%= userInfo._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+<form action="/api/user/<%= userInfo._id %>?_method=PUT" method="POST">
     <label for="firstname">Firstname</label>
     <input value="<%= userInfo.firstname %>" type="text" name="firstname" class="validate" required>
     <label for="lastname">lastname</label>
@@ -19,7 +19,7 @@
     <label for="email">Email</label>
     <input value="<%= userInfo.email %>"  type="email" name="email" class="validate">
     <label for="password">Password</label>
-    <input value="<%= userInfo.password %>" type="text" name="password" class="validate">
+    <input value="<%= userInfo.password %>" type="password" name="password" class="validate">
     
 
 <button class="waves-effect waves-light btn blue-grey darken-3">Edit</button>
