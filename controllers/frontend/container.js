@@ -23,7 +23,6 @@ exports.containerDetailsPage = async (req, res) => {
         if (containerInfo.image != "noImage") {
             containerInfo.image = JSON.parse(containerInfo.image);
         }
-        console.log(containerInfo)
         res.render('pages/container/containerDetails', {containerInfo});
     } catch {
         res.status(401).json({error: 'Failed Request'});

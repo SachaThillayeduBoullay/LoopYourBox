@@ -38,7 +38,6 @@ exports.partnerDetailsPage = async (req, res) => {
         if (partnerInfo.image != "noImage") {
             partnerInfo.image = JSON.parse(partnerInfo.image);
         }
-        console.log(partnerInfo)
         res.render('pages/partner/partnerDetails', {partnerInfo});
     } catch {
         res.status(401).json({error: 'Failed Request'});
