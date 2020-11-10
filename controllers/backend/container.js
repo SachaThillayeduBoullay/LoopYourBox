@@ -3,8 +3,6 @@ const joi = require('joi');
 const fs = require('fs');
 
 exports.createContainer = (req, res, next) => {
-
-
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         number: joi.string().trim().empty(''),
@@ -33,11 +31,15 @@ exports.createContainer = (req, res, next) => {
 
 
 exports.getAllContainer = (req, res, next) => {
-
     Container.find()
     .then(containers => res.status(200).json(containers))
     .catch(error => res.status(400).json({error}));
+};
 
+exports.getAllPartnerContainer = (req, res, next) => {
+    Container.find({partnerId:req.params.partnerId})
+    .then(containers => res.status(200).json(containers))
+    .catch(error => res.status(400).json({error}));
 };
 
 exports.getOneContainer = (req, res, next) => {

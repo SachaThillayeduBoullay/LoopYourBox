@@ -5,36 +5,38 @@
 <title>Use the geocoder without a map</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-<link
-rel="stylesheet"
-href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-type="text/css"
-/>
+
 
 
 </head>
 <body>
+    <select id="defaultContainer"> 
+        <option value="noDefault">No Default</option>
+        <% containerInfo.forEach(option => { %>
+            <option value="<%= option.name %>"><%= option.name %></option>
+        <%})%>
+    </select>
+
 <form action="api/container" method="POST" enctype="multipart/form-data">
     <label for="name">Name</label>
-    <input type="text" name="name" class="validate" required>
+    <input id="name" type="text" name="name" class="validate" required>
     <label for="material">Material</label>
 
-    <select name="material">
-        <option value="Plastique"></option>
-        <option value="Verre"></option>
-        <option value="Inox"></option>
+    <select id="material" name="material">
+        <option value="Plastique">Plastique</option>
+        <option value="Verre">Verre</option>
+        <option value="Inox">Inox</option>
     </select>
 
     <label for="credit">Credit</label>
-    <input type="number" name="credit" class="validate">
-    <label for="image">Image</label>
-    <input type="file" name="image">
+    <input type="number" name="credit" id="credit" class="validate">
+    <label for="image" id="imageLabel">Image</label>
+    <input type="file" name="image" id="image">
+    <input type="hidden" name="partnerId" value="<%= partnerId %>">
     <button class="waves-effect waves-light btn blue-grey darken-3">Create</button>
 </form>
 
-<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
-<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<script src="/js/geocoder.js"></script>
-<body>
+<script> let container = <%- JSON.stringify(containerInfo) %>;</script>
+<script src="/js/defaultContainer.js"></script>
 </body>
 </html>

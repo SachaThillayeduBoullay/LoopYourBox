@@ -2,6 +2,7 @@ const Partner = require('../../models/partner');
 const joi = require('joi');
 const fs = require('fs');
 
+
 exports.createPartner = (req, res, next) => {
 
     const schemaSchedule = joi.object().keys({
@@ -63,6 +64,12 @@ exports.getAllPartner = (req, res, next) => {
     .then(partners => res.status(200).json(partners))
     .catch(error => res.status(400).json({error}));
 
+};
+
+exports.getPartnerFromUserId = (req, res, next) => {
+    Partner.findOne({idUser:req.params.userId})
+    .then(container => res.status(200).json(container))
+    .catch(error => res.status(404).json({error}));
 };
 
 exports.getOnePartner = (req, res, next) => {

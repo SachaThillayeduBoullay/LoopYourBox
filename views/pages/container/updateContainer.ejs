@@ -5,11 +5,7 @@
 <title>Use the geocoder without a map</title>
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
-<link
-rel="stylesheet"
-href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-type="text/css"
-/>
+
 
 
 </head>
@@ -20,9 +16,9 @@ type="text/css"
     <input value="<%= containerInfo.name %>" type="text" name="name" class="validate" required>
     <label for="material">material</label>
     <select name="material">
-      <option value="Plastique" <% if(containerInfo.material=="Plastique") {%> selected <%} %>></option>
-      <option value="Verre" <% if(containerInfo.material=="Verre") {%> selected <%} %>></option>
-      <option value="Inox" <% if(containerInfo.material=="Inox") {%> selected <%} %>></option>
+      <option value="Plastique" <% if(containerInfo.material=="Plastique") {%> selected <%} %>>Plastique</option>
+      <option value="Verre" <% if(containerInfo.material=="Verre") {%> selected <%} %>>Verre</option>
+      <option value="Inox" <% if(containerInfo.material=="Inox") {%> selected <%} %>>Inox</option>
     </select>
     <label for="credit">Credit</label>
     <input value="<%= containerInfo.credit %>"  type="number" name="credit" class="validate">
@@ -40,9 +36,7 @@ type="text/css"
 <button class="waves-effect waves-light btn blue-grey darken-3">Edit</button>
 </form>
 
-<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
-<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<script src="/js/geocoder.js"></script>
+
 <body>
 </body>
 </html>

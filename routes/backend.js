@@ -7,6 +7,7 @@ const userCtrl = require('../controllers/backend/user');
 
 
 router.post('/partner', multer, partnerCtrl.createPartner);
+router.get('/partner/container/:userId', partnerCtrl.getPartnerFromUserId);
 router.get('/partner', partnerCtrl.getAllPartner);
 router.get('/partner/:id', partnerCtrl.getOnePartner);
 router.put('/partner/:id', multer, partnerCtrl.updatePartner);
@@ -15,6 +16,7 @@ router.get('/partner/delete/:id', partnerCtrl.deletePartner);
 
 router.post('/container', multer, containerCtrl.createContainer);
 router.get('/container', containerCtrl.getAllContainer);
+router.get('/container/partner/:partnerId', containerCtrl.getAllPartnerContainer);
 router.get('/container/:id', containerCtrl.getOneContainer);
 router.put('/container/:id', multer, containerCtrl.updateContainer);
 router.get('/container/delete/:id', containerCtrl.deleteContainer);

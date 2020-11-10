@@ -4,6 +4,8 @@ const postcode = document.getElementById('postcode');
 const city = document.getElementById('city');
 const container = document.getElementById('container');
 
+const partnerList = document.getElementById('partnerList');
+
 let select = document.getElementsByTagName("select");
 let arr = [...select];
 
@@ -19,23 +21,30 @@ arr.forEach(element => {
         //console.log(filter)
         
         const result = partnerInfo.filter(partner => {
-            if (partner.chain == filter.chain && partner.address.postcode == filter.postcode && partner.address.city == filter.city && /*partner.container == filter.container &&*/  partner.foodType == filter.foodType){
+            if (
+                (partner.chain == filter.chain  || filter.chain == "all" ) && 
+                (partner.address.postcode == filter.postcode || filter.postcode == "all" ) && 
+                (partner.address.city == filter.city || filter.city == "all" ) && 
+                /*partner.container == filter.container &&*/  
+                (partner.foodType == filter.foodType || filter.foodType == "all" )
+                ){
                 return partner
             }
-
         });
-        console.log(result);
-        //document.getElementById(partner._id).style.display = "none";
-         /* <div class="collection">
-        <% partnerInfo.forEach((partner) => { %>
-        <a href="/partner/<%= partner._id %>" class="collection-item" id="<%= partner._id %>"><%= partner.name %></a>
-        <% }); %>
-    </div>*/
+        //console.log(result);
+
+        while (partnerList.firstChild) {
+            partnerList.removeChild(partnerList.lastChild);
+        }
+        
+        for (i=0;i<result.length;i++) {
+            let a = document.createElement("a");
+            a.setAttribute("class", "collection-item");
+            a.setAttribute("id", result[i]._id);
+            a.setAttribute("href", `/partner/${result[i]._id}`);
+            a.innerHTML = `${result[i].name} `;
+
+            partnerList.appendChild(a);
+        }
     });
 });
-
-console.log(partnerInfo)
-
-
-
-//
