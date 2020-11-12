@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Use the geocoder without a map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+
+
+
+</head>
+<body>
+    <select id="defaultContainer"> 
+        <option value="noDefault">No Default</option>
+        <% containerInfo.forEach(option => { %>
+            <option value="<%= option.name %>"><%= option.name %></option>
+        <%})%>
+    </select>
+
+<form action="api/container" method="POST" enctype="multipart/form-data">
+    <label for="name">Name</label>
+    <input id="name" type="text" name="name" class="validate" required>
+    <label for="material">Material</label>
+
+    <select id="material" name="material">
+        <option value="Plastique">Plastique</option>
+        <option value="Verre">Verre</option>
+        <option value="Inox">Inox</option>
+    </select>
+
+    <label for="credit">Credit</label>
+    <input type="number" name="credit" id="credit" class="validate">
+    <label for="image" id="imageLabel">Image</label>
+    <input type="file" name="image" id="image">
+    <input type="hidden" name="partnerId" value="<%= partnerId %>">
+    <button class="waves-effect waves-light btn blue-grey darken-3">Create</button>
+</form>
+
+<script> let container = <%- JSON.stringify(containerInfo) %>;</script>
+<script src="/js/defaultContainer.js"></script>
+</body>
+</html>

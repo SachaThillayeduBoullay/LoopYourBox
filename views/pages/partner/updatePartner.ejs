@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Use the geocoder without a map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+<link
+rel="stylesheet"
+href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+type="text/css"
+/>
+
+
+</head>
+<body>
+
+<form action="/api/partner/<%= partnerInfo._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <label for="name">Name</label>
+    <input value="<%= partnerInfo.name %>" type="text" name="name" class="validate" required>
+    <label for="phoneNumber">phoneNumber</label>
+    <input value="<%= partnerInfo.phoneNumber %>" type="text" name="phoneNumber" class="validate">
+    <label for="website">Website</label>
+    <input value="<%= partnerInfo.website %>"  type="text" name="website" class="validate">
+    <input type="hidden" name="idUser" value="noId" required>
+    <label for="chain">Chain</label>
+    <input value="<%= partnerInfo.chain %>" type="text" name="chain" class="validate">
+    <p><label for="sport">Food Type</label></p>
+    <select name="foodType">
+        <option  <% if (partnerInfo.foodType == "Autres"){ %> selected <% } %> >Autres</option>
+        <option <% if (partnerInfo.foodType == "vietnamien"){ %> selected <% } %>value="vietnamien">Vietnamien</option>
+        <option <% if (partnerInfo.foodType == "belge"){ %> selected <% } %> value="belge">Belge</option>
+        <option <% if (partnerInfo.foodType == "thailandais"){ %> selected <% } %>value="thailandais">Thaïlandais</option>
+        <option <% if (partnerInfo.foodType == "italien"){ %> selected <% } %>value="italien">Italien</option>
+        <option <% if (partnerInfo.foodType == "francais"){ %> selected <% } %>value="francais">Français</option>
+    </select>
+
+
+    <div class="file-field input-field">
+        <div class="btn blue-grey darken-3">
+          <span>Image</span>
+          <input type="file" name="image">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate" type="text" value="<%= partnerInfo.image.filename %>">
+        </div>
+    </div>
+    
+    <label for="monday">Monday</label>
+    <input value="<%= partnerInfo.schedule.monday %>" type="text" name="schedule.monday" class="validate" >
+    <label for="tuesday">tuesday</label>
+    <input value="<%= partnerInfo.schedule.tuesday %>" type="text" name="schedule.tuesday" class="validate" >
+    <label for="wednesday">wednesday</label>
+    <input value="<%= partnerInfo.schedule.wednesday %>" type="text" name="schedule.wednesday" class="validate" >
+    <label for="thursday">thursday</label>
+    <input value="<%= partnerInfo.schedule.thursday %>" type="text" name="schedule.thursday" class="validate" >
+    <label for="friday">friday</label>
+    <input value="<%= partnerInfo.schedule.friday %>" type="text" name="schedule.friday" class="validate" >
+    <label for="saturday">saturday</label>
+    <input value="<%= partnerInfo.schedule.saturday %>" type="text" name="schedule.saturday" class="validate" >
+    <label for="sunday">sunday</label>
+    <input value="<%= partnerInfo.schedule.sunday %>" type="text" name="schedule.sunday" class="validate" >
+    
+    <input type="hidden" name="oldImage" value="<%= partnerInfo.image.filename %>">
+    <input type="hidden" id="place_name" value="<%= partnerInfo.address.place_name %>">
+
+    <p>Address</p>
+    <div id="geocoder"></div>
+    <input type="hidden" name="address" id="address" value="<%= JSON.stringify(partnerInfo.address)%>" required>
+
+<button class="waves-effect waves-light btn blue-grey darken-3">Edit</button>
+</form>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<script src="/js/geocoder.js"></script>
+<body>
+</body>
+</html>
+
