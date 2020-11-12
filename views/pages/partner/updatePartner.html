@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <title>Use the geocoder without a map</title>
+   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+   <link rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+      type="text/css" />
+   <link rel="stylesheet" href="/public/css/materialize.css">
+</head>
+
+<body>
+   <div class="container">
+      <div class="row">
+         <h1 class="col s12">Update partner</h1>
+      </div>
+      <div class="row">
+         <form action="/api/partner/<%= partnerInfo._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="input-field">
+               <label for="name">Name</label>
+               <input value="<%= partnerInfo.name %>" type="text" name="name" class="validate" required>
+            </div>
+            <div class="input-field">
+               <label for="phoneNumber">Phone Number</label>
+               <input value="<%= partnerInfo.phoneNumber %>" type="text" name="phoneNumber" class="validate">
+            </div>
+            <div class="input-field">
+               <label for="website">Website</label>
+               <input value="<%= partnerInfo.website %>" type="text" name="website" class="validate">
+            </div>
+            <div class="input-field">
+               <input type="hidden" name="idUser" value="noId" required>
+               <label for="chain">Chain</label>
+               <input value="<%= partnerInfo.chain %>" type="text" name="chain" class="validate">
+            </div>
+            <div class="input-field">
+               <p><label for="sport">Food Type</label></p>
+               <select name="foodType">
+                  <option <% if (partnerInfo.foodType == "Autres"){ %> selected <% } %>>Autres</option>
+                  <option <% if (partnerInfo.foodType == "vietnamien"){ %> selected <% } %>value="vietnamien">
+                     Vietnamien
+                  </option>
+                  <option <% if (partnerInfo.foodType == "belge"){ %> selected <% } %> value="belge">Belge</option>
+                  <option <% if (partnerInfo.foodType == "thailandais"){ %> selected <% } %>value="thailandais">
+                     Thaïlandais
+                  </option>
+                  <option <% if (partnerInfo.foodType == "italien"){ %> selected <% } %>value="italien">Italien
+                  </option>
+                  <option <% if (partnerInfo.foodType == "francais"){ %> selected <% } %>value="francais">Français
+                  </option>
+               </select>
+            </div>
+            <div class="file-field input-field">
+               <div class="btn green darken-1">
+                  <span>Image</span>
+                  <input type="file" name="image">
+               </div>
+               <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" value="<%= partnerInfo.image.filename %>">
+               </div>
+            </div>
+            <div class="input-field">
+
+               <label for="monday">Monday</label>
+               <input value="<%= partnerInfo.schedule.monday %>" type="text" name="schedule.monday" class="validate">
+            </div>
+            <div class="input-field">
+               <label for="tuesday">Tuesday</label>
+               <input value="<%= partnerInfo.schedule.tuesday %>" type="text" name="schedule.tuesday" class="validate">
+
+            </div>
+
+            <div class="input-field">
+
+               <label for="wednesday">Wednesday</label>
+               <input value="<%= partnerInfo.schedule.wednesday %>" type="text" name="schedule.wednesday"
+                  class="validate">
+            </div>
+            <div class="input-field">
+               <label for="thursday">Thursday</label>
+               <input value="<%= partnerInfo.schedule.thursday %>" type="text" name="schedule.thursday"
+                  class="validate">
+            </div>
+            <div class="input-field">
+               <label for="friday">Friday</label>
+               <input value="<%= partnerInfo.schedule.friday %>" type="text" name="schedule.friday" class="validate">
+            </div>
+            <div class="input-field">
+               <label for="saturday">Saturday</label>
+               <input value="<%= partnerInfo.schedule.saturday %>" type="text" name="schedule.saturday"
+                  class="validate">
+            </div>
+            <div class="input-field">
+               <label for="sunday">Sunday</label>
+               <input value="<%= partnerInfo.schedule.sunday %>" type="text" name="schedule.sunday" class="validate">
+            </div>
+            <div class="input-field">
+               <input type="hidden" name="oldImage" value="<%= partnerInfo.image.filename %>">
+               <input type="hidden" id="place_name" value="<%= partnerInfo.address.place_name %>">
+            </div>
+            <div class="input-field">
+               <label for="address">Address</label>
+               <input type="text" name="address" id="address" value="<%= JSON.stringify(partnerInfo.address)%>"
+                  required>
+               <div id="geocoder"></div>
+            </div>
+      </div>
+      <div class="row">
+         <button class="col s12 waves-effect waves-light btn green darken-1">Edit</button>
+      </div>
+      </form>
+   </div>
+   </div>
+
+
+   <script src="/public/js/bin/materialize.js"></script>
+   <script>
+      M.AutoInit();
+
+      document.addEventListener('DOMContentLoaded', function () {
+         var elems = document.querySelectorAll('select');
+         var instances = M.FormSelect.init(elems, options);
+      });
+   </script>
+
+   <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+   <script
+      src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+   <script src="/js/geocoder.js"></script>
+
+   <body>
+   </body>
+
+</html>

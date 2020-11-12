@@ -6,7 +6,7 @@
     <title>Local search app</title>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <link href='/css/style.css' rel='stylesheet' />
-
+    <link rel="stylesheet" href="/public/css/materialize.css">
 
 </head>
 
@@ -26,9 +26,6 @@
 
     <div class="collection"></div>
 
-
-
-    
     <% userInfo.forEach((user) => { %>
 
     <a href="/user/<%= user._id %>" class="collection-item"><%= user.firstname %></a>
@@ -37,7 +34,15 @@
     </div>
 
 
+    <script src="/public/js/bin/materialize.js"></script>
+    <script>
+        M.AutoInit();
 
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems, options);
+        });
+    </script>
 </body>
 
 </html>

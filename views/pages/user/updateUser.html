@@ -6,7 +6,7 @@
 <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
 
-
+<link rel="stylesheet" href="/public/css/materialize.css">
 
 </head>
 <body>
@@ -26,6 +26,15 @@
 </form>
 
 
+<script src="/public/js/bin/materialize.js"></script>
+<script>
+    M.AutoInit();
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, options);
+    });
+</script>
 </body>
 </html>
 
