@@ -1,9 +1,10 @@
 const express = require('express');
-const User = require('../../model/user');
+const User = require('../../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const joi = require('joi-oid');
 const nodemailer = require('nodemailer');
+
 
 exports.getAllUser = (req, res, next) => {
     User.find()
@@ -17,19 +18,43 @@ exports.getOneUser = (req, res, next) => {
     .catch(error => res.status(404).json({error}));
 };
 
-exports.getLastUser = (req, res, next) => {
-    User.find().sort({ _id: -1 }).limit(1)
-    .then(user => res.status(200).json(user))
-    .catch(error => res.status(404).json({error}));
+
+
+
+
+
+exports.login = (req, res, next) => {
+    User.findOne({email: req.body.email})
+    .then (user => {
+        if(!user) {
+            return res.status(401).json({error: 'User not found'});
+        }
+        bcrypt.compare(req.body.password, user.password)
+        .then (valid =>{
+            if (!valid) {
+                return res.status(401).json({error: 'Wrong password'});
+            }
+            const token = jwt.sign(
+                {userId: user._id},
+                'RANDOM_TOKEN_SECRET',
+                {expiresIn: '24h'}
+                );
+            res.cookie('token', token);
+            res.status(200).redirect('/my-account');
+        })
+        .catch(error => res.status(500).json({error}));
+    })
+    .catch (error => res.status(500).json({error}));
 };
 
-exports.createUser = async (req, res, next) => {
+
+
+
+exports.signup = async (req, res, next) => {
 
     const schema = joi.object().keys({
         firstname: joi.string().trim().required(),
         lastname: joi.string().trim().required(),
-        birthdate: joi.string().trim().required(),
-        mainSport: joi.string().trim().required(),
         email: joi.string().trim().email().required(),
         password: joi.string().pattern(new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')).required(), //1 upper, 1 lower, 1 number, 1 special char, 8 min length
         confirmPassword: joi.any().equal(joi.ref('password'))
@@ -87,29 +112,7 @@ exports.deleteUser = (req, res, next) => {
     .catch(error => res.status(400).json({error}));
 };
 
-exports.signin = (req, res, next) => {
-    User.findOne({email: req.body.email})
-    .then (user => {
-        if(!user) {
-            return res.status(401).json({error: 'User not found'});
-        }
-        bcrypt.compare(req.body.password, user.password)
-        .then (valid =>{
-            if (!valid) {
-                return res.status(401).json({error: 'Wrong password'});
-            }
-            const token = jwt.sign(
-                {userId: user._id},
-                'RANDOM_TOKEN_SECRET',
-                {expiresIn: '24h'}
-            );
-            res.cookie('token', token);
-            res.status(200).redirect('/home/');
-        })
-        .catch(error => res.status(500).json({error}));
-    })
-    .catch (error => res.status(500).json({error}));
-};
+
 
 exports.lostPwd = (req, res, next) => {
 
@@ -120,18 +123,18 @@ exports.lostPwd = (req, res, next) => {
             port: 465,
             secure: true, // use SSL
             auth: {
-              user: 'becode.netp@gmail.com',
+              user: 'loopyourbox@gmail.com',
               pass: '123Banane!'
             }
         });
           
         let mailOptions = {
-            from: 'contact@npproject.com',
+            from: 'contact@loopyourbox.com',
             to: req.body.email,
-            subject: 'Sending Email using Node.js',
+            subject: 'Password reset',
             html: `
-            <h1>npProject</h1>
-            <p>Click on the link to change your password: </p>
+            <h1>Loop Your Box</h1>
+            <p>Please click on the link to change your password: </p>
             <p>
                 <a href="http://localhost:3000/changepwd?id=${user._id}">Change password</a>
             </p>
@@ -151,3 +154,26 @@ exports.lostPwd = (req, res, next) => {
 
     
 };
+
+exports.getLogout = (req, res) => {res.clearCookie('token'); res.redirect('/user');};
+
+/*
+exports.signup = (req, res, next) => {
+    bcrypt.hash(req.body.password, 10)
+        .then(hash => {
+        const user = new User({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            email: req.body.email,
+            password: hash
+        });
+        user.save()
+            .then(() => res.status(201).redirect('/index'))
+            .catch(error => res.status(400).json({ error }));
+        })
+        .catch(error => res.status(500).json({ error }));
+};
+*/
+
+
+

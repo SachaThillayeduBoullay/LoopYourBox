@@ -11,10 +11,6 @@ const frontendRoutes = require("./routes/frontend");
 
 
 
-const sessionRoutes = require('./routes/user');
-const pageRoutes = require('./routes/pages');
-
-
 app.set('view engine', 'ejs');
 //app.set('views', __dirname, ' /views');
 app.use(express.static('./public'));
