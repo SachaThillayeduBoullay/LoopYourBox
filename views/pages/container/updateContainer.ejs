@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Use the geocoder without a map</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+<link
+rel="stylesheet"
+href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+type="text/css"
+/>
+
+
+</head>
+<body>
+
+<form action="/api/container/<%= containerInfo._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+    <label for="name">Name</label>
+    <input value="<%= containerInfo.name %>" type="text" name="name" class="validate" required>
+    <label for="material">material</label>
+    <input value="<%= containerInfo.material %>" type="text" name="material" class="validate">
+    <label for="website">Website</label>
+    <input value="<%= containerInfo.website %>"  type="number" name="website" class="validate">
+
+
+
+<button class="waves-effect waves-light btn blue-grey darken-3">Edit</button>
+</form>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<script src="/js/geocoder.js"></script>
+<body>
+</body>
+</html>
+

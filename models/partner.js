@@ -1,28 +1,26 @@
 const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
+//const uniqueValidator = require('mongoose-unique-validator');
 
 const partnerSchema = mongoose.Schema({
     name: { type: String, required: true },
-    phoneNumber: { type: Number, required: true },
-    address: { type: String, required: true, unique: true },
-    website: { type: String, required: true, default:"NoWebsite" },
-    image: { type: String, required: true, default:"NoImage" },
-    description: { type: String, required: true, default:"NoDescription" },
+    phoneNumber: { type: String, default:"noNumber" },
+    address: { type: Object, required: true },
+    website: { type: String, default:"noWebsite" },
+    image: { type: String, default:"noImage" },
     schedule: {
-        monday: { type: String, required: true },
-        tuesday: { type: String, required: true },
-        wednesday: { type: String, required: true },
-        thursday:{ type: String, required: true },
-        friday:{ type: String, required: true },
-        saturday:{ type: String, required: true },
-        sunday:{ type: String, required: true },
+        monday: { type: String, default:"none" },
+        tuesday: { type: String, default:"none" },
+        wednesday: { type: String, default:"none" },
+        thursday:{ type: String, default:"none" },
+        friday:{ type: String, default:"none" },
+        saturday:{ type: String, default:"none" },
+        sunday:{ type: String, default:"none" },
     },
-    
-    idUser: { type: String, required: true },
-    description: { type: String }
-
+    foodType: { type: String, default:"noType" },
+    idUser: { type: String, required: true }, //change to ObjectId
+    chain: { type: String, default:"noChain" }
 });
 
-partnerSchema.plugin(uniqueValidator);
+//partnerSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Partner', partnerSchema);
