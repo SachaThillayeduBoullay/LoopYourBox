@@ -16,7 +16,7 @@ router.get('/partner/delete/:id', partnerCtrl.deletePartner);
 
 router.post('/container', multer, containerCtrl.createContainer);
 router.get('/container', containerCtrl.getAllContainer);
-router.get('/container/partner/:partnerId', containerCtrl.getAllPartnerContainer);
+router.get('/container/partner/:default', containerCtrl.getAllDefaultContainer);
 router.get('/container/:id', containerCtrl.getOneContainer);
 router.put('/container/:id', multer, containerCtrl.updateContainer);
 router.get('/container/delete/:id', containerCtrl.deleteContainer);

@@ -17,7 +17,20 @@
         <%})%>
     </select>
 
+    
+
 <form action="api/container" method="POST" enctype="multipart/form-data">
+    
+    <label id="default" 
+    <% if(userStatus == "admin") {%>
+        style="display:inline"
+    <%} else {%>
+        style="display:none"
+    <%}%>>
+        <input name="default" type="checkbox"/>
+        <span>Contenant par défaut</span>
+    </label>
+
     <label for="name">Name</label>
     <input id="name" type="text" name="name" class="validate" required>
     <label for="material">Material</label>
@@ -36,7 +49,9 @@
     <button class="waves-effect waves-light btn blue-grey darken-3">Create</button>
 </form>
 
-<script> let container = <%- JSON.stringify(containerInfo) %>;</script>
+<script> 
+        let container = <%- JSON.stringify(containerInfo) %>;
+</script>
 <script src="/js/defaultContainer.js"></script>
 </body>
 </html>

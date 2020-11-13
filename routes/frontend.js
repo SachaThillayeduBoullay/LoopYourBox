@@ -2,9 +2,15 @@ const express = require("express");
 const router = express.Router();
 //const auth = require("../..//middleware/auth");
 
+const indexCtrl = require("../controllers/frontend/index");
 const partnerCtrl = require("../controllers/frontend/partner");
 const containerCtrl = require("../controllers/frontend/container");
 const userCtrl = require("../controllers/frontend/user");
+const mapCtrl = require("../controllers/frontend/map");
+const qrCodeCtrl = require("../controllers/frontend/qrCode");
+const myAccountCtrl = require("../controllers/frontend/myaccount");
+
+router.get("/", indexCtrl.indexPage);
 
 router.get("/partner", partnerCtrl.partnerPage);
 router.get("/partner/:id", partnerCtrl.partnerDetailsPage);
@@ -21,5 +27,11 @@ router.get("/user", userCtrl.userPage);
 router.get("/user/:id", userCtrl.userDetailsPage);
 router.get("/createUser", userCtrl.createUserPage);
 router.get("/updateUser/:id", userCtrl.updateUserPage);
+
+router.get("/myaccount", myAccountCtrl.myAccountPage);
+
+router.get("/map", mapCtrl.mapPage);
+
+router.get("/qrcode", qrCodeCtrl.qrCodePage);
 
 module.exports = router;

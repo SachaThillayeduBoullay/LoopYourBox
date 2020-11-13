@@ -47,6 +47,7 @@ exports.createContainerPage = async (req, res) => {
         partnerInfo = await partnerInfo.json();
         let partnerId = partnerInfo._id
 
+
         let urlUser = `http://localhost:3000/api/user/${userId}`;
 
         let userInfo = await fetch(urlUser, myInit);
@@ -57,11 +58,13 @@ exports.createContainerPage = async (req, res) => {
         let containerInfo = await fetch(urlContainer, myInit);
         containerInfo = await containerInfo.json();
 
-        if (userInfo.status == "admin") {
+        /*if (userInfo.status == "admin") {
             partnerId = "default";
-        }
+        }*/
 
-        res.render('pages/container/createContainer', {partnerId, containerInfo})
+        console.log(userInfo.status)
+
+        res.render('pages/container/createContainer', {partnerId, containerInfo, userStatus: userInfo.status})
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }

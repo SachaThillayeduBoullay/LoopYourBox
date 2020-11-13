@@ -19,10 +19,14 @@ exports.createContainer = (req, res, next) => {
         return;
     }
 
-
+    if (req.file){
+        req.body.image = JSON.stringify(req.file);
+    }
+    if (req.body.default == "on"){
+        req.body.default = true
+    }else{req.body.default = false}
     const container = new Container({
         ...req.body,
-        image: JSON.stringify(req.file),
     });
     container.save()
         .then(() => res.status(201).redirect('/container'))
@@ -36,8 +40,8 @@ exports.getAllContainer = (req, res, next) => {
     .catch(error => res.status(400).json({error}));
 };
 
-exports.getAllPartnerContainer = (req, res, next) => {
-    Container.find({partnerId:req.params.partnerId})
+exports.getAllDefaultContainer = (req, res, next) => {
+    Container.find({default:true})
     .then(containers => res.status(200).json(containers))
     .catch(error => res.status(400).json({error}));
 };
