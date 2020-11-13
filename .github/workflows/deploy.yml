@@ -1,7 +1,8 @@
 name: deploy
 
 on:
-  release:
+  push:
+    branches: [ master ]
 
 
 jobs:
@@ -18,4 +19,4 @@ jobs:
             cd ~/webapp/LoopYourBox
             git pull
             npm install
-            pm2 restart app.js
+            pm2 restart server.js
