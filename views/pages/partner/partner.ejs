@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Local search app</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+    <link href='/css/style.css' rel='stylesheet' />
+
+    <link rel="stylesheet" href="/css/materialize.css">
+    <link rel="stylesheet" href="/css/partner.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="collection row" id="partnerList">
+            <h2 class="page-title">List of Partners</h2>
+            <% partnerInfo.forEach((partner) => { %>
+            <a href="/partner/<%= partner._id %>" class="collection-item col s12"
+                id="<%= partner._id %>"><%= partner.name %></a>
+            <% }); %>
+        </div>
+
+        <div class="row">
+            <form class="col s12" action="" method="POST" enctype="multipart/form-data">
+                <div class="input-field col s12">
+                    <select name="foodType" id="foodType">
+                        <option value="all">Tous</option>
+                        <% selectInfo.foodType.forEach(option => { 
+                                        if (option==""){option = "Autres" }%>
+                        <option value="<%= option %>"><%= option.charAt(0).toUpperCase() + option.slice(1) %></option>
+                        <%})%>
+                    </select>
+                    <label for="foodType">Type de cuisine</label>
+                </div>
+                <div class="input-field col s12">
+                    <select name="chain" id="chain">
+                        <option value="all">Tous</option>
+                        <% selectInfo.chain.forEach(option => { %>
+                        <option value="<%= option %>"><%= option.charAt(0).toUpperCase() + option.slice(1) %></option>
+                        <%})%>
+                    </select>
+                    <label for="chain">Chaîne</label>
+                </div>
+                <div class="input-field col s12">
+                    <select name="postcode" id="postcode">
+                        <option value="all">Tous</option>
+                        <% selectInfo.postcode.forEach(option => { %>
+                        <option value="<%= option %>"><%= option.charAt(0).toUpperCase() + option.slice(1) %></option>
+                        <%})%>
+                    </select>
+                    <label for="postcode">Code postal</label>
+                </div>
+                <div class="input-field col s12">
+                    <select name="city" id="city">
+                        <option value="all">Tous</option>
+                        <% selectInfo.city.forEach(option => { %>
+                        <option value="<%= option %>"><%= option.charAt(0).toUpperCase() + option.slice(1) %></option>
+                        <%})%>
+                    </select>
+                    <label for="city">Ville</label>
+                </div>
+                <div class="input-field col s12">
+                    <select name="container" id="container">
+                        <option value="all">Tous</option>
+                        <option value="Plastique">Plastique </option>
+                        <option value="Verre">Verre</option>
+                        <option value="Inox">Inox</option>
+                    </select>
+                    <label for="container">Contenant</label>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="map-container">
+            <div id='map'></div>
+        </div>
+        <div class="row">
+            <a class="col s8 offset-s2 waves-effect waves-light green darken-1 btn" href="/createpartner">Add
+                new partner</a>
+        </div>
+    </div>
+    <!-- SCRIPTS -->
+    <script src="/js/bin/materialize.js"></script>
+    <script src="/js/bin/materialize-init.js"></script>
+    <script>
+        let partnerInfo = <%- JSON.stringify(partnerInfo) %>
+    </script>
+    <script src="/js/map.js"></script>
+    <script src="/js/filterPartner.js"></script>
+</body>
+
+</html>

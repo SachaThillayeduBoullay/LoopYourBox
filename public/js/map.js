@@ -62,7 +62,7 @@ new mapboxgl.Marker() // initialize a new marker
           .addTo(map);*/ // Add the marker to the map
 
  //});
- //console.log(partnerInfo);
+ console.log(partnerInfo);
 let features = partnerInfo.map(element => {
     return  {
         'type': 'Feature',

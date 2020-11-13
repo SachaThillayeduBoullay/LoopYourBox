@@ -1,0 +1,35 @@
+
+@import "base/typography";
+@import "utilities/variables";
+@import "utilities/mixins";
+@import "layouts/navbar";
+@import "components/all-components";
+@import "base/global";
+
+body {
+   font-family: $primary-font;
+
+   .container {
+      .collection-item {
+         padding: 0.7rem 1rem;
+         font-size: $mobile-fontSize;
+      }
+      .partner-img {
+         width: 100%;
+         height: auto;
+      }
+      a {
+         color: $secondary-color;
+         @extend %button-global;
+      }
+
+      button {
+         @extend %button-global;
+      }
+   }
+}
+
+
+
+
+
