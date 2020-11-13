@@ -15,7 +15,7 @@ arr.forEach(element => {
             chain: chain.value,
             postcode: postcode.value,
             city: city.value,
-            //container: container.value,
+            container: container.value,
             foodType: foodType.value,
         }
         //console.log(filter)

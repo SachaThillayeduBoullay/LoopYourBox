@@ -7,6 +7,7 @@ const containerSchema = mongoose.Schema({
     credit: { type: Number, required: true },
     partnerId: { type: String},
     image: { type: String, default:"noImage" },
+    default: {type: Boolean, default: false}
 });
 
 
