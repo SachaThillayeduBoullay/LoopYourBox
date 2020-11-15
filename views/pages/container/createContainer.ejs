@@ -35,14 +35,14 @@
     <input id="name" type="text" name="name" class="validate" required>
     <label for="material">Material</label>
 
-    <select id="material" name="material">
+    <select id="material" name="material" required>
         <option value="Plastique">Plastique</option>
         <option value="Verre">Verre</option>
         <option value="Inox">Inox</option>
     </select>
 
     <label for="credit">Credit</label>
-    <input type="number" name="credit" id="credit" class="validate">
+    <input type="number" name="credit" id="credit" class="validate" required>
     <label for="image" id="imageLabel">Image</label>
     <input type="file" name="image" id="image">
     <input type="hidden" name="partnerId" value="<%= partnerId %>">

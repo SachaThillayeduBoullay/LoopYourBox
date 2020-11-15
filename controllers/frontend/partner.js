@@ -8,21 +8,27 @@ exports.partnerPage = async (req, res) => {
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
-        let foodType = Array.from(new Set(partnerInfo.map(element => element.foodType)));
-        let chain = Array.from(new Set(partnerInfo.map(element => element.chain)));
-        let postcode = Array.from(new Set(partnerInfo.map(element => element.address.postcode)));
-        let city = Array.from(new Set(partnerInfo.map(element => element.address.city)));
+        let foodType = Array.from(new Set(partnerInfo.map(element => element.foodType))).sort();
+        let chain = Array.from(new Set(partnerInfo.map(element => element.chain))).sort();
+        let postcode = Array.from(new Set(partnerInfo.map(element => element.address.postcode))).sort();
+        let city = Array.from(new Set(partnerInfo.map(element => element.address.city))).sort();
+
+        let urlContainer = `http://localhost:3000/api/container/`;
+
+        let containerInfo = await fetch(urlContainer);
+        containerInfo = await containerInfo.json();
+
+        let material = Array.from(new Set(containerInfo.map(element => element.material))).sort();
 
         let selectInfo = {
             foodType: foodType,
             chain: chain,
             postcode: postcode,
-            city: city
+            city: city,
+            material: material
         };
 
-        //console.log(selectInfo)
-
-        res.render('pages/partner/partner', {partnerInfo, selectInfo})
+        res.render('pages/partner/partner', {partnerInfo, selectInfo, containerInfo})
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }
@@ -45,10 +51,15 @@ exports.partnerDetailsPage = async (req, res) => {
 };
 
 exports.createPartnerPage = (req, res) => { 
-    const token = req.cookies["token"];
-    const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
-    const userId = decodedToken.userId;
-    res.render('pages/partner/createPartner', {userId})
+    try {
+        const token = req.cookies["token"];
+        const decodedToken = jwt.verify(token, process.env.JWT_PW);
+        const userId = decodedToken.userId;
+        res.render('pages/partner/createPartner', {userId})
+    } catch {
+        res.status(401).json({error: 'You cannot access this page'});
+    }
+    
 };
 
 exports.updatePartnerPage = async (req, res) => { 

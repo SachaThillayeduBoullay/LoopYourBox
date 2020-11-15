@@ -82,7 +82,7 @@ exports.login = (req, res, next) => {
             }
             const token = jwt.sign(
                 {userId: user._id},
-                'RANDOM_TOKEN_SECRET',
+                process.env.JWT_PW,
                 {expiresIn: '24h'}
                 );
             res.cookie('token', token);

@@ -1,13 +1,13 @@
 const Container = require('../../models/container');
-const joi = require('joi');
+const joi = require('joi-oid');
 const fs = require('fs');
 
 exports.createContainer = (req, res, next) => {
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
-        number: joi.string().trim().empty(''),
-        //credit: joi.string().trim().empty(''),
-
+        material: joi.string().trim().required(),
+        credit: joi.number().required(),
+        partnerId: joi.objectId().required()
     });
 
     const result = schema.validate(req.body, { allowUnknown: true }); //Attentino multer middleware met les images dans partner
@@ -53,6 +53,22 @@ exports.getOneContainer = (req, res, next) => {
 };
 
 exports.updateContainer = (req, res, next) => {
+
+    const schema = joi.object().keys({
+        name: joi.string().trim().required(),
+        material: joi.string().trim().required(),
+        credit: joi.number().required()
+    });
+
+    const result = schema.validate(req.body, { allowUnknown: true });
+    if (result.error) {
+        if (req.file) {
+            fs.unlink(`./public/img/container/${req.file.filename}`, () => {});
+        }
+        res.status(400).send(result.error.details[0].message);
+        return;
+    }
+
     let container = {...req.body}
     if (req.file) {
         fs.unlink(`./public/img/container/${req.body.oldImage}`, () => {});
@@ -85,3 +101,4 @@ exports.deleteContainer = (req, res, next) => {
     })
     .catch(error => res.status(404).json({error}));
 };
+

@@ -15,13 +15,13 @@
     <label for="name">Name</label>
     <input value="<%= containerInfo.name %>" type="text" name="name" class="validate" required>
     <label for="material">material</label>
-    <select name="material">
+    <select name="material" required>
       <option value="Plastique" <% if(containerInfo.material=="Plastique") {%> selected <%} %>>Plastique</option>
       <option value="Verre" <% if(containerInfo.material=="Verre") {%> selected <%} %>>Verre</option>
       <option value="Inox" <% if(containerInfo.material=="Inox") {%> selected <%} %>>Inox</option>
     </select>
     <label for="credit">Credit</label>
-    <input value="<%= containerInfo.credit %>"  type="number" name="credit" class="validate">
+    <input value="<%= containerInfo.credit %>"  type="number" name="credit" class="validate" required>
     <div class="file-field input-field">
         <div class="btn blue-grey darken-3">
           <span>Image</span>
