@@ -26,7 +26,7 @@ exports.userDetailsPage = async (req, res) => {
     }
 };
 
-exports.createUserPage = (req, res) => { res.render('pages/user/createUser')};
+exports.createUserPage = (req, res) => { res.render('pages/user/register')};
 
 exports.updateUserPage = async (req, res) => { 
     try {
@@ -46,4 +46,8 @@ exports.updateUserPage = async (req, res) => {
     } catch {
         res.status(401).json({error: 'Unauthenticated Request'});
     }
+};
+
+exports.loginPage = async (req, res) => { 
+        res.render('pages/user/login')
 };

@@ -40,7 +40,7 @@ exports.login = (req, res, next) => {
                 {expiresIn: '24h'}
                 );
             res.cookie('token', token);
-            res.status(200).redirect('/my-account');
+            res.status(200).redirect('/partner');
         })
         .catch(error => res.status(500).json({error}));
     })
@@ -78,7 +78,7 @@ exports.signup = async (req, res, next) => {
         })
     
     user.save()
-      .then(() => res.status(201).redirect('/user'))
+      .then(() => res.status(201).redirect('/login'))
       .catch(error => res.status(400).json({ error }));
     })
     .catch(error => res.status(500).json({ error }));
@@ -155,7 +155,7 @@ exports.lostPwd = (req, res, next) => {
     
 };
 
-exports.getLogout = (req, res) => {res.clearCookie('token'); res.redirect('/user');};
+exports.getLogout = (req, res) => {res.clearCookie('token'); res.redirect('/');};
 
 /*
 exports.signup = (req, res, next) => {
