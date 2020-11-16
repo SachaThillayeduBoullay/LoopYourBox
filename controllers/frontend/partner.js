@@ -2,16 +2,31 @@ global.fetch = require("node-fetch");
 const jwt = require('jsonwebtoken');
 
 exports.partnerPage = async (req, res) => { 
+    let url;
+    if (req.query) {
+        let urlStringFilter = "?";
+        for (let property in req.query) {
+            urlStringFilter += `${property}=${req.query[property]}&`
+        }
+        urlStringFilter = urlStringFilter.slice(0, urlStringFilter.length-1)
+        url = `http://localhost:3000/api/partner${urlStringFilter}`;
+    
+    }
+    
     try {
-        let url = `http://localhost:3000/api/partner/`;
+        let urlSelect = `http://localhost:3000/api/partner`;
+
+        let partnerInfoForSelect = await fetch(urlSelect);
+        partnerInfoForSelect = await partnerInfoForSelect.json();
 
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
+        
 
-        let foodType = Array.from(new Set(partnerInfo.map(element => element.foodType))).sort();
-        let chain = Array.from(new Set(partnerInfo.map(element => element.chain))).sort();
-        let postcode = Array.from(new Set(partnerInfo.map(element => element.address.postcode))).sort();
-        let city = Array.from(new Set(partnerInfo.map(element => element.address.city))).sort();
+        let foodType = Array.from(new Set(partnerInfoForSelect.map(element => element.foodType))).sort();
+        let chain = Array.from(new Set(partnerInfoForSelect.map(element => element.chain))).sort();
+        let postcode = Array.from(new Set(partnerInfoForSelect.map(element => element.address.postcode))).sort();
+        let city = Array.from(new Set(partnerInfoForSelect.map(element => element.address.city))).sort();
 
         let urlContainer = `http://localhost:3000/api/container/`;
 
@@ -19,7 +34,7 @@ exports.partnerPage = async (req, res) => {
         containerInfo = await containerInfo.json();
 
         let material = Array.from(new Set(containerInfo.map(element => element.material))).sort();
-
+        
         let selectInfo = {
             foodType: foodType,
             chain: chain,
@@ -28,7 +43,7 @@ exports.partnerPage = async (req, res) => {
             material: material
         };
 
-        res.render('pages/partner/partner', {partnerInfo, selectInfo, containerInfo})
+        res.render('pages/partner/partner', { selectInfo, containerInfo, partnerInfo})
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }
