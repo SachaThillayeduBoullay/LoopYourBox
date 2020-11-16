@@ -35,3 +35,5 @@ router.get("/map", mapCtrl.mapPage);
 router.get("/qrcode", qrCodeCtrl.qrCodePage);
 
 module.exports = router;
+
+

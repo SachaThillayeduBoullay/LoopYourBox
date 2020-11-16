@@ -4,6 +4,8 @@ const partnerCtrl = require('../controllers/backend/partner');
 const multer = require('../middleware/multer-config');
 const containerCtrl = require('../controllers/backend/container');
 const userCtrl = require('../controllers/backend/user');
+const auth = require("../middleware/auth");
+
 
 
 router.post('/partner', multer, partnerCtrl.createPartner);
@@ -23,11 +25,19 @@ router.get('/container/delete/:id', containerCtrl.deleteContainer);
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
-router.get('/user', userCtrl.getAllUser);
-router.get('/user/:id', userCtrl.getOneUser);
+router.get('/user',  userCtrl.getAllUser);
+router.get('/user/:id',  userCtrl.getOneUser);
 router.put('/user/:id', userCtrl.updateUser);
-router.get('/user/delete/:id', userCtrl.deleteUser);
+router.get('/user/delete/:id',  userCtrl.deleteUser);
+router.post('/lostpwd', userCtrl.lostPwd);
 router.get('/logout', userCtrl.getLogout);
 
 
 module.exports = router;
+
+
+
+
+
+
+
