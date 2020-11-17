@@ -102,3 +102,8 @@ exports.deleteContainer = (req, res, next) => {
     .catch(error => res.status(404).json({error}));
 };
 
+exports.getAllPartnerContainer = (req, res, next) => {
+    Container.find({partnerId:req.params.id})
+    .then(container => res.status(200).json(container))
+    .catch(error => res.status(404).json({error}));
+};

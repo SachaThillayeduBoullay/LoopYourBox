@@ -4,6 +4,7 @@ const partnerCtrl = require('../controllers/backend/partner');
 const multer = require('../middleware/multer-config');
 const containerCtrl = require('../controllers/backend/container');
 const userCtrl = require('../controllers/backend/user');
+const historyCtrl = require('../controllers/backend/history');
 const auth = require("../middleware/auth");
 
 
@@ -19,6 +20,7 @@ router.get('/partner/delete/:id', partnerCtrl.deletePartner);
 router.post('/container', multer, containerCtrl.createContainer);
 router.get('/container', containerCtrl.getAllContainer);
 router.get('/container/partner/:default', containerCtrl.getAllDefaultContainer);
+router.get('/containerpartner/:id', containerCtrl.getAllPartnerContainer);
 router.get('/container/:id', containerCtrl.getOneContainer);
 router.put('/container/:id', multer, containerCtrl.updateContainer);
 router.get('/container/delete/:id', containerCtrl.deleteContainer);
@@ -31,6 +33,12 @@ router.put('/user/:id', userCtrl.updateUser);
 router.get('/user/delete/:id',  userCtrl.deleteUser);
 router.post('/lostpwd', userCtrl.lostPwd);
 router.get('/logout', userCtrl.getLogout);
+
+router.get('/history', historyCtrl.getAllHistory);
+router.post('/history', historyCtrl.createHistory);
+/*router.get('/history/:id', historyCtrl.getOneHistory);
+router.put('/history/:id', historyCtrl.updateHistory);
+router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
 
 
 module.exports = router;
