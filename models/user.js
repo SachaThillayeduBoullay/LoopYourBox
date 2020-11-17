@@ -6,7 +6,8 @@ const userSchema = mongoose.Schema({
     lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    loyaltyPoint: { type: Number },
+    loyaltyPoint: { type: Number, default: 0 },
+    credit: { type: Number, default: 0 },
     avatar: { type: String },
     status: { type: String, default: 'member', required: true},
 });

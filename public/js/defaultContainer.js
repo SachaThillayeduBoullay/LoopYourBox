@@ -29,6 +29,6 @@ select.addEventListener('change', () => {
     }
 
 
-    console.log(defaultInfo)
+    //console.log(defaultInfo)
 });
 

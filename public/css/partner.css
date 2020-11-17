@@ -129,23 +129,115 @@ body .container a, body .container button {
 * img {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
 body {
   font-family: "Montserrat", sans-serif;
+  background: rgba(246, 246, 246, 0.976);
 }
 
-body .container .collection-item {
-  padding: 0.7rem 1rem;
-  font-size: 0.8rem;
+body .container {
+  position: relative;
 }
 
-body .container .partner-img {
+body .container .page-title {
+  font-size: 2rem;
+  padding: 2rem 0;
+  font-weight: 700;
+}
+
+body .container #partnerList #partner-title {
+  width: 90%;
+  margin: 0 auto;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+body .container #partnerList .partner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 20px;
+  position: relative;
+  width: 90%;
+  margin: 0rem auto 1rem auto;
+}
+
+body .container #partnerList .partner .partner-img {
   width: 100%;
-  height: auto;
+  height: 250px;
+}
+
+body .container #partnerList .partner .partner-img img {
+  border-radius: 20px;
+}
+
+body .container #partnerList .partner .partner-info {
+  background: #fff;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 1rem 0;
+  width: 100%;
+  border-radius: 0 0 20px 20px;
+  padding-left: .5rem;
+}
+
+body .container #partnerList .partner .partner-info .partner-name {
+  width: 100%;
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.976);
+  font-weight: 600;
+  padding-bottom: .4rem;
+  text-align: left;
+}
+
+body .container #partnerList .partner .partner-info .partner-address {
+  text-align: left;
+  width: 100%;
+  font-size: 0.6rem;
+  color: rgba(0, 0, 0, 0.976);
+}
+
+body .container #filter {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  font-size: 0.7rem;
+  padding: 0.1rem 0.1rem;
+  margin-bottom: 3rem;
+}
+
+body .container .modal {
+  border-radius: 10px;
+}
+
+body .container .modal-content h3 {
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  color: #43a047;
 }
 
 body .container a {
   color: #fff;
+}
+
+body .container form div:last-child {
+  margin-bottom: 4rem;
 }
 /*# sourceMappingURL=partner.css.map */

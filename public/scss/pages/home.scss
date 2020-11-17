@@ -13,11 +13,22 @@
     }
 
     .carousel-wrapper {
+
+        .carousel {
+            height: 200px;
+        }
+
         .carousel-title {
             font-size: 1rem;
             text-transform: uppercase;
             font-weight: 600;
             padding: 1rem 0;
         }
+
+       
+    }
+    
+    section:last-child {
+        margin-bottom: 60px;
     }
 }

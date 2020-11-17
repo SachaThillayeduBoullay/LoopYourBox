@@ -29,7 +29,7 @@
                <label for="name">Name</label>
             </div>
             <div class="input-field col s12">
-               <select id="material" name="material">
+               <select id="material" name="material" required>
                   <option value="Plastique">Plastique</option>
                   <option value="Verre">Verre</option>
                   <option value="Inox">Inox</option>
@@ -37,8 +37,8 @@
                <label for="material">Material</label>
             </div>
             <div class="input-field col s12">
-               <input type="number" name="credit" id="credit" class="validate">
                <label for="credit">Credit</label>
+               <input type="number" name="credit" id="credit" class="validate" required>
             </div>
             <div class="input-field file-field col s12">
                <div class="btn green darken-1">
@@ -56,28 +56,15 @@
             </div>
          </form>
       </div>
+   </div>
 
 
-      <form action="api/container" method="POST" enctype="multipart/form-data">
+   <script src="/js/bin/materialize.js"></script>
+   <script src="/js/bin/materialize-init.js"></script>
+   <script src="/js/bin/container.js"></script>
 
-         <label id="default" <% if(userStatus == "admin") {%> style="display:inline" <%} else {%> style="display:none" <%}%>>
-        <input name="default" type="checkbox"/>
-        <span>Contenant par défaut</span>
-    </label>
-
-    <label for="name">Name</label>
-    <input id="name" type="text" name="name" class="validate" required>
-    <label for="material">Material</label>
-    </form>
-</div>
-
-
-    <script src="/js/bin/materialize.js"></script>
-    <script src="/js/bin/materialize-init.js"></script>
-    <script src="/js/bin/container.js"></script>
-
-    <script> let container = <% - JSON.stringify(containerInfo) %> </script>
-            <script src="/js/defaultContainer.js"></script>
+   <script> let container = <% - JSON.stringify(containerInfo) %> </script>
+   <script src="/js/defaultContainer.js"></script>
 </body>
 
 </html>

@@ -19,13 +19,21 @@ arr.forEach(element => {
             foodType: foodType.value,
         }
         //console.log(filter)
+
+        const resultContainer = containerInfo.filter(container => {
+            if (container.material == filter.container) {
+                return container;
+            }
+        });
         
+
+
         const result = partnerInfo.filter(partner => {
             if (
                 (partner.chain == filter.chain  || filter.chain == "all" ) && 
                 (partner.address.postcode == filter.postcode || filter.postcode == "all" ) && 
                 (partner.address.city == filter.city || filter.city == "all" ) && 
-                /*partner.container == filter.container &&*/  
+                (partner._id == filter.container ) &&  
                 (partner.foodType == filter.foodType || filter.foodType == "all" )
                 ){
                 return partner

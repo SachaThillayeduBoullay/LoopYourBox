@@ -29,8 +29,10 @@ router.get("/updateContainer/:id", containerCtrl.updateContainerPage);
 // USER
 router.get("/user", userCtrl.userPage);
 router.get("/user/:id", userCtrl.userDetailsPage);
-router.get("/createUser", userCtrl.createUserPage);
+router.get("/register", userCtrl.createUserPage);
 router.get("/updateUser/:id", userCtrl.updateUserPage);
+router.get("/login", userCtrl.loginPage);
+
 
 router.get("/myaccount", myAccountCtrl.myAccountPage);
 
@@ -39,3 +41,5 @@ router.get("/map", mapCtrl.mapPage);
 router.get("/qrcode", qrCodeCtrl.qrCodePage);
 
 module.exports = router;
+
+

@@ -1,4 +1,3 @@
-
 @import "base/typography";
 @import "utilities/variables";
 @import "utilities/mixins";
@@ -8,16 +7,88 @@
 
 body {
    font-family: $primary-font;
-
+   background: lighten($base-grey, 17%);
    .container {
-      .collection-item {
-         padding: 0.7rem 1rem;
-         font-size: $mobile-fontSize;
+      position: relative;
+      .page-title {
+         font-size: $title-fontSize;
+         padding: 2rem 0;
+         font-weight: 700;
       }
-      .partner-img {
-         width: 100%;
-         height: auto;
+
+      #partnerList {
+         
+
+         #partner-title {
+            width: 90%;
+            margin: 0 auto;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            font-weight: 500;
+         }
+         .partner {
+            @include flex(column, center, center);
+            // border: 5px solid $base-black;
+            border-radius: $card-radius;
+            position: relative;
+            width: 90%;
+            margin: 0rem auto 1rem auto;
+            .partner-img {
+               img {
+                  border-radius: $card-radius;
+               }
+               width: 100%;
+               height: 250px;
+            }
+            .partner-info {
+               background: $secondary-color;
+               position: absolute;
+               bottom: 0;
+               left: 0;
+               padding: 1rem 0;
+               width: 100%;
+               border-radius: 0 0 $card-radius $card-radius;
+               padding-left: .5rem;
+               .partner-name {
+                  width: 100%;
+                  font-size: 0.8rem;
+                  color: $base-black;
+                  font-weight: 600;
+                  padding-bottom: .4rem;
+                  text-align: left;
+               }
+   
+               .partner-address {
+                  text-align: left;
+                  width: 100%;
+                  font-size: 0.6rem;
+                  color: $base-black;
+               }
+            }
+         }
+   
+        
       }
+
+      #filter {
+         position: fixed;
+         top: 100px;
+         right: 20px;
+         font-size: 0.7rem;
+         padding: 0.1rem 0.1rem;
+         margin-bottom: 3rem;
+      }
+
+      .modal {
+         border-radius: 10px;
+      }
+      .modal-content h3 {
+         text-align: center;
+         text-transform: uppercase;
+         margin-bottom: 1rem;
+         color: $primary-color;
+      }
+
       a {
          color: $secondary-color;
          @extend %button-global;
@@ -26,10 +97,11 @@ body {
       button {
          @extend %button-global;
       }
+
+      form {
+         div:last-child {
+            margin-bottom: 4rem;
+         }
+      }
    }
 }
-
-
-
-
-
