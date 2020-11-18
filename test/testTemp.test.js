@@ -11,7 +11,7 @@ describe('description du test', () => {
 */
 
 describe('description du test', () => {
-    it('dois retourne X', () => {
+    it('dois passer', () => {
            assert.equal(true, true);
        });
    });
