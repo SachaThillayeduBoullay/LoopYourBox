@@ -1,5 +1,6 @@
 global.fetch = require("node-fetch");
 const jwt = require('jsonwebtoken');
+const checkStatus = require('../../public/js/checkstatus');
 
 exports.partnerPage = async (req, res) => { 
     let url;
@@ -47,8 +48,6 @@ exports.partnerPage = async (req, res) => {
             city: city,
             material: material
         };
-        // console.log(partnerInfo.image);
-
 
         res.render('pages/partner/partner', { selectInfo, containerInfo, partnerInfo})
     } catch {
@@ -58,6 +57,12 @@ exports.partnerPage = async (req, res) => {
 
 exports.partnerDetailsPage = async (req, res) => { 
     try {
+        let statusInfo = {userStatus: 'guest'};
+
+        if(req.cookies["token"]) {
+            statusInfo = await checkStatus(req.cookies["token"]);
+        }
+
         let url = `http://localhost:3000/api/partner/${req.params.id}`;
 
         let partnerInfo = await fetch(url);
@@ -66,7 +71,7 @@ exports.partnerDetailsPage = async (req, res) => {
         if (partnerInfo.image != "noImage") {
             partnerInfo.image = JSON.parse(partnerInfo.image);
         }
-        res.render('pages/partner/partnerDetails', {partnerInfo});
+        res.render('pages/partner/partnerDetails', {partnerInfo, statusInfo});
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }

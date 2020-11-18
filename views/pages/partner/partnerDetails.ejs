@@ -44,8 +44,13 @@
                 <% if (partnerInfo.chain != "noChain"){ %><li class="collection-item"><%= partnerInfo.chain %></li>
                 <% } %>
             </ul>
+
+            <% if(statusInfo.userStatus == 'admin' || statusInfo.partnerId == partnerInfo._id) {%>
             <a class="col s3 offset-s2 btn green darken-1 " href="/updatePartner/<%= partnerInfo._id %>">Edit</a>
             <a class="col s3 offset-s2 btn green darken-1 " href="/api/partner/delete/<%= partnerInfo._id %>">Delete</a>
+            <%}%>
+
+
         </div>
     </div>
 </body>
