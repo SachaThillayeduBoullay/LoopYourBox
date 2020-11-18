@@ -6,8 +6,10 @@ const userSchema = mongoose.Schema({
     lastname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    loyaltyPoint: { type: String },
-    avatar: { type: String }
+    loyaltyPoint: { type: Number, default: 0 },
+    credit: { type: Number, default: 0 },
+    avatar: { type: String },
+    status: { type: String, default: 'member', required: true},
 });
 
 userSchema.plugin(uniqueValidator);
