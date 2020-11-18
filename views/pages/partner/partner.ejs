@@ -1,77 +1,134 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Local search app</title>
-    <meta
-      name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
-  </head>
 
-  <body>
-    <a href="/createpartner">Add partner</a>
+<head>
+   <meta charset="utf-8" />
+   <title>Local search app</title>
+   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+   <link href='/css/style.css' rel='stylesheet' />
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
+   <link rel="stylesheet" href="/css/materialize.css">
+   <link rel="stylesheet" href="/css/partner.css">
+</head>
 
-    <div>
-      <form action="/partner" method="GET">
-        <label for="foodType">Type de cuisine</label>
-        <select name="foodType" id="foodType" onchange="this.form.submit();">
-          <option value="all">Tous</option>
-          <% selectInfo.foodType.forEach(option => { if (option==""){option =
-          "Autres" }%>
-          <option value="<%= option %>">
-            <%= option.charAt(0).toUpperCase() + option.slice(1) %>
-          </option>
-          <%})%>
-        </select>
+<body>
+   <!-- NAVBAR -->
 
-        <label for="chain">Chaîne</label>
-        <select name="chain" id="chain" onchange="this.form.submit();">
-          <option value="all">Tous</option>
-          <% selectInfo.chain.forEach(option => { %>
-          <option value="<%= option %>">
-            <%= option.charAt(0).toUpperCase() + option.slice(1) %>
-          </option>
-          <%})%>
-        </select>
+   <%- include('../../layouts/navbar.ejs') -%>
 
-        <label for="postcode">Code postal</label>
-        <select name="postcode" id="postcode" onchange="this.form.submit();">
-          <option value="all">Tous</option>
-          <% selectInfo.postcode.forEach(option => { %>
-          <option value="<%= option %>">
-            <%= option.charAt(0).toUpperCase() + option.slice(1) %>
-          </option>
-          <%})%>
-        </select>
+   <!-- MAIN PAGE -->
 
-        <label for="city">Ville</label>
-        <select name="city" id="city" onchange="this.form.submit();">
-          <option value="all" >Tous</option>
-          <% selectInfo.city.forEach(option => { %>
-          <option value="<%= option %>">
-            <%= option.charAt(0).toUpperCase() + option.slice(1) %>
-          </option>
-          <%})%>
-        </select>
+   <main class="container">
+      <div class="page-title">Welcome, User!</div>
+      <div class="row" id="partnerList">
+         <div id="partner-title">all available partners</div>
+         <% partnerInfo.forEach((partner) => { %>
+         <a href="/partner/<%= partner._id %>">
+            <div class="partner">
+               <div class="partner-img">
+                  <% if (partner.image!="noImage") {%>
+                  <img src="http://localhost:3000/img/partner/<%= partner.image.filename %>" alt="<%= partner.name %>">
+                  <% } %>
+               </div>
+               <div class="partner-info">
+                  <div class="partner-name" id="<%= partner._id %>"><%= partner.name %></div>
+                  <div class="partner-address"><i class="fas fa-map-marker-alt"></i>   <%= partner.address.street %></div>
+               </div>
+            </div>
+         </a>
 
-        <label for="material">Contenant</label>
-        <select name="material" id="material" onchange="this.form.submit();">
-          <option value="all">Tous</option>
-          <% selectInfo.material.forEach(option => { %>
-          <option value="<%= option %>">
-            <%= option.charAt(0).toUpperCase() + option.slice(1) %>
-          </option>
-          <%})%>
-        </select>
-      </form>
-    </div>
+         <% }); %>
+      </div>
 
-    <div class="collection" id="partnerList">
-      <% partnerInfo.forEach((partner) => { %>
-      <a href="/partner/<%= partner._id %>"class="collection-item" id="<%= partner._id %>"><%= partner.name %></a>
-      <% }); %>
-    </div>
-    <script src="/js/select.js"></script>
-  </body>
+      <div id='filter' data-target="filter-form" class="waves-effect waves-light btn modal-trigger">
+         <a><i class="fas fa-filter"></i></a>
+      </div>
+
+      <div class="modal" id="filter-form">
+         <div class="modal-content">
+            <h3>Filter your partner</h3>
+            <form action="/partner" method="GET">
+               <div class="row">
+                  <div class="input-field col s12">
+                     <select name="foodType" id="foodType" onchange="this.form.submit();">
+                        <option value="all">Tous</option>
+                        <% selectInfo.foodType.forEach(option => { if (option==""){option =
+                              "Autres" }%>
+                        <option value="<%= option %>">
+                           <%= option.charAt(0).toUpperCase() + option.slice(1) %>
+                        </option>
+                        <%})%>
+                     </select>
+                     <label for="foodType">Type de cuisine</label>
+                  </div>
+                  <div class="input-field col s12">
+                     <select name="chain" id="chain" onchange="this.form.submit();">
+                        <option value="all">Tous</option>
+                        <% selectInfo.chain.forEach(option => { %>
+                        <option value="<%= option %>">
+                           <%= option.charAt(0).toUpperCase() + option.slice(1) %>
+                        </option>
+                        <%})%>
+                     </select>
+                     <label for="chain">Chaîne</label>
+                  </div>
+                  <div class="input-field col s12">
+   
+                     <select name="postcode" id="postcode" onchange="this.form.submit();">
+                        <option value="all">Tous</option>
+                        <% selectInfo.postcode.forEach(option => { %>
+                        <option value="<%= option %>">
+                           <%= option.charAt(0).toUpperCase() + option.slice(1) %>
+                        </option>
+                        <%})%>
+                     </select>
+                     <label for="postcode">Code postal</label>
+                  </div>
+                  <div class="input-field col s12">
+                     <select name="city" id="city" onchange="this.form.submit();">
+                        <option value="all">Tous</option>
+                        <% selectInfo.city.forEach(option => { %>
+                        <option value="<%= option %>">
+                           <%= option.charAt(0).toUpperCase() + option.slice(1) %>
+                        </option>
+                        <%})%>
+                     </select>
+                     <label for="city">Ville</label>
+                  </div>
+                  <div class="input-field col s12">
+                     <select name="material" id="material" onchange="this.form.submit();">
+                        <option value="all">Tous</option>
+                        <% selectInfo.material.forEach(option => { %>
+                        <option value="<%= option %>">
+                           <%= option.charAt(0).toUpperCase() + option.slice(1) %>
+                        </option>
+                        <%})%>
+                     </select>
+   
+                     <label for="material">Contenant</label>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+         </div>
+      </div>
+
+      <!-- <div class="row">
+         <a class="col s8 offset-s2 waves-effect waves-light green darken-1 btn" href="/createpartner">Add
+            new partner</a>
+      </div> -->
+   </main>
+   
+   <!-- SCRIPTS -->
+   <script src="/js/bin/materialize.js"></script>
+   <script src="/js/bin/materialize-init.js"></script>
+   <script>
+      let partnerInfo = <% - JSON.stringify(partnerInfo) %>
+   </script>
+   <script src="/js/select.js"></script>
+
+</body>
+
 </html>

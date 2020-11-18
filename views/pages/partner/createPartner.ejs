@@ -1,64 +1,115 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8" />
-<title>Use the geocoder without a map</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-
-<link
-rel="stylesheet"
-href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-type="text/css"
-/>
-
+   <meta charset="utf-8" />
+   <title>Use the geocoder without a map</title>
+   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+   <link rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+      type="text/css" />
+   <link rel="stylesheet" href="/css/materialize.css">
+   <link rel="stylesheet" href="/css/partner.css">
 
 </head>
-<body>
-<form action="api/partner" method="POST" enctype="multipart/form-data">
-    <label for="name">Name</label>
-    <input type="text" name="name" class="validate" required>
-    <label for="phoneNumber">phoneNumber</label>
-    <input type="text" name="phoneNumber" class="validate">
-    <label for="website">Website</label>
-    <input type="text" name="website" class="validate">
-    <input type="hidden" name="idUser" value="<%= userId %>" required>
-    <label for="chain">Chain</label>
-    <input type="text" name="chain" class="validate">
-    <p><label for="sport">Food Type</label></p>
-    <select name="foodType">
-        <option value="Autres" selected></option>
-        <option value="vietnamien">Vietnamien</option>
-        <option value="belge">Belge</option>
-        <option value="thailandais">Thaïlandais</option>
-        <option value="italien">Italien</option>
-        <option value="francais">Français</option>
-    </select>
-    <label for="image">Image</label>
-    <input type="file" name="image">
-    
-    <label for="monday">Monday</label>
-    <input type="text" name="schedule.monday" class="validate">
-    <label for="tuesday">Tuesday</label>
-    <input type="text" name="schedule.tuesday" class="validate">
-    <label for="wednesday">Wednesday</label>
-    <input type="text" name="schedule.wednesday" class="validate">
-    <label for="thursday">Thursday</label>
-    <input type="text" name="schedule.thursday" class="validate">
-    <label for="friday">Friday</label>
-    <input type="text" name="schedule.friday" class="validate">
-    <label for="saturday">Saturday</label>
-    <input type="text" name="schedule.saturday" class="validate">
-    <label for="sunday">Sunday</label>
-    <input type="text" name="schedule.sunday" class="validate">
-    <p>Address</p>
-    <div id="geocoder"></div>
-    <input type="hidden" name="address" id="address" required>
-<button class="waves-effect waves-light btn blue-grey darken-3">Create</button>
-</form>
 
-<script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
-<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<script src="/js/geocoder.js"></script>
 <body>
-</body>
+   <div class="container">
+      <div class="row">
+         <h1 class="col s12 page-title">Create new partner</h1>
+      </div>
+      <div class="row">
+         <form class="col s12" action="api/partner" method="POST" enctype="multipart/form-data">
+            <div class="input-field col s12">
+               <input id="name" type="text" name="name" class="validate" required>
+               <label for="name">Name</label>
+            </div>
+            <div class="input-field col s12">
+               <input id="phoneNumber" type="text" name="phoneNumber" class="validate">
+               <label for="phoneNumber">Phone Number</label>
+            </div>
+            <div class="input-field col s12">
+               <input id="website" type="text" name="website" class="validate">
+               <label for="website">Website</label>
+            </div>
+            <div class="input-field col s12">
+               <input type="hidden" name="idUser" value="<%= userId %>" required>
+               <input id="chain" type="text" name="chain" class="validate">
+               <label for="chain">Chain</label>
+            </div>
+            <div class="input-field col s12">
+               <select id="foodType" name="foodType">
+                  <option value="Autres" selected>Autres</option>
+                  <option value="vietnamien">Vietnamien</option>
+                  <option value="belge">Belge</option>
+                  <option value="thailandais">Thaïlandais</option>
+                  <option value="italien">Italien</option>
+                  <option value="francais">Français</option>
+               </select>
+               <label for="foodType">Food Type</label>
+            </div>
+            <div class="input-field file-field col s12">
+               <div class="btn green darken-1">
+                  <span>File</span>
+                  <input name="file" type="file">
+               </div>
+               <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="File to upload">
+               </div>
+            </div>
+
+            <div class="input-field col s12">
+               <label for="monday">Monday</label>
+               <input id="monday" type="text" name="schedule.monday" class="validate">
+            </div>
+            <div class="input-field col s12">
+               <label for="tuesday">Tuesday</label>
+               <input id="tuesday" type="text" name="schedule.tuesday" class="validate">
+            </div>
+
+            <div class="input-field col s12">
+               <label for="wednesday">Wednesday</label>
+               <input id="wednesday" type="text" name="schedule.wednesday" class="validate">
+            </div>
+            <div class="input-field col s12">
+               <label for="thursday">Thursday</label>
+               <input id="thursday" type="text" name="schedule.thursday" class="validate">
+            </div>
+            <div class="input-field col s12">
+               <label for="friday">Friday</label>
+               <input id="friday" type="text" name="schedule.friday" class="validate">
+            </div>
+            <div class="input-field col s12">
+               <label for="saturday">Saturday</label>
+               <input id="saturday" type="text" name="schedule.saturday" class="validate">
+            </div>
+
+            <div class="input-field col s12">
+               <label for="sunday">Sunday</label>
+               <input id="sunday" type="text" name="schedule.sunday" class="validate">
+            </div>
+
+            <div class="input-field col s12">
+               <input type="hidden" name="address" id="address" required>
+               <label for="address">Address</label>
+            </div>
+            <div class="input-field col s12">
+               <div id="geocoder"></div>
+            </div>
+            <button class="col s12  waves-effect waves-light btn green darken-1">Create</button>
+         </form>
+      </div>
+   </div>
+   <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+   <script
+      src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+   <script src="/js/geocoder.js"></script>
+
+   <body>
+   </body>
+
+
+   <script src="/js/bin/materialize.js"></script>
+   <script src="/js/bin/materialize-init.js"></script>
+
 </html>

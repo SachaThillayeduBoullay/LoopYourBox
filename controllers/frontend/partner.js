@@ -22,6 +22,11 @@ exports.partnerPage = async (req, res) => {
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
         
+        partnerInfo.forEach(info => {
+            if(info.image != "noImage") {
+                info.image = JSON.parse(info.image);
+            }
+        })
 
         let foodType = Array.from(new Set(partnerInfoForSelect.map(element => element.foodType))).sort();
         let chain = Array.from(new Set(partnerInfoForSelect.map(element => element.chain))).sort();
@@ -32,7 +37,7 @@ exports.partnerPage = async (req, res) => {
 
         let containerInfo = await fetch(urlContainer);
         containerInfo = await containerInfo.json();
-
+       
         let material = Array.from(new Set(containerInfo.map(element => element.material))).sort();
         
         let selectInfo = {
@@ -42,6 +47,8 @@ exports.partnerPage = async (req, res) => {
             city: city,
             material: material
         };
+        // console.log(partnerInfo.image);
+
 
         res.render('pages/partner/partner', { selectInfo, containerInfo, partnerInfo})
     } catch {

@@ -7,7 +7,7 @@ exports.userPage = async (req, res) => {
         let userInfo = await fetch(url);
         userInfo = await userInfo.json();
 
-        res.render('pages/user/user', {userInfo})
+        res.render('pages/user/login', {userInfo})
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }

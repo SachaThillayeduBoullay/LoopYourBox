@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8" />
-<title>Use the geocoder without a map</title>
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-
-
-
+    <meta charset="utf-8" />
+    <title>Use the geocoder without a map</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="stylesheet" href="/css/register.css" />
 </head>
+
 <body>
-<form action="api/signup" method="POST">
-    <label for="firstname">Prénom</label>
-    <input type="text" name="firstname" class="validate" required>
-    <label for="lastname">Nom</label>
-    <input type="text" name="lastname" class="validate">
-    <label for="email">Email</label>
-    <input type="email" name="email" class="validate">
-    <label for="password">Mot de passe</label>
-    <input type="password" name="password" class="validate">
-    <label for="confirmPassword">Confirmation du mot de passe</label>
-    <input type="password" name="confirmPassword" class="validate">
-    
-<button class="waves-effect waves-light btn blue-grey darken-3">S'inscrire</button>
-</form>
+    <main class="container">
+        <div class="button-back mt-1">
+            <a href=""><i class="fas fa-arrow-circle-left"></i></a>
+        </div>
+        <div class="title">Register</div>
+        <form id="form-register" action="api/signup" method="POST">
+            <label for="firstname">Prénom</label>
+            <input type="text" name="firstname" class="validate" required>
+            <label for="lastname">Nom</label>
+            <input type="text" name="lastname" class="validate">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="validate">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" class="validate">
+            <label for="confirmPassword">Confirmation du mot de passe</label>
+            <input type="password" name="confirmPassword" class="validate">
 
+            <button class="waves-effect waves-light btn blue-grey darken-3">S'inscrire</button>
+        </form>
 
+        <div class="account">
+            Already have an account? <a href="/user">Sign In</a>!
+        </div>
 
+    </main>
+
+    <!-- <script src="/public/js/bin/materialize.js"></script> -->
 </body>
+
 </html>
