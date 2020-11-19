@@ -20,6 +20,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd ~/webapp/LoopYourBox
+            git add *
             git stash
             git pull
             npm install
