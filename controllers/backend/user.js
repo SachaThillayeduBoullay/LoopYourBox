@@ -91,7 +91,7 @@ exports.updateUser = (req, res, next) => {
             //console.log(hash);
             User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id, password: hash})
             .then(() => {
-                res.status(200).redirect('/myprofile');
+                res.status(200).redirect('/myaccount');
             })
             .catch(error => res.status(400).json({ error }));
             }
@@ -101,7 +101,7 @@ exports.updateUser = (req, res, next) => {
 
     User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
     .then(() => {
-        res.status(200).redirect('/myprofile');
+        res.status(200).redirect('/myaccount');
     })
     .catch(error => res.status(400).json({ error }));
 };
