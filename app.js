@@ -22,6 +22,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 
 app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views')
 
 app.use(express.static("./public"));
 
