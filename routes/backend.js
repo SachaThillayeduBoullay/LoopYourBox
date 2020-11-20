@@ -5,6 +5,7 @@ const multer = require('../middleware/multer-config');
 const containerCtrl = require('../controllers/backend/container');
 const userCtrl = require('../controllers/backend/user');
 const historyCtrl = require('../controllers/backend/history');
+const qrcodeCtrl = require('../controllers/backend/qrcode');
 const auth = require("../middleware/auth");
 
 
@@ -39,6 +40,9 @@ router.post('/history', historyCtrl.createHistory);
 /*router.get('/history/:id', historyCtrl.getOneHistory);
 router.put('/history/:id', historyCtrl.updateHistory);
 router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
+
+router.post('/qrcode', qrcodeCtrl.saveQrcode);
+router.get('/qrcode/:reference',  qrcodeCtrl.getOneQrcode);
 
 
 module.exports = router;

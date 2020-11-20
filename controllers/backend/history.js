@@ -1,9 +1,32 @@
 const History = require("../../models/history");
 const joi = require("joi-oid");
+const bcrypt = require('bcrypt');
+const Qrcode = require("../../models/qrcode");
+const jwt = require("jsonwebtoken");
 
 exports.createHistory = (req, res, next) => {
+  const {reference, token} = req.body;
+  const decodedToken = jwt.verify(token, process.env.JWT_PW);
+  const userId = decodedToken.userId;
+  Qrcode.findOne({ reference })
+    .then((qrcode) => {
+      const history = new History({
+        containerId: qrcode.containerId,
+        userId,
+        partnerId: qrcode.partnerId,
+        action: qrcode.action,
+      });
+      history.save()
+      .then(() => res.status(201).json({ validated: true }))
+      .catch(error => res.status(400).json({ error }));
 
-  const schema = joi.object().keys({
+    })
+    .catch((error) => res.status(404).json({ error }));
+  
+
+  
+  
+  /*const schema = joi.object().keys({
     idContainer: joi.objectId().required(),
     idUser: joi.objectId().required(),
     idPartner: joi.objectId().required(),
@@ -22,7 +45,7 @@ exports.createHistory = (req, res, next) => {
   history
     .save()
     .then(() => res.status(201).redirect("/home"))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).json({ error }));*/
 };
 
 exports.getAllHistory = (req, res, next) => {
@@ -98,3 +121,28 @@ exports.deleteHistory = (req, res, next) => {
     .catch((error) => res.status(404).json({ error }));
 };
 */
+
+
+exports.modifyScore =(req, res, next) => {
+	Score.updateOne({ _id: req.params.id }, {
+		...req.body,
+		$push: {result:  [[req.params.k,req.params.i,req.body.results]]}
+	} )
+	.then(() =>
+	Team.updateOne({ _id: req.body.id0}, {
+		point : req.body.point0,
+		victory: req.body.victory0,
+		lost : req.body.lost0
+  } ))
+  
+  .then(() =>
+	Team.updateOne({ _id: req.body.id1}, {
+		point : req.body.point1,
+		victory: req.body.victory1,
+		lost : req.body.lost1
+	} ))
+
+		.then(() => res.status(200).redirect(`/schedule/${req.params.id}`))
+		.catch((error) => res.status(400).json({ error }));
+
+};

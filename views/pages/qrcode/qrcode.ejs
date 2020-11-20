@@ -7,10 +7,20 @@
 <body>
   <div id="loadingMessage">Unable to access video stream</div>
   <canvas id="canvas" hidden></canvas>
-  <div id="output" hidden>
-    <div id="outputMessage">No QR code detected.</div>
-    <div hidden><b>Data:</b> <span id="outputData"></span></div>
-  </div>
+
+  <div id="informations" hidden>
+    <span id="action"></span>
+    <div>
+      <p>Partenaire</p>
+      <span id="partner"></span>
+    </div>
+    <div>
+      <p>Contenant</p>
+      <span id="container"></span>
+    </div>
+    <button onclick="validation()" id="validation">Confirmer</button>
+</div>
+
   <script src="/js/QR.js"></script>
 </body>
 </html>

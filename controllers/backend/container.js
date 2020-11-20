@@ -29,7 +29,7 @@ exports.createContainer = (req, res, next) => {
         ...req.body,
     });
     container.save()
-        .then(() => res.status(201).redirect('/container'))
+        .then(() => res.status(201).redirect('/mycontainer'))
         .catch(error => res.status(400).json({ error }));
 };
 
