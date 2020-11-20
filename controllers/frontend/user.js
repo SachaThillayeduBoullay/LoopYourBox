@@ -7,7 +7,11 @@ exports.userPage = async (req, res) => {
         let userInfo = await fetch(url);
         userInfo = await userInfo.json();
 
+<<<<<<< HEAD
         res.render('pages/user/user', {userInfo})
+=======
+        res.render('pages/user/login', {userInfo})
+>>>>>>> Phuong
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }
@@ -26,7 +30,11 @@ exports.userDetailsPage = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
 exports.createUserPage = (req, res) => { res.render('pages/user/createUser')};
+=======
+exports.createUserPage = (req, res) => { res.render('pages/user/register')};
+>>>>>>> Phuong
 
 exports.updateUserPage = async (req, res) => { 
     try {
@@ -46,4 +54,11 @@ exports.updateUserPage = async (req, res) => {
     } catch {
         res.status(401).json({error: 'Unauthenticated Request'});
     }
+<<<<<<< HEAD
+=======
+};
+
+exports.loginPage = async (req, res) => { 
+        res.render('pages/user/login')
+>>>>>>> Phuong
 };

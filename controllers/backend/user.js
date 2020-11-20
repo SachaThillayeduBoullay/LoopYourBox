@@ -40,7 +40,11 @@ exports.login = (req, res, next) => {
                 {expiresIn: '24h'}
                 );
             res.cookie('token', token);
+<<<<<<< HEAD
             res.status(200).redirect('/my-account');
+=======
+            res.status(200).redirect('/partner');
+>>>>>>> Phuong
         })
         .catch(error => res.status(500).json({error}));
     })
@@ -78,7 +82,11 @@ exports.signup = async (req, res, next) => {
         })
     
     user.save()
+<<<<<<< HEAD
       .then(() => res.status(201).redirect('/signup3/'))
+=======
+      .then(() => res.status(201).redirect('/login'))
+>>>>>>> Phuong
       .catch(error => res.status(400).json({ error }));
     })
     .catch(error => res.status(500).json({ error }));
@@ -91,7 +99,11 @@ exports.updateUser = (req, res, next) => {
             //console.log(hash);
             User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id, password: hash})
             .then(() => {
+<<<<<<< HEAD
                 res.status(200).redirect('/myprofile');
+=======
+                res.status(200).redirect('/myaccount');
+>>>>>>> Phuong
             })
             .catch(error => res.status(400).json({ error }));
             }
@@ -101,7 +113,11 @@ exports.updateUser = (req, res, next) => {
 
     User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id})
     .then(() => {
+<<<<<<< HEAD
         res.status(200).redirect('/myprofile');
+=======
+        res.status(200).redirect('/myaccount');
+>>>>>>> Phuong
     })
     .catch(error => res.status(400).json({ error }));
 };
@@ -155,7 +171,11 @@ exports.lostPwd = (req, res, next) => {
     
 };
 
+<<<<<<< HEAD
 exports.getLogout = (req, res) => {res.clearCookie('token'); res.redirect('/user');};
+=======
+exports.getLogout = (req, res) => {res.clearCookie('token'); res.redirect('/');};
+>>>>>>> Phuong
 
 /*
 exports.signup = (req, res, next) => {
@@ -173,7 +193,11 @@ exports.signup = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
+<<<<<<< HEAD
 */
 
 
 
+=======
+*/
+>>>>>>> Phuong

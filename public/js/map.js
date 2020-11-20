@@ -43,12 +43,11 @@ map = new mapboxgl.Map({
 
 map.addControl(
     new mapboxgl.GeolocateControl({
-    positionOptions: {
-    enableHighAccuracy: true
-    },
-    trackUserLocation: true
+        positionOptions: {enableHighAccuracy: true},
+        trackUserLocation: true,
+        fitBoundsOptions: {maxZoom:12}
     })
-    );
+);
 /*
 new mapboxgl.Marker() // initialize a new marker
   .setLngLat(currentPosition) // Marker [lng, lat] coordinates
@@ -63,7 +62,7 @@ new mapboxgl.Marker() // initialize a new marker
           .addTo(map);*/ // Add the marker to the map
 
  //});
- //console.log(partnerInfo);
+ console.log(partnerInfo);
 let features = partnerInfo.map(element => {
     return  {
         'type': 'Feature',
@@ -78,7 +77,7 @@ let features = partnerInfo.map(element => {
     }
 });
 
-console.log(features)
+//console.log(features)
 
 map.on('load', function () {
     map.addSource('places', {
@@ -135,4 +134,10 @@ map.on('load', function () {
     map.on('mouseleave', 'places', function () {
         map.getCanvas().style.cursor = '';
     });
+
+    /*map.setLayoutProperty(
+        'places',
+        'visibility',
+        'none'
+    );*/
 });

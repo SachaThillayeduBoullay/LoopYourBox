@@ -1,0 +1,54 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+
+.container {
+    font-family: $primary-font;
+    .button-back {
+        font-size: 2rem;
+        a {
+            color: darken($primary-color, 15%);
+        }
+    }
+    .title {
+        font-size: $title-fontSize;
+        text-align: center;
+        color: lighten($base-black, 20%);
+    }
+
+    #form-login {
+        @include flex(column, center, center);
+        margin: 3rem 0;
+
+        input {
+            font-size: $mobile-fontSize;
+            width: 80%;
+            padding: 0.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid darken($base-grey, 25%);
+            border-radius: 5px;
+            &::placeholder {
+                font-style: italic;
+            }
+        }
+
+        button {
+            @extend %button-global;
+            color: #fff;
+            padding: 0.7rem;
+            width: 80%;
+            background: $primary-color;
+            border: none;
+        }
+    }
+    .block {
+        margin: 1rem 0;
+        display: block;
+        text-align: center;
+        color: lighten($base-black, 25%);
+    }
+}
+

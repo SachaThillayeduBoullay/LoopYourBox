@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>User Account</title>
+   <link rel="stylesheet" href="/css/home.css">
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- NARBAR -->
+    <%- include('../../layouts/navbar.ejs') -%>
+    <div class="container">
+        <div class="row">
+            <ul class="collection with-header">
+                <li class="collection-header"><h4><%= userInfo.firstname %> <%= userInfo.lastname %></h4></li>
+                <li class="collection-item"><%= userInfo.status %></li>
+            </ul>
+            <div>
+                <h5>Mon compte</h5>
+            <p><a class="col s4 offset-s1 btn green darken-1" href="/updateUser/<%= userInfo._id %>">Modifier mes informations</a></p>
+            <p><a class="col s4 offset-s2 btn green darken-1" href="/api/user/delete/<%= userInfo._id %>">Supprimer mon compte</a></p>
+            </div>
+            <% if(userInfo.status =="partner") {%>
+            <div>
+                <h5>Partenaire</h5>
+                <a href="/mypartner">Mon partenaire</a>
+            </div>
+            <%}%> 
+
+            <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
+            <div>
+                <h5>Contenants</h5>
+            <p><a href="/mycontainer">Mes contenants</a></p>
+            </div>
+            <%}%>
+
+            <% if(userInfo.status =="admin") {%>
+            <div>
+                            <h5>Dashboard</h5>
+            <p><a href="/dashboard">Dashboard</a></p>
+            </div>
+            <%}%>
+
+            <div>
+                <h5>Déconnexion</h5>
+            <p><a href="/api/logout">Déconnexion</a></p>
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

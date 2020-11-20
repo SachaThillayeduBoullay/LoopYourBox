@@ -2,35 +2,35 @@
 <html>
 
 <head>
-    <meta charset='utf-8' />
-    <title>Local search app</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-    <link href='/css/style.css' rel='stylesheet' />
+   <meta charset='utf-8' />
+   <title>Local search app</title>
+   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+   <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+   <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+   <link rel="stylesheet" href="/css/materialize.css">
 
 
 </head>
 
 <body>
+   <div class="container">
+      <div class="row">
+         <h2 class="col s12">List of containers</h2>
+      </div>
+      <div class="row collection">
+         <% containerInfo.forEach((container) => { %>
+         <a href="/container/<%= container._id %>" class="col s12 collection-item"><%= container.name %></a>
+         <% }); %>
+      </div>
+      <div class="row">
+         <a class="col s12 btn green darken-1" href="/createContainer/">Add container</a>
+      </div>
 
-    <a href="/createcontainer">Add container</a>
-    <div class="collection"></div>
-
-    
-    <% containerInfo.forEach((container) => { %>
-
-    <a href="/container/<%= container._id %>" class="collection-item"><%= container.name %></a>
-
-    <% }); %>
-    </div>
-
-    <div id='map'></div>
-    <script>
-    let containerInfo = <%- JSON.stringify(containerInfo) %>; //Outputs the unescaped value into the template
-    </script>
-    <script src="/js/map.js"></script>
+   </div>
 
 </body>
+
+<script src="/js/bin/materialize.js"></script>
+<script src="/js/bin/materialize-init.js"></script>
 
 </html>

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//const uniqueValidator = require('mongoose-unique-validator');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const partnerSchema = mongoose.Schema({
     name: { type: String, required: true },
@@ -16,11 +16,11 @@ const partnerSchema = mongoose.Schema({
         saturday:{ type: String, default:"none" },
         sunday:{ type: String, default:"none" },
     },
-    foodType: { type: String, default:"noType" },
-    idUser: { type: String, required: true }, //change to ObjectId
+    foodType: { type: String, default:"Autres" },
+    idUser: { type: String, required: true, unique: true }, //change to ObjectId
     chain: { type: String, default:"noChain" }
 });
 
-//partnerSchema.plugin(uniqueValidator);
+partnerSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Partner', partnerSchema);
