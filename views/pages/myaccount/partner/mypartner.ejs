@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>User Account</title>
+   <link rel="stylesheet" href="/css/home.css">
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- NARBAR -->
+    <%- include('../../../layouts/navbar.ejs') -%>
+    <div class="container">
+        <div class="row">
+
+            <div>
+                <h5>Partenaire</h5>
+                <% if (!partnerInfo) {%> 
+                <p><a class="col s8 offset-s2 waves-effect waves-light green darken-1 btn" href="/createpartner">Ajouter</a></p>
+                <%} else {%> 
+                <p><a class="col s3 offset-s2 btn green darken-1 " href="/updatePartner/<%= partnerInfo._id %>">Modifer</a></p>
+                <p><a class="col s3 offset-s2 btn green darken-1 " href="/api/partner/delete/<%= partnerInfo._id %>">Supprimer</a></p>
+                <%}%> 
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>

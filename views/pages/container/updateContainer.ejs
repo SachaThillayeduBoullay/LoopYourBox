@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset="utf-8" />
+   <title>Use the geocoder without a map</title>
+   <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+   <link rel="stylesheet" href="/css/materialize.css">
+
+
+</head>
+
+<body>
+<div class="container">
+   <div class="row">
+      <h2 class="col s12">Update Container</h2>
+   </div>
+   <div class="row">
+      <form action="/api/container/<%= containerInfo._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+         <div class="input-field col s12">
+            <input value="<%= containerInfo.name %>" type="text" name="name" class="validate" required>
+            <label for="name">Name</label>
+         </div>
+         <div class="input-field col s12">
+            <select name="material">
+               <option value="Plastique" <% if(containerInfo.material=="Plastique") {%> selected <%} %>>Plastique</option>
+               <option value="Verre" <% if(containerInfo.material=="Verre") {%> selected <%} %>>Verre</option>
+               <option value="Inox" <% if(containerInfo.material=="Inox") {%> selected <%} %>>Inox</option>
+            </select>
+            <label for="material">Material</label>
+         </div>
+         <div class="input-field col s12">
+            <label for="credit">Credit</label>
+            <input value="<%= containerInfo.credit %>" type="number" name="credit" class="validate">
+         </div>
+         <div class="file-field input-field col s12">
+            <div class="btn green darken-1">
+               <span>Image</span>
+               <input type="file" name="image">
+            </div>
+            <div class="file-path-wrapper">
+               <input class="file-path validate" type="text" value="<%= containerInfo.image.filename %>">
+            </div>
+         </div>
+         <button class="col s12 waves-effect waves-light btn green darken-1">Edit</button>
+      </form>
+   </div>
+</div>
+
+<script src="/js/bin/materialize.js"></script>
+<script src="/js/bin/materialize-init.js"></script>
+
+   <body>
+   </body>
+
+</html>

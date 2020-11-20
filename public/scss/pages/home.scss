@@ -1,0 +1,34 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+.container {
+    .title {
+        font-size: $title-fontSize;
+        color: lighten($base-black, 20%);
+    }
+
+    .carousel-wrapper {
+
+        .carousel {
+            height: 200px;
+        }
+
+        .carousel-title {
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            padding: 1rem 0;
+        }
+
+       
+    }
+    
+    section:last-child {
+        margin-bottom: 60px;
+    }
+}

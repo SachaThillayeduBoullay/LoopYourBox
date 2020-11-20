@@ -1,0 +1,51 @@
+
+// PADDING AND MARGIN CLASSES
+
+
+$spaceamounts: (1,2,3,4,5);
+
+@each $space in $spaceamounts {
+
+    .m-#{$space} {
+        margin: #{$space}rem;
+    }
+    .mx-#{$space} {
+        margin: 0 #{$space}rem ;
+    }
+    .my-#{$space} {
+        margin: #{$space}rem 0;
+    }
+    .mt-#{$space} {
+        margin: #{$space}rem 0 0 0 ;
+    }
+    .mb-#{$space} {
+        margin: 0 0 #{$space}rem 0 ;
+    }
+    .ml-#{$space} {
+        margin: 0 0 0 #{$space}rem;
+    }
+    .mr-#{$space} {
+        margin: 0 #{$space}rem 0 0;
+    }
+    .p-#{$space} {
+      padding: #{$space}rem;
+    }
+    .px-#{$space} {
+      padding: 0 #{$space}rem;
+    }
+    .py-#{$space} {
+      padding: #{$space}rem 0;
+    }
+    .pt-#{$space} {
+      padding: #{$space}rem 0 0 0;
+    }
+    .pb-#{$space} {
+      padding: 0 0 #{$space}rem 0;
+    }
+    .pl-#{$space} {
+      padding: 0 0 0 #{$space}rem;
+    }
+    .pr-#{$space} {
+        padding: 0 #{$space}rem 0 0;
+    }
+};

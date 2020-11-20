@@ -1,0 +1,22 @@
+// ===== FLEX =========
+
+@mixin flex($dir, $x, $y) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: $dir;
+    justify-content: $x;
+    align-items: $y;
+}
+
+// INHERITANCES===========
+
+%button-global {
+    letter-spacing: 2px;
+    font-size: $button-fontSize;
+    padding: 0.5rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    text-transform: uppercase;
+}
+
+
