@@ -18,7 +18,7 @@ exports.saveQrcode = (req, res, next) => {
     const qrcode = new Qrcode({...req.body, reference});
     const {action, partnerId, containerId} = req.body;
 
-    const result = `${reference}##${action}##${partnerId}##${containerId}`;
+    const result = reference;
 
     qrcode.save()
         .then(() => 

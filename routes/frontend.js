@@ -53,8 +53,8 @@ router.get("/point", pointCtrl.pointPage);
 router.get("/map", mapCtrl.mapPage);
 
 router.get("/qrcode", qrCodeCtrl.qrCodePage);
-
 router.get("/qrcodepartner", qrCodeCtrl.qrCodePartnerPage);
+router.get("/confirmation", qrCodeCtrl.confirmationPage);
 
 module.exports = router;
 

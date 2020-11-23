@@ -37,12 +37,12 @@ router.get('/logout', userCtrl.getLogout);
 
 router.get('/history', historyCtrl.getAllHistory);
 router.post('/history', historyCtrl.createHistory);
-/*router.get('/history/:id', historyCtrl.getOneHistory);
-router.put('/history/:id', historyCtrl.updateHistory);
+router.get('/history/:reference', historyCtrl.getOneHistory);
+/*router.put('/history/:id', historyCtrl.updateHistory);
 router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
 
 router.post('/qrcode', qrcodeCtrl.saveQrcode);
-router.get('/qrcode/:reference',  qrcodeCtrl.getOneQrcode);
+router.get('/qrcode/:reference', qrcodeCtrl.getOneQrcode);
 
 
 module.exports = router;

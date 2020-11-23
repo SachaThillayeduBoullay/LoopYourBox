@@ -15,9 +15,14 @@ exports.createHistory = (req, res, next) => {
         userId,
         partnerId: qrcode.partnerId,
         action: qrcode.action,
+        reference: qrcode.reference,
       });
-      history.save()
-      .then(() => res.status(201).json({ validated: true }))
+      history.save().then(()=>{Qrcode.deleteOne({ reference })
+      .then(() => res.status(201).json({ reference }))
+    })
+      
+
+      
       .catch(error => res.status(400).json({ error }));
 
     })
@@ -53,6 +58,13 @@ exports.getAllHistory = (req, res, next) => {
     .then(histories => res.status(200).json(histories))
     .catch(error => res.status(400).json({error}));
 };
+
+exports.getOneHistory = (req, res, next) => {
+  History.findOne({ reference: req.params.reference })
+    .then((history) => res.status(200).json(history))
+    .catch((error) => res.status(404).json({ error }));
+};
+
 /*
 exports.getHistoryFromUserId = (req, res, next) => {
   History.findOne({ idUser: req.params.userId })
@@ -60,11 +72,7 @@ exports.getHistoryFromUserId = (req, res, next) => {
     .catch((error) => res.status(404).json({ error }));
 };
 
-exports.getOneHistory = (req, res, next) => {
-  History.findOne({ _id: req.params.id })
-    .then((history) => res.status(200).json(history))
-    .catch((error) => res.status(404).json({ error }));
-};
+
 
 exports.updateHistory = (req, res, next) => {
 

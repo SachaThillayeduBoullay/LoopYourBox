@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+<div class="content">
+<p>Merci pour <% if (result.action != "réutilisation"){%>ton <%= result.action%><%}else{%>ta <%= result.action%><%}%> de <%= result.containerName%> </p>
+    <p><%= result.date%></p>
+    <p><%= result.partner.name%> - <%= result.partner.city%></p>
+    
+    
+    
+
+    <p>Veuillez présenter cette confirmation au personnel.</p>
+</div>
+<!--<p><%= result.time%></p>-->
+</body>
+</html>
+

@@ -10,9 +10,9 @@
     <form action="api/qrcode" method="POST" >
         
         <select name="action">
-            <option value="get">Emprunt</option>
-            <option value="reuse">Réutilisation</option>
-            <option value="return">Retour</option>
+            <option value="emprunt">Emprunt</option>
+            <option value="réutilisation">Réutilisation</option>
+            <option value="retour">Retour</option>
         </select>
         <select name="containerId">
         <% containerInfo.forEach((container)=>{%>

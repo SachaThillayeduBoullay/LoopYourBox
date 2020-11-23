@@ -61,21 +61,32 @@ async function tick() {
             drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
             drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
     
-            info = code.data.split('##');
+            info = code.data;
             
             try {
-                let urlContainer = `http://localhost:3000/api/container/${info[3]}`;
-                let containerInfo = await fetch(urlContainer);
-                containerInfo = await containerInfo.json();
 
-                let urlPartner = `http://localhost:3000/api/partner/${info[2]}`;
-                let partnerInfo = await fetch(urlPartner);
-                partnerInfo = await partnerInfo.json();
-                
+                let urlQrcode = `http://localhost:3000/api/qrcode/${info}`;
+                let qrcodeInfo = await fetch(urlQrcode);
+                qrcodeInfo = await qrcodeInfo.json();
+
+                if (qrcodeInfo){
+                    let urlContainer = `http://localhost:3000/api/container/${qrcodeInfo.containerId}`;
+                    let containerInfo = await fetch(urlContainer);
+                    containerInfo = await containerInfo.json();
+
+                    let urlPartner = `http://localhost:3000/api/partner/${qrcodeInfo.partnerId}`;
+                    let partnerInfo = await fetch(urlPartner);
+                    partnerInfo = await partnerInfo.json();
+                    
+                    action.innerHTML = qrcodeInfo.action ;
+                    partner.innerHTML = partnerInfo.name ;
+                    container.innerHTML = `${containerInfo.name} ${containerInfo.credit} credits`;
+                }else{
+                    
+                    informations.innerHTML = "Oooops, ce qrcode n'existe pas !!"
+                }
                 informations.hidden = false;
-                action.innerHTML = info[1] ;
-                partner.innerHTML = partnerInfo.name ;
-                container.innerHTML = `${containerInfo.name} ${containerInfo.credit} credits`;
+                canvasElement.hidden = true;
 
             } catch { 
                 console.log('cant fetch Info')
@@ -98,17 +109,18 @@ async function validation() {
             'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({
-          reference: info[0],
+          reference: info,
           token: token,
         })
     };
 
     try {
         let data = await fetch(url, myInit); 
-        const data2 = await data.json();
-        
-        if (data2) {
-            window.location.replace("/partner");
+        data = await data.json();
+
+        //if save in history & and delete qrcode successful
+        if (data) {
+            window.location.replace(`/confirmation?ref=${data.reference}`);
         }
     } catch (e) {
         return e;
