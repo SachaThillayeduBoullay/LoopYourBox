@@ -6,16 +6,17 @@
 @import "../base/global";
 @import "../layouts/navbar";
 
-
-
 body {
-  #canvas {
-     width: 100%;
-     height: 100%;
-  }
+   #canvas-wrapper {
+      width: 100%;
+      #canvas {
+         padding: 2rem;
+         width: 100%;
+      }
+   }
 
-  #navbar {
-     height: 6.8vh;
+   #navbar {
+      height: 6.8vh;
       ul {
          li {
             &:nth-child(3) {
@@ -32,5 +33,5 @@ body {
             }
          }
       }
-  }
+   }
 }

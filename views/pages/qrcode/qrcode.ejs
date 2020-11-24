@@ -2,11 +2,15 @@
 <head>
   <meta charset="utf-8">
   <title>QR code scanner & generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="/js/jsQR.js"></script>
+  <link rel="stylesheet" href="/css/qrcode.css">
 </head>
 <body>
   <div id="loadingMessage">Unable to access video stream</div>
-  <canvas id="canvas" hidden></canvas>
+  <div class="canvas-wrapper">
+    <canvas id="canvas" hidden></canvas>
+  </div>
 
   <div id="informations" hidden>
     <span id="action"></span>
