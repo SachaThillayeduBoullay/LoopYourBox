@@ -2,13 +2,85 @@ const History = require("../../models/history");
 const joi = require("joi-oid");
 const bcrypt = require('bcrypt');
 const Qrcode = require("../../models/qrcode");
+const Container = require("../../models/container");
+const Partner = require("../../models/partner");
+const Point = require("../../models/point")
 const jwt = require("jsonwebtoken");
 
-exports.createHistory = (req, res, next) => {
+exports.createHistory = async (req, res, next) => {
+  
+  try {
+  
   const {reference, token} = req.body;
   const decodedToken = jwt.verify(token, process.env.JWT_PW);
   const userId = decodedToken.userId;
-  Qrcode.findOne({ reference })
+  
+  const qrcode = await Qrcode.findOne({ reference });
+  const container = await Container.findOne({ _id: qrcode.containerId });
+  const userPoint = await Point.findOne({ _id: qrcode.userId });
+
+  //////////////////////
+  //  CA MARCHE PAS  //
+  ////////////////////
+
+  if (qrcode.action == "emprunt"){
+    if (userPoint.credit < container.credit){
+      res.status(201).render('/pages/index.ejs', { error: "Crédit insuffisant" });
+    }
+  }
+
+
+
+  const history = new History({
+    containerId: qrcode.containerId,
+    userId,
+    partnerId: qrcode.partnerId,
+    action: qrcode.action,
+    reference: qrcode.reference,
+  });
+
+  await history.save();
+  //await Qrcode.deleteOne({ reference });
+
+  
+  //const partner = await Partner.findOne({ _id: qrcode.partnerId });
+
+  let deltaCredit = 0;
+  if (qrcode.action == 'retour') {
+    deltaCredit = container.credit;
+  } if (qrcode.action == 'emprunt') {
+    deltaCredit = (container.credit)*(-1);
+  }
+
+  let deltaEnvironmentalImpact = 0;
+  if (qrcode.action == 'réutilisation') {
+    if (container.material == "Plastique"){
+    deltaEnvironmentalImpact = 0.1145;
+    } else if (container.material == "Verre"){
+      deltaEnvironmentalImpact = 0.11925;
+    }else if (container.material == "Inox") {
+      deltaEnvironmentalImpact = 0.1152;
+    }
+  }
+
+
+  let point = {
+    $inc: {credit: deltaCredit},
+    $inc: {environmentalImpact: deltaEnvironmentalImpact}
+  }
+
+  //Point.updateOne({ userId }, point)  
+  try {
+    await Point.findOneAndUpdate({userId}, point, {
+      new: true, useFindAndModify: false
+    });
+
+  } catch {console.log('probleme')}
+
+
+  res.status(201).json({ reference });
+
+  /*Qrcode.findOne({ reference })
     .then((qrcode) => {
       const history = new History({
         containerId: qrcode.containerId,
@@ -16,8 +88,11 @@ exports.createHistory = (req, res, next) => {
         partnerId: qrcode.partnerId,
         action: qrcode.action,
         reference: qrcode.reference,
-      });
-      history.save().then(()=>{Qrcode.deleteOne({ reference })
+      });*/
+      /*Container.findOne({ _id: qrcode.containerId })
+      Partner.findOne({ _id: qrcode.partnerId })*/
+      /*history.save()
+      .then(()=>{Qrcode.deleteOne({ reference })
       .then(() => res.status(201).json({ reference }))
     })
       
@@ -26,7 +101,10 @@ exports.createHistory = (req, res, next) => {
       .catch(error => res.status(400).json({ error }));
 
     })
-    .catch((error) => res.status(404).json({ error }));
+    .catch((error) => res.status(404).json({ error }));*/
+  }catch{
+    res.status(404).json({ error })
+  }
   
 
   
@@ -129,28 +207,3 @@ exports.deleteHistory = (req, res, next) => {
     .catch((error) => res.status(404).json({ error }));
 };
 */
-
-
-exports.modifyScore =(req, res, next) => {
-	Score.updateOne({ _id: req.params.id }, {
-		...req.body,
-		$push: {result:  [[req.params.k,req.params.i,req.body.results]]}
-	} )
-	.then(() =>
-	Team.updateOne({ _id: req.body.id0}, {
-		point : req.body.point0,
-		victory: req.body.victory0,
-		lost : req.body.lost0
-  } ))
-  
-  .then(() =>
-	Team.updateOne({ _id: req.body.id1}, {
-		point : req.body.point1,
-		victory: req.body.victory1,
-		lost : req.body.lost1
-	} ))
-
-		.then(() => res.status(200).redirect(`/schedule/${req.params.id}`))
-		.catch((error) => res.status(400).json({ error }));
-
-};

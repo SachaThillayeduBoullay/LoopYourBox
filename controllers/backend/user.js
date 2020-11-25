@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const joi = require('joi-oid');
 const nodemailer = require('nodemailer');
+const Point = require('../../models/point');
 
 
 exports.getAllUser = (req, res, next) => {
@@ -77,12 +78,21 @@ exports.signup = async (req, res, next) => {
             password: hash
         })
     
+    const point = new Point({
+        userId: user._id
+    });
+    
+    point.save()
     user.save()
-      .then(() => res.status(201).redirect('/login'))
-      .catch(error => res.status(400).json({ error }));
+    
+    .then(()=> res.status(201).redirect('/login'))
+    .catch(error => res.status(400).json({ error:"user" }));
     })
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({ error:"bcrypt" }));
 };
+
+
+
 
 exports.updateUser = (req, res, next) => {
     if (req.body.password) {

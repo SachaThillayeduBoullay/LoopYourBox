@@ -6,6 +6,7 @@ const containerCtrl = require('../controllers/backend/container');
 const userCtrl = require('../controllers/backend/user');
 const historyCtrl = require('../controllers/backend/history');
 const qrcodeCtrl = require('../controllers/backend/qrcode');
+const pointCtrl = require('../controllers/backend/point');
 const auth = require("../middleware/auth");
 
 
@@ -43,6 +44,9 @@ router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
 
 router.post('/qrcode', qrcodeCtrl.saveQrcode);
 router.get('/qrcode/:reference', qrcodeCtrl.getOneQrcode);
+
+router.get('/point/:userId', pointCtrl.getOneUserPoint);
+router.put('/point/:userId', pointCtrl.updateOneUserPoint);
 
 
 module.exports = router;
