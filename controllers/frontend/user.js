@@ -51,3 +51,16 @@ exports.updateUserPage = async (req, res) => {
 exports.loginPage = async (req, res) => { 
         res.render('pages/user/login')
 };
+
+exports.updatePasswordPage = async (req, res) => {
+    try {
+        let url = `http://localhost:3000/api/user/${req.params.id}`;
+
+        let userInfo = await fetch(url);
+        userInfo = await userInfo.json();
+
+        res.render('pages/user/updatePassword', {userInfo})
+    } catch {
+        res.status(401).json({error: 'Unauthenticated Request'});
+    }
+}

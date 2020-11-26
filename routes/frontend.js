@@ -34,6 +34,7 @@ router.get("/user", userCtrl.userPage);
 router.get("/user/:id", userCtrl.userDetailsPage);
 router.get("/register", userCtrl.createUserPage);
 router.get("/updateUser/:id", userCtrl.updateUserPage);
+router.get("/updatePassword/:id", userCtrl.updatePasswordPage);//HERE
 router.get("/login", userCtrl.loginPage);
 
 

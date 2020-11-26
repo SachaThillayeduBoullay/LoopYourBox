@@ -106,6 +106,15 @@ exports.updateUser = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
+exports.updatePassword = (req, res, next) => {
+    if (req.body.password) {
+        bcrypt.hash(req.body.password, 10)
+        .then(hash => {
+            User.updateOne({_id: req.params.id}, {...req.body, _id: req.params.id, password: hash})
+        })
+    }
+}
+
 exports.deleteUser = (req, res, next) => {
     User.deleteOne({_id: req.params.id})
     .then(()=> res.status(200).json({message: 'Your account has been deleted'}))
