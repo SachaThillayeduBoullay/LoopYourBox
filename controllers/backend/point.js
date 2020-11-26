@@ -15,14 +15,13 @@ exports.updateOneUserPoint = (req, res, next) => {
         
         req.body.credit != "" &&  (credit += parseInt(req.body.credit));
         req.body.loyaltyPoint != "" &&  (loyaltyPoint += parseInt(req.body.loyaltyPoint));
-        req.body.environmentalImpact != "" &&  (environmentalImpact += parseInt(req.body.environmentalImpact));
+        req.body.environmentalImpact != "" &&  (environmentalImpact = parseFloat(environmentalImpact) + parseFloat(req.body.environmentalImpact));
 
         Point.updateOne({ userId: req.params.userId },{credit, loyaltyPoint, environmentalImpact})
         .then(() => {
           res.status(200).redirect(`/point`);
         })
         .catch((error) => res.status(404).json({ error }));
-
     })
     
       .catch((error) => res.status(400).json({ error }));

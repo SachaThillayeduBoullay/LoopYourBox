@@ -1,10 +1,12 @@
 const jwt = require('jsonwebtoken');
+const checkStatus = require('../../public/js/checkstatus');
 
 exports.myAccountPage = async (req, res) => { 
     try {
         const token = req.cookies["token"];
         const decodedToken = jwt.verify(token, process.env.JWT_PW);
         const userId = decodedToken.userId;
+    
         let url = `http://localhost:3000/api/user/${userId}`;
 
         myInit = {
@@ -31,9 +33,11 @@ exports.myAccountPage = async (req, res) => {
 exports.myContainerPage = async (req, res) => { 
   try {
       const token = req.cookies["token"];
+      let status = await checkStatus(token);
+      status = status.userStatus;
       const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
       const userId = decodedToken.userId;
-      let url = `http://localhost:3000/api/partner/container/${userId}`;
+      let urlContainer= "";
 
       myInit = {
         headers: {
@@ -41,10 +45,20 @@ exports.myContainerPage = async (req, res) => {
         },
       };
 
-      let partnerInfo = await fetch(url, myInit);
-      partnerInfo = await partnerInfo.json();
+      if (status == "partner") {
 
-      let urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
+        let url = `http://localhost:3000/api/partner/container/${userId}`;
+        
+        let partnerInfo = await fetch(url, myInit);
+        partnerInfo = await partnerInfo.json();
+
+        urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
+
+      } else if( status == "member") {
+        urlContainer = `http://localhost:3000/api/userContainer/${userId}`;
+      }
+
+
       let containerInfo = await fetch(urlContainer, myInit);
       containerInfo = await containerInfo.json();
 

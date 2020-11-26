@@ -6,6 +6,7 @@ const Container = require("../../models/container");
 const Partner = require("../../models/partner");
 const Point = require("../../models/point")
 const jwt = require("jsonwebtoken");
+const UserContainer = require("../../models/userContainer")
 
 exports.createHistory = async (req, res, next) => {
   
@@ -17,19 +18,14 @@ exports.createHistory = async (req, res, next) => {
   
   const qrcode = await Qrcode.findOne({ reference });
   const container = await Container.findOne({ _id: qrcode.containerId });
-  const userPoint = await Point.findOne({ _id: qrcode.userId });
-
-  //////////////////////
-  //  CA MARCHE PAS  //
-  ////////////////////
+  const userPoint = await Point.findOne({ userid: qrcode.userId });
 
   if (qrcode.action == "emprunt"){
     if (userPoint.credit < container.credit){
-      res.status(201).render('/pages/index.ejs', { error: "Crédit insuffisant" });
+      res.status(404).json({ error: "Crédit insuffisant" });
+      return;
     }
   }
-
-
 
   const history = new History({
     containerId: qrcode.containerId,
@@ -40,10 +36,24 @@ exports.createHistory = async (req, res, next) => {
   });
 
   await history.save();
-  //await Qrcode.deleteOne({ reference });
+
+  if(qrcode.action == "emprunt"){
+    const userContainer = new UserContainer({
+      containerId: qrcode.containerId,
+      userId,
+      partnerId: qrcode.partnerId,
+    });
+
+    await userContainer.save()
+  
+  } else if(qrcode.action == "retour"){
+    await UserContainer.deleteOne({userId, containerId: qrcode.containerId});
+  }
+  
+  await Qrcode.deleteOne({ reference }); 
 
   
-  //const partner = await Partner.findOne({ _id: qrcode.partnerId });
+  
 
   let deltaCredit = 0;
   if (qrcode.action == 'retour') {
@@ -80,55 +90,10 @@ exports.createHistory = async (req, res, next) => {
 
   res.status(201).json({ reference });
 
-  /*Qrcode.findOne({ reference })
-    .then((qrcode) => {
-      const history = new History({
-        containerId: qrcode.containerId,
-        userId,
-        partnerId: qrcode.partnerId,
-        action: qrcode.action,
-        reference: qrcode.reference,
-      });*/
-      /*Container.findOne({ _id: qrcode.containerId })
-      Partner.findOne({ _id: qrcode.partnerId })*/
-      /*history.save()
-      .then(()=>{Qrcode.deleteOne({ reference })
-      .then(() => res.status(201).json({ reference }))
-    })
-      
-
-      
-      .catch(error => res.status(400).json({ error }));
-
-    })
-    .catch((error) => res.status(404).json({ error }));*/
   }catch{
-    res.status(404).json({ error })
+    res.status(404).json({ error: "tout est faux" })
   }
   
-
-  
-  
-  /*const schema = joi.object().keys({
-    idContainer: joi.objectId().required(),
-    idUser: joi.objectId().required(),
-    idPartner: joi.objectId().required(),
-    action: joi.string().trim().required(),
-    date: joi.date().required()
-  });
-
-  const result = schema.validate(req.body);
-  if (result.error) {
-    res.status(400).send(result.error.details[0].message);
-    return;
-  }
-
-  const history = new History({...req.body});
-
-  history
-    .save()
-    .then(() => res.status(201).redirect("/home"))
-    .catch((error) => res.status(400).json({ error }));*/
 };
 
 exports.getAllHistory = (req, res, next) => {
@@ -142,68 +107,3 @@ exports.getOneHistory = (req, res, next) => {
     .then((history) => res.status(200).json(history))
     .catch((error) => res.status(404).json({ error }));
 };
-
-/*
-exports.getHistoryFromUserId = (req, res, next) => {
-  History.findOne({ idUser: req.params.userId })
-    .then((container) => res.status(200).json(container))
-    .catch((error) => res.status(404).json({ error }));
-};
-
-
-
-exports.updateHistory = (req, res, next) => {
-
-  const schema = joi.object().keys({
-    name: joi.string().trim().required(),
-    phoneNumber: joi.string().trim().empty(""),
-    address: joi.string().trim().required(),
-    website: joi.string().trim().empty(""),
-    foodType: joi.string().trim(),
-    chain: joi.string().trim().empty(""),
-  });
-
-  const result = schema.validate(req.body, { allowUnknown: true }); //need to change
-  if (result.error) {
-    res.status(400).send(result.error.details[0].message);
-    return;
-  }
-
-  let history = { ...req.body };
-  if (req.file) {
-    fs.unlink(`./public/img/history/${req.body.oldImage}`, () => {});
-    history = {
-      ...req.body,
-      image: JSON.stringify(req.file),
-    };
-  }
-  History.updateOne(
-    { _id: req.params.id },
-    {
-      ...history,
-      _id: req.params.id,
-      address: JSON.parse(req.body.address),
-    }
-  )
-    .then(() => {
-      res.status(200).redirect(`/history/${req.params.id}`);
-    })
-    .catch((error) => res.status(400).json({ error }));
-};
-
-exports.deleteHistory = (req, res, next) => {
-  History.findOne({ _id: req.params.id })
-    .then((history) => {
-      if (history.image != "noImage") {
-        fs.unlink(
-          `./public/img/history/${JSON.parse(history.image).filename}`,
-          () => {}
-        );
-      }
-      History.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).redirect("/history"))
-        .catch((error) => res.status(400).json({ error }));
-    })
-    .catch((error) => res.status(404).json({ error }));
-};
-*/

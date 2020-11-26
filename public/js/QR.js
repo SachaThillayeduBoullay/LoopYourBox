@@ -120,7 +120,11 @@ async function validation() {
 
         //if save in history & and delete qrcode successful
         if (data) {
-            window.location.replace(`/confirmation?ref=${data.reference}`);
+            if (data.hasOwnProperty('error')) {
+                window.location.replace(`/`); //changer url quand pas assez de credit
+            } else {
+                window.location.replace(`/confirmation?ref=${data.reference}`);
+            } 
         }
     } catch (e) {
         return e;

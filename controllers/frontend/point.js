@@ -9,7 +9,7 @@ exports.pointPage = async (req, res) => {
 
         let pointInfo = await fetch(urlPoint);
         pointInfo = await pointInfo.json();
-
+     
         res.render('pages/point/point.ejs', {pointInfo})
     } catch {
         res.status(401).json({error: 'Failed Request'});

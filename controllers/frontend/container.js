@@ -1,5 +1,6 @@
 global.fetch = require("node-fetch");
 const jwt = require('jsonwebtoken');
+const checkStatus = require('../../public/js/checkstatus');
 
 exports.containerPage = async (req, res) => { 
     try {
@@ -16,6 +17,9 @@ exports.containerPage = async (req, res) => {
 
 exports.containerDetailsPage = async (req, res) => { 
     try {
+        const token = req.cookies["token"];
+        let status = await checkStatus(token);
+        status = status.userStatus;
         let url = `http://localhost:3000/api/container/${req.params.id}`;
 
         let containerInfo = await fetch(url);
@@ -24,14 +28,15 @@ exports.containerDetailsPage = async (req, res) => {
         if (containerInfo.image != "noImage") {
             containerInfo.image = JSON.parse(containerInfo.image);
         }
-        res.render('pages/container/containerDetails', {containerInfo});
+        res.render('pages/container/containerDetails', {containerInfo, status});
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }
 };
 
 exports.createContainerPage = async (req, res) => { 
-    const token = req.cookies['token'];
+
+    const token = req.cookies["token"];
     const decodedToken = jwt.verify(token, process.env.JWT_PW);
     const userId = decodedToken.userId;
     try {
