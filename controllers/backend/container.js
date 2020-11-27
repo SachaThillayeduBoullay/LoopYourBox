@@ -1,4 +1,5 @@
 const Container = require('../../models/container');
+const User = require('../../models/user');
 const joi = require('joi-oid');
 const fs = require('fs');
 
@@ -28,8 +29,17 @@ exports.createContainer = (req, res, next) => {
     const container = new Container({
         ...req.body,
     });
+    let redirect ="/mycontainer"
+    User.findOne({_id : req.body.partnerId})
+        .then(user => {
+
+            if (user.status == "admin") {
+                redirect = "/dashboard/container"
+            }
+        })
+    
     container.save()
-        .then(() => res.status(201).redirect('/mycontainer'))
+        .then(() => res.status(201).redirect(redirect))
         .catch(error => res.status(400).json({ error }));
 };
 

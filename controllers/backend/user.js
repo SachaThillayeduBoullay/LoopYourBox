@@ -1,5 +1,8 @@
 const express = require ('express');
 const User = require ('../../models/user');
+const Partner = require ('../../models/partner');
+const Container = require ('../../models/container');
+const UserContainer = require ('../../models/userContainer');
 const bcrypt = require ('bcrypt');
 const jwt = require ('jsonwebtoken');
 const joi = require ('joi-oid');
@@ -12,11 +15,16 @@ exports.getAllUser = (req, res, next) => {
     .catch (error => res.status (400).json ({error}));
 };
 
+
+
 exports.getOneUser = (req, res, next) => {
   User.findOne ({_id: req.params.id})
     .then (user => res.status (200).json (user))
     .catch (error => res.status (404).json ({error}));
 };
+
+
+
 
 exports.login = (req, res, next) => {
   User.findOne ({email: req.body.email})
@@ -40,6 +48,9 @@ exports.login = (req, res, next) => {
     })
     .catch (error => res.status (500).json ({error}));
 };
+
+
+
 
 exports.signup = async (req, res, next) => {
   const schema = joi.object ().keys ({
@@ -90,6 +101,9 @@ exports.signup = async (req, res, next) => {
     .catch (error => res.status (500).json ({error: 'bcrypt'}));
 };
 
+
+
+
 exports.updateUser = (req, res, next) => {
     const schema = joi.object ().keys ({
         firstname: joi.string ().trim ().required (),
@@ -119,6 +133,9 @@ exports.updateUser = (req, res, next) => {
       .catch (error => res.json ({error}));
   }
 
+
+
+
   User.updateOne ({_id: req.params.id}, {...req.body, _id: req.params.id})
     .then (() => {
       res.status (200).redirect ('/myaccount');
@@ -126,13 +143,30 @@ exports.updateUser = (req, res, next) => {
     .catch (error => res.status (400).json ({error}));
 };
 
+
+
+// async puis if partner exist
 exports.deleteUser = (req, res, next) => {
+  UserContainer.deleteMany ({userId: req.params.id})
+  Point.deleteOne ({userId: req.params.id})
+
+  Partner.findOne({idUser: req.params.id})
+  Container.deleteMany ({partnerId: partner._id})
+  Partner.deleteOne ({partnerId: partner._id})
+ 
   User.deleteOne ({_id: req.params.id})
+
+  
+  
+  
     .then (() =>
       res.status (200).json ({message: 'Your account has been deleted'})
     )
     .catch (error => res.status (400).json ({error}));
 };
+
+
+
 
 exports.lostPwd = (req, res, next) => {
   User.findOne ({email: req.body.email})
@@ -172,10 +206,16 @@ exports.lostPwd = (req, res, next) => {
     .catch (error => res.status (404).json ({error}));
 };
 
+
+
+
 exports.getLogout = (req, res) => {
   res.clearCookie ('token');
   res.redirect ('/');
 };
+
+
+
 
 exports.modifyPassword = (req, res, next) => {
 const schema = joi.object ().keys ({
