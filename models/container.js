@@ -7,7 +7,8 @@ const containerSchema = mongoose.Schema({
     credit: { type: Number, required: true },
     partnerId: { type: mongoose.Schema.Types.ObjectId},
     image: { type: String, default:"noImage" },
-    default: {type: Boolean, default: false}
+    default: {type: Boolean, default: false},
+    basedOnDefault: {type: Boolean, default: false}
 });
 
 
