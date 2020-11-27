@@ -6,14 +6,12 @@
 @import "base/global";
 
 body {
-   font-family: $primary-font;
-   background: lighten($base-grey, 17%);
-   
+
    .container {
       position: relative;
       .page-title {
          font-size: $title-fontSize;
-         padding: 2rem 0;
+         padding: 1.5rem 0;
          font-weight: 700;
       }
 

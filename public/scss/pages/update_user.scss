@@ -1,0 +1,22 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+
+body {
+   .container {
+      width: 90%;
+
+      .page-title {
+         font-size: 1.5rem;
+      }
+      
+      button {
+         margin: 1rem 0;
+      }
+   }
+}

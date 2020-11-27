@@ -1,0 +1,62 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+body {
+   .hero-wrapper {
+      position: relative;
+      .partner_name {
+         position: absolute;
+         height: 100%;
+         width: 100%;
+         top: 0;
+         left: 0;
+         padding: 0 0 2rem 0;
+         font-weight: 600;
+         font-size: 1.3rem;
+         text-transform: uppercase;
+         @include flex(row, center, flex-end);
+         color: $secondary-color;
+         background: rgba(0, 0, 0, 0.248);
+      }
+   }
+   .container {
+      color: darken($base-grey, 70%);
+      .partner_info,
+      .partner_openhours {
+         @include flex(column, space-between, flex-start);
+         font-size: $mobile-fontSize;
+         width: 90%;
+         margin: 1rem auto;
+         padding: 1rem 0;
+         background: lighten($base-grey, 20%);
+         border-radius: $card-radius;
+         div {
+            padding: 0.4rem 0;
+            margin-left: 0.5rem;
+         }
+         .heading {
+            align-self: center;
+         }
+      }
+
+      .partner_openhours {
+         .day {
+            margin: 0.2rem auto;
+            width: 90%;
+            @include flex(row, space-between, center);
+         }
+      }
+
+      .admin-button {
+         padding-top: 1rem;
+         a {
+            color: $secondary-color;
+         }
+      }
+   }
+}

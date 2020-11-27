@@ -1,0 +1,84 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+body {
+   .container {
+      width: 80%;
+      color: darken($base-grey, 60%);
+      .user {
+         @include flex(row, flex-start, center);
+         margin: 2rem 0;
+
+         .user_icon {
+            color: lighten($primary-color, 10%);
+            margin: 0 1rem;
+         }
+
+         .user_info {
+            &-name {
+               font-weight: 600;
+               font-size: 1.3rem;
+            }
+         }
+      }
+      .setting-wrapper {
+
+         a {
+            color: darken($base-grey, 60%);
+         }
+
+         .link {
+            @include flex(row, space-between, center);
+         }
+
+         .padding {
+            padding: 0.5rem 0;
+         }
+
+         %heading {
+            font-weight: 600;
+            font-size: 0.9rem;
+         }
+         .user_account {
+            &-heading {
+               @extend %heading;
+            }
+         }
+
+         .partner_account {
+            &-heading {
+               @extend %heading;
+            }
+         }
+
+         .container_account {
+            &-heading {
+               @extend %heading;
+            }
+         }
+
+         .admin_account{
+            &-heading {
+               @extend %heading;
+            }
+         }
+
+         #logout {
+            @extend %button-global;
+            margin-top: 2rem;
+            padding: 0.7rem 1.2rem;
+            background: $primary-color;
+            a {
+               color: $secondary-color;
+            }
+         }
+
+
+      }
+   }
+}

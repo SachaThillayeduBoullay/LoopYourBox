@@ -408,8 +408,15 @@ body {
   font-size: 1.2rem;
 }
 
-#map {
-  height: 100vh;
-  width: 100%;
+body .container {
+  width: 90%;
 }
-/*# sourceMappingURL=map.css.map */
+
+body .container .page-title {
+  font-size: 1.5rem;
+}
+
+body .container button {
+  margin: 1rem 0;
+}
+/*# sourceMappingURL=update_user.css.map */

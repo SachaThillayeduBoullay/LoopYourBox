@@ -5,26 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="/js/jsQR.js"></script>
   <link rel="stylesheet" href="/css/qrcode.css">
+  <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div id="loadingMessage">Unable to access video stream</div>
-  <div class="canvas-wrapper">
-    <canvas id="canvas" hidden></canvas>
+  <!-- NARBAR -->
+  <%- include('../../layouts/navbar.ejs') -%>
+  <!-- MAIN -->
+  <main class="container">
+    <div hidden id="loadingMessage">Unable to access video stream</div>
+    <div class="canvas-wrapper">
+      <div id="scanning-message">Please scan your QR code</div>
+      <canvas id="canvas" hidden></canvas>
+    </div>
+  
+    <div id="informations">
+      <span id="action"></span>
+      <div class="partner-info">
+        <p>Partenaire:</p>
+        <span id="partner"> The Barn Restaunrant</span>
+      </div>
+      <div class="container-info">
+        <p>Contenant:</p>
+        <span id="container"> Green Lunch Box </span>
+      </div>
+      <button onclick="validation()" id="validation">Confirmer</button>
   </div>
-
-  <div id="informations" hidden>
-    <span id="action"></span>
-    <div>
-      <p>Partenaire</p>
-      <span id="partner"></span>
-    </div>
-    <div>
-      <p>Contenant</p>
-      <span id="container"></span>
-    </div>
-    <button onclick="validation()" id="validation">Confirmer</button>
-</div>
-
+  </main>
+  
+  <script src="/js/loading.js"></script>
   <script src="/js/QR.js"></script>
 </body>
 </html>
