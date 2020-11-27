@@ -14,19 +14,17 @@
 <body>
     <div class="container">
         <div class="row">
-            <h2 class="col s12">Update User Information</h2>
+            <h2 class="col s12">Modifier ses informations</h2>
         </div>
         <div class="row">
             <form action="/api/user/<%= userInfo._id %>?_method=PUT" method="POST">
-                <label for="firstname">Firstname</label>
+                <label for="firstname">Prénom</label>
                 <input value="<%= userInfo.firstname %>" type="text" name="firstname" class="validate" required>
-                <label for="lastname">lastname</label>
+                <label for="lastname">Nom</label>
                 <input value="<%= userInfo.lastname %>" type="text" name="lastname" class="validate">
                 <label for="email">Email</label>
                 <input value="<%= userInfo.email %>" type="email" name="email" class="validate">
-                <label for="password">Password</label>
-                <input value="<%= userInfo.password %>" type="password" name="password" class="validate">
-                <button class="col s12 waves-effect waves-light btn green darken-1">Edit</button>
+                <button class="col s12 waves-effect waves-light btn green darken-1">Modifier</button>
             </form>
         </div>
 

@@ -1,12 +1,10 @@
 const Point = require("../../models/point");
 
-
 exports.getOneUserPoint = (req, res, next) => {
     Point.findOne({ userId: req.params.userId })
     .then((point) => res.status(200).json(point))
     .catch((error) => res.status(404).json({ error }));
 };
-
 
 exports.updateOneUserPoint = (req, res, next) => {
     Point.findOne({ userId: req.params.userId })

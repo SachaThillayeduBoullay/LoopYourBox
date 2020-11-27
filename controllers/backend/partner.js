@@ -194,25 +194,3 @@ exports.getAllPartner = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-/*[
-  {
-    '$match': {
-      'material': 'Verre'
-    }
-  }, {
-    '$lookup': {
-      'from': 'partners', 
-      'localField': 'partnerId', 
-      'foreignField': '_id', 
-      'as': 'partnerInfo'
-    }
-  }, {
-    '$unwind': {
-      'path': '$partnerInfo'
-    }
-  }, {
-    '$project': {
-      'partnerId': 0
-    }
-  }
-]*/

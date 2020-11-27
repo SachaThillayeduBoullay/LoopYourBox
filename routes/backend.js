@@ -33,6 +33,7 @@ router.post('/login', userCtrl.login);
 router.get('/user',  userCtrl.getAllUser);
 router.get('/user/:id',  userCtrl.getOneUser);
 router.put('/user/:id', userCtrl.updateUser);
+router.put('/user/password/:id', userCtrl.modifyPassword);
 router.get('/user/delete/:id',  userCtrl.deleteUser);
 router.post('/lostpwd', userCtrl.lostPwd);
 router.get('/logout', userCtrl.getLogout);

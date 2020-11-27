@@ -1,5 +1,4 @@
 const History = require("../../models/history");
-const joi = require("joi-oid");
 const bcrypt = require('bcrypt');
 const Qrcode = require("../../models/qrcode");
 const Container = require("../../models/container");
@@ -78,8 +77,7 @@ exports.createHistory = async (req, res, next) => {
     $inc: {credit: deltaCredit},
     $inc: {environmentalImpact: deltaEnvironmentalImpact}
   }
-
-  //Point.updateOne({ userId }, point)  
+ 
   try {
     await Point.findOneAndUpdate({userId}, point, {
       new: true, useFindAndModify: false

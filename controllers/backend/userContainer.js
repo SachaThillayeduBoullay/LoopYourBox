@@ -8,7 +8,6 @@ exports.getOneUserContainer = (req, res, next) => {
     .catch(error => res.status(404).json({error}));
 };
 
-
 exports.getAllUserContainer = (req, res, next) => {
     UserContainer.aggregate(
     [
@@ -37,7 +36,6 @@ exports.getAllUserContainer = (req, res, next) => {
     ]
     )
 
-    
     .then(container => res.status(200).json(container))
     .catch(error => res.status(404).json({error}));
 };
