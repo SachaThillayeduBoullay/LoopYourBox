@@ -10,7 +10,7 @@ exports.createContainer = (req, res, next) => {
         partnerId: joi.objectId().required()
     });
 
-    const result = schema.validate(req.body, { allowUnknown: true }); //Attentino multer middleware met les images dans partner
+    const result = schema.validate(req.body, { allowUnknown: true });
     if (result.error) {
         if (req.file) {
             fs.unlink(`./public/img/container/${req.file.filename}`, () => {});

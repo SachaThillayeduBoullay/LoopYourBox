@@ -47,10 +47,12 @@
       <div class="modal" id="filter-form">
          <div class="modal-content">
             <h3>Filter your partner</h3>
-            <form action="/partner" method="GET">
+            <form action="/partner" method="GET" id="formFilter">
                <div class="row">
-                  <div class="input-field col s12">
-                     <select name="foodType" id="foodType" onchange="this.form.submit();">
+
+                  <label class="col s12" for="foodType">Type de cuisine</label>
+                  <div class="input-field col s12"> 
+                     <select class="browser-default" name="foodType" id="foodType">
                         <option value="all">Tous</option>
                         <% selectInfo.foodType.forEach(option => { if (option==""){option =
                               "Autres" }%>
@@ -59,10 +61,11 @@
                         </option>
                         <%})%>
                      </select>
-                     <label for="foodType">Type de cuisine</label>
                   </div>
+                  
+                  <label class="col s12" for="chain">Chaîne</label>
                   <div class="input-field col s12">
-                     <select name="chain" id="chain" onchange="this.form.submit();">
+                     <select class="browser-default" name="chain" id="chain">
                         <option value="all">Tous</option>
                         <% selectInfo.chain.forEach(option => { %>
                         <option value="<%= option %>">
@@ -70,11 +73,11 @@
                         </option>
                         <%})%>
                      </select>
-                     <label for="chain">Chaîne</label>
                   </div>
+
+                  <label class="col s12" for="postcode">Code postal</label>
                   <div class="input-field col s12">
-   
-                     <select name="postcode" id="postcode" onchange="this.form.submit();">
+                     <select class="browser-default" name="postcode" id="postcode">
                         <option value="all">Tous</option>
                         <% selectInfo.postcode.forEach(option => { %>
                         <option value="<%= option %>">
@@ -82,10 +85,11 @@
                         </option>
                         <%})%>
                      </select>
-                     <label for="postcode">Code postal</label>
                   </div>
+
+                  <label class="col s12" for="city">Ville</label>
                   <div class="input-field col s12">
-                     <select name="city" id="city" onchange="this.form.submit();">
+                     <select class="browser-default" name="city" id="city">
                         <option value="all">Tous</option>
                         <% selectInfo.city.forEach(option => { %>
                         <option value="<%= option %>">
@@ -93,10 +97,11 @@
                         </option>
                         <%})%>
                      </select>
-                     <label for="city">Ville</label>
                   </div>
+
+                  <label class="col s12" for="material">Contenant</label>
                   <div class="input-field col s12">
-                     <select name="material" id="material" onchange="this.form.submit();">
+                     <select class="browser-default" name="material" id="material">
                         <option value="all">Tous</option>
                         <% selectInfo.material.forEach(option => { %>
                         <option value="<%= option %>">
@@ -104,15 +109,15 @@
                         </option>
                         <%})%>
                      </select>
-   
-                     <label for="material">Contenant</label>
                   </div>
+
+               
+               <a class="col s12 waves-effect waves-light btn" onclick="document.getElementById('formFilter').submit()">Trier</a>
                </div>
             </form>
+            
          </div>
-         <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-         </div>
+         
       </div>
 
       <!-- <div class="row">

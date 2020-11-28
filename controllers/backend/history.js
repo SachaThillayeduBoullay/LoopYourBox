@@ -1,56 +1,97 @@
 const History = require("../../models/history");
-const joi = require("joi-oid");
 const bcrypt = require('bcrypt');
 const Qrcode = require("../../models/qrcode");
+const Container = require("../../models/container");
+const Partner = require("../../models/partner");
+const Point = require("../../models/point")
 const jwt = require("jsonwebtoken");
+const UserContainer = require("../../models/userContainer")
 
-exports.createHistory = (req, res, next) => {
+exports.createHistory = async (req, res, next) => {
+  
+  try {
+  
   const {reference, token} = req.body;
   const decodedToken = jwt.verify(token, process.env.JWT_PW);
   const userId = decodedToken.userId;
-  Qrcode.findOne({ reference })
-    .then((qrcode) => {
-      const history = new History({
-        containerId: qrcode.containerId,
-        userId,
-        partnerId: qrcode.partnerId,
-        action: qrcode.action,
-        reference: qrcode.reference,
-      });
-      history.save().then(()=>{Qrcode.deleteOne({ reference })
-      .then(() => res.status(201).json({ reference }))
-    })
-      
-
-      
-      .catch(error => res.status(400).json({ error }));
-
-    })
-    .catch((error) => res.status(404).json({ error }));
   
+  const qrcode = await Qrcode.findOne({ reference });
+  const container = await Container.findOne({ _id: qrcode.containerId });
+  const userPoint = await Point.findOne({ userid: qrcode.userId });
 
-  
-  
-  /*const schema = joi.object().keys({
-    idContainer: joi.objectId().required(),
-    idUser: joi.objectId().required(),
-    idPartner: joi.objectId().required(),
-    action: joi.string().trim().required(),
-    date: joi.date().required()
-  });
-
-  const result = schema.validate(req.body);
-  if (result.error) {
-    res.status(400).send(result.error.details[0].message);
-    return;
+  if (qrcode.action == "emprunt"){
+    if (userPoint.credit < container.credit){
+      res.status(404).json({ error: "Crédit insuffisant" });
+      return;
+    }
   }
 
-  const history = new History({...req.body});
+  const history = new History({
+    containerId: qrcode.containerId,
+    userId,
+    partnerId: qrcode.partnerId,
+    action: qrcode.action,
+    reference: qrcode.reference,
+  });
 
-  history
-    .save()
-    .then(() => res.status(201).redirect("/home"))
-    .catch((error) => res.status(400).json({ error }));*/
+  await history.save();
+
+  if(qrcode.action == "emprunt"){
+    const userContainer = new UserContainer({
+      containerId: qrcode.containerId,
+      userId,
+      partnerId: qrcode.partnerId,
+    });
+
+    await userContainer.save()
+  
+  } else if(qrcode.action == "retour"){
+    await UserContainer.deleteOne({userId, containerId: qrcode.containerId});
+  }
+  
+  await Qrcode.deleteOne({ reference }); 
+
+  
+  
+
+  let deltaCredit = 0;
+  if (qrcode.action == 'retour') {
+    deltaCredit = container.credit;
+  } if (qrcode.action == 'emprunt') {
+    deltaCredit = (container.credit)*(-1);
+  }
+
+  let deltaEnvironmentalImpact = 0;
+  if (qrcode.action == 'réutilisation') {
+    if (container.material == "Plastique"){
+    deltaEnvironmentalImpact = 0.1145;
+    } else if (container.material == "Verre"){
+      deltaEnvironmentalImpact = 0.11925;
+    }else if (container.material == "Inox") {
+      deltaEnvironmentalImpact = 0.1152;
+    }
+  }
+
+
+  let point = {
+    $inc: {credit: deltaCredit},
+    $inc: {environmentalImpact: deltaEnvironmentalImpact}
+  }
+ 
+  try {
+    await Point.findOneAndUpdate({userId}, point, {
+      new: true, useFindAndModify: false
+    });
+
+  } catch {console.log('probleme')}
+
+
+  res.status(201).json({ reference });
+
+  }catch{
+    res.status(404).json({ error: "tout est faux" })
+  }
+  
 };
 
 exports.getAllHistory = (req, res, next) => {
@@ -63,94 +104,4 @@ exports.getOneHistory = (req, res, next) => {
   History.findOne({ reference: req.params.reference })
     .then((history) => res.status(200).json(history))
     .catch((error) => res.status(404).json({ error }));
-};
-
-/*
-exports.getHistoryFromUserId = (req, res, next) => {
-  History.findOne({ idUser: req.params.userId })
-    .then((container) => res.status(200).json(container))
-    .catch((error) => res.status(404).json({ error }));
-};
-
-
-
-exports.updateHistory = (req, res, next) => {
-
-  const schema = joi.object().keys({
-    name: joi.string().trim().required(),
-    phoneNumber: joi.string().trim().empty(""),
-    address: joi.string().trim().required(),
-    website: joi.string().trim().empty(""),
-    foodType: joi.string().trim(),
-    chain: joi.string().trim().empty(""),
-  });
-
-  const result = schema.validate(req.body, { allowUnknown: true }); //need to change
-  if (result.error) {
-    res.status(400).send(result.error.details[0].message);
-    return;
-  }
-
-  let history = { ...req.body };
-  if (req.file) {
-    fs.unlink(`./public/img/history/${req.body.oldImage}`, () => {});
-    history = {
-      ...req.body,
-      image: JSON.stringify(req.file),
-    };
-  }
-  History.updateOne(
-    { _id: req.params.id },
-    {
-      ...history,
-      _id: req.params.id,
-      address: JSON.parse(req.body.address),
-    }
-  )
-    .then(() => {
-      res.status(200).redirect(`/history/${req.params.id}`);
-    })
-    .catch((error) => res.status(400).json({ error }));
-};
-
-exports.deleteHistory = (req, res, next) => {
-  History.findOne({ _id: req.params.id })
-    .then((history) => {
-      if (history.image != "noImage") {
-        fs.unlink(
-          `./public/img/history/${JSON.parse(history.image).filename}`,
-          () => {}
-        );
-      }
-      History.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).redirect("/history"))
-        .catch((error) => res.status(400).json({ error }));
-    })
-    .catch((error) => res.status(404).json({ error }));
-};
-*/
-
-
-exports.modifyScore =(req, res, next) => {
-	Score.updateOne({ _id: req.params.id }, {
-		...req.body,
-		$push: {result:  [[req.params.k,req.params.i,req.body.results]]}
-	} )
-	.then(() =>
-	Team.updateOne({ _id: req.body.id0}, {
-		point : req.body.point0,
-		victory: req.body.victory0,
-		lost : req.body.lost0
-  } ))
-  
-  .then(() =>
-	Team.updateOne({ _id: req.body.id1}, {
-		point : req.body.point1,
-		victory: req.body.victory1,
-		lost : req.body.lost1
-	} ))
-
-		.then(() => res.status(200).redirect(`/schedule/${req.params.id}`))
-		.catch((error) => res.status(400).json({ error }));
-
 };

@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>User points</title>
-   <link rel="stylesheet" href="/css/point.css">
-   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User points</title>
+    <link rel="stylesheet" href="/css/point.css">
+    <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <!-- NARBAR -->
-  <%- include('../../layouts/navbar.ejs') -%>
-  <!-- MAIN -->
-  <main class="container">
+    <%- include('../../layouts/navbar.ejs') -%>
+    <!-- MAIN -->
+    <main class="container">
 
-  </main>
+        <p>Points de fidélité : <%= pointInfo.loyaltyPoint %> </p>
+        <p>Crédits: <%= pointInfo.credit%></p>
+        <p>Impact environnemental: <%= pointInfo.environmentalImpact.$numberDecimal %></p>
+        <form action="/api/point/<%= pointInfo.userId %>?_method=PUT" method="POST">
+            <label for="credit">Crédit</label>
+            <input type="number" name="credit">
+            <label for="loyaltyPoint">Points de fidélité</label>
+            <input type="number" name="loyaltyPoint">
+            <label for="environmentalImpact">Impact environnemental</label>
+            <input type="number" name="environmentalImpact">
+            <input type="submit" value="Update">
+        </form>
+    </main>
+
 </body>
+
 </html>

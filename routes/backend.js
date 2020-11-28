@@ -6,6 +6,8 @@ const containerCtrl = require('../controllers/backend/container');
 const userCtrl = require('../controllers/backend/user');
 const historyCtrl = require('../controllers/backend/history');
 const qrcodeCtrl = require('../controllers/backend/qrcode');
+const pointCtrl = require('../controllers/backend/point');
+const userContainerCtrl = require('../controllers/backend/userContainer');
 const auth = require("../middleware/auth");
 
 
@@ -31,6 +33,7 @@ router.post('/login', userCtrl.login);
 router.get('/user',  userCtrl.getAllUser);
 router.get('/user/:id',  userCtrl.getOneUser);
 router.put('/user/:id', userCtrl.updateUser);
+router.put('/user/password/:id', userCtrl.modifyPassword);
 router.get('/user/delete/:id',  userCtrl.deleteUser);
 router.post('/lostpwd', userCtrl.lostPwd);
 router.get('/logout', userCtrl.getLogout);
@@ -43,6 +46,15 @@ router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
 
 router.post('/qrcode', qrcodeCtrl.saveQrcode);
 router.get('/qrcode/:reference', qrcodeCtrl.getOneQrcode);
+
+router.get('/point/:userId', pointCtrl.getOneUserPoint);
+router.put('/point/:userId', pointCtrl.updateOneUserPoint);
+
+
+
+router.get('/userContainer/:userId', userContainerCtrl.getAllUserContainer);
+router.get('/userContainer/:containerId/:userId', userContainerCtrl.getOneUserContainer);
+
 
 
 module.exports = router;

@@ -2,18 +2,18 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" href="/css/myaccount.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Account</title>
     <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/myaccount.css">
+    <link rel="stylesheet" href="/css/materialize.css">
     <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
     <!-- NARBAR -->
     <%- include('../../layouts/navbar.ejs') -%>
-
     <main class="container">
 
 
@@ -43,32 +43,61 @@
 
             </div>
 
-            <% if(userInfo.status =="partner") {%>
-            <div class="partner_account">
-                <div class="partner_account-heading padding">Partenaire</div>
-                <div class="link padding">
-                    <a href="/mypartner">Mon partenaire</a> <i class="fas fa-chevron-right"></i>
-                </div>
-            </div>
-            <%}%> 
+            =======
+            <div class="container">
+                <div class="row">
+                    <ul class="collection with-header">
+                        <li class="collection-header">
+                            <h4><%= userInfo.firstname %> <%= userInfo.lastname %></h4>
+                        </li>
+                        <li class="collection-item"><%= userInfo.status %></li>
+                    </ul>
+                    <div>
+                        <h5>Mon compte</h5>
+                        <p><a class="col s12" href="/updateUser/<%= userInfo._id %>">Modifier mes informations</a></p>
+                        <p><a class="col s12" href="/changepassword/<%= userInfo._id %>">Modifier mon mot de passe</a>
+                        </p>
+                        <p><a class="col s12 modal-trigger" href="#modal">Supprimer mon compte</a></p>
+
+                    </div>
+                    <!-- Modal Structure -->
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <h4>Supprimer son compte ? </h4>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="/api/user/delete/<%= userInfo._id %>"
+                                class="modal-close waves-effect waves-green btn-flat">Confirmer</a>
+                            <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
+                        </div>
+                    </div>
+                    >>>>>>> Nath
+                    <% if(userInfo.status =="partner") {%>
+                    <div class="partner_account">
+                        <div class="partner_account-heading padding">Partenaire</div>
+                        <div class="link padding">
+                            <a href="/mypartner">Mon partenaire</a> <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <%}%> 
     
             <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
-            <div class="container_account">
-                <div class="container_account-heading padding">Contenants</div>
-                <div class="link padding">
-                    <a href="/mycontainer">Mes contenants</a> <i class="fas fa-chevron-right"></i>
-                </div>
-            </div>
-            <%}%>
+                    <div class="container_account">
+                        <div class="container_account-heading padding">Contenants</div>
+                        <div class="link padding">
+                            <a href="/mycontainer">Mes contenants</a> <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <%}%>
     
                 <% if(userInfo.status =="admin") {%>
-            <div class="admin_account">
-                <div class="admin_account-heading padding">Dashboard</div>
-                <div class="link padding">
-                    <a href="/dashboard">Dashboard</a> <i class="fas fa-chevron-right"></i>
-                </div>
-            </div>
-            <%}%>
+                    <div class="admin_account">
+                        <div class="admin_account-heading padding">Dashboard</div>
+                        <div class="link padding">
+                            <a href="/dashboard">Dashboard</a> <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                    <%}%>
     
             <div class="padding" id="logout">
                 <a href="/api/logout">Déconnexion</a> 
@@ -76,5 +105,9 @@
         </div>
 
     </main>
+
+    <!-- SCRIPTS -->
+    <script src="/js/bin/materialize.js"></script>
+    <script src="/js/bin/materialize-init.js"></script>
 </body>
 </html>

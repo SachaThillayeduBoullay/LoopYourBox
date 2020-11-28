@@ -1,4 +1,5 @@
 global.fetch = require("node-fetch");
+const jwt = require('jsonwebtoken');
 
 exports.userPage = async (req, res) => { 
     try {
@@ -43,6 +44,30 @@ exports.updateUserPage = async (req, res) => {
         userInfo = await userInfo.json();
 
         res.render('pages/user/updateUser', {userInfo})
+    } catch {
+        res.status(401).json({error: 'Unauthenticated Request'});
+    }
+};
+
+
+exports.changePasswordPage = async (req, res) => { 
+    try {
+        const token = req.cookies['token'];
+        const decodedToken = jwt.verify(token, process.env.JWT_PW);
+        const userId = decodedToken.userId;
+
+        //let url = `http://localhost:3000/api/user/${req.params.id}`;
+
+        /*let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };*/
+
+        //let userInfo = await fetch(url /*, myInit*/);
+        //userInfo = await userInfo.json();
+
+        res.render('pages/user/changepassword', {userId})
     } catch {
         res.status(401).json({error: 'Unauthenticated Request'});
     }
