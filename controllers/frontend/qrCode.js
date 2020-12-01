@@ -1,7 +1,34 @@
 const jwt = require('jsonwebtoken');
+const checkStatus = require('../../public/js/checkstatus');
 
-exports.qrCodePage = (req, res) => { 
-    res.render('pages/qrcode/qrcode');
+exports.qrCodePage = async (req, res) => { 
+    if(req.cookies["token"]) {
+        statusInfo = await checkStatus(req.cookies["token"]);
+    
+        if (statusInfo.userStatus == "partner") {
+            try {
+                const token = req.cookies["token"];
+                const decodedToken = jwt.verify(token, process.env.JWT_PW);
+                const userId = decodedToken.userId;
+        
+                let url = `http://localhost:3000/api/partner/container/${userId}`;
+        
+                let partnerInfo = await fetch(url);
+                partnerInfo = await partnerInfo.json();
+        
+                let urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
+                let containerInfo = await fetch(urlContainer);
+                containerInfo = await containerInfo.json();
+        
+                res.render('pages/qrcode/qrcodegenerator', {partnerId : partnerInfo._id, containerInfo});
+            } catch {
+                res.status(401).json({error: 'Failed Request'});
+            }
+        } else if (statusInfo.userStatus == "member" || statusInfo.userStatus == "admin")
+            res.render('pages/qrcode/qrcode');
+    } else {
+        res.status(401).json({error: 'You need to signup to see this page'});
+    }
 }
 
 exports.confirmationPage = async (req, res) => { 
@@ -49,7 +76,6 @@ exports.confirmationPage = async (req, res) => {
 }
 
 exports.qrCodePartnerPage = async (req, res) => { 
-
     try {
         const token = req.cookies["token"];
         const decodedToken = jwt.verify(token, process.env.JWT_PW);
@@ -68,6 +94,4 @@ exports.qrCodePartnerPage = async (req, res) => {
     } catch {
         res.status(401).json({error: 'Failed Request'});
     }
-
-    
 }

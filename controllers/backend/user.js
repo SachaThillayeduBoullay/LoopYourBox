@@ -1,5 +1,8 @@
 const express = require ('express');
 const User = require ('../../models/user');
+const Partner = require ('../../models/partner');
+const Container = require ('../../models/container');
+const UserContainer = require ('../../models/userContainer');
 const bcrypt = require ('bcrypt');
 const jwt = require ('jsonwebtoken');
 const joi = require ('joi-oid');
@@ -12,11 +15,16 @@ exports.getAllUser = (req, res, next) => {
     .catch (error => res.status (400).json ({error}));
 };
 
+
+
 exports.getOneUser = (req, res, next) => {
   User.findOne ({_id: req.params.id})
     .then (user => res.status (200).json (user))
     .catch (error => res.status (404).json ({error}));
 };
+
+
+
 
 exports.login = (req, res, next) => {
   User.findOne ({email: req.body.email})
@@ -40,6 +48,9 @@ exports.login = (req, res, next) => {
     })
     .catch (error => res.status (500).json ({error}));
 };
+
+
+
 
 exports.signup = async (req, res, next) => {
   const schema = joi.object ().keys ({
@@ -90,6 +101,9 @@ exports.signup = async (req, res, next) => {
     .catch (error => res.status (500).json ({error: 'bcrypt'}));
 };
 
+
+
+
 exports.updateUser = (req, res, next) => {
     const schema = joi.object ().keys ({
         firstname: joi.string ().trim ().required (),
@@ -119,6 +133,9 @@ exports.updateUser = (req, res, next) => {
       .catch (error => res.json ({error}));
   }
 
+
+
+
   User.updateOne ({_id: req.params.id}, {...req.body, _id: req.params.id})
     .then (() => {
       res.status (200).redirect ('/myaccount');
@@ -126,36 +143,52 @@ exports.updateUser = (req, res, next) => {
     .catch (error => res.status (400).json ({error}));
 };
 
-exports.deleteUser = (req, res, next) => {
-  User.deleteOne ({_id: req.params.id})
-    .then (() =>
-      res.status (200).json ({message: 'Your account has been deleted'})
-    )
-    .catch (error => res.status (400).json ({error}));
+
+
+exports.deleteUser = async (req, res, next) => {
+  try {
+  await UserContainer.deleteMany ({userId: req.params.id})
+  await Point.deleteOne ({userId: req.params.id})
+
+  const partner = await Partner.findOne({idUser: req.params.id});
+  await Container.deleteMany ({partnerId: partner._id})
+  await Partner.deleteOne ({_id: partner._id})
+
+  await User.deleteOne ({_id: req.params.id})
+
+  res.status (200).json ({message: 'Your account has been deleted'})
+    
+  } catch {
+    res.status (400).json ({error});
+  }
 };
+
 
 exports.lostPwd = (req, res, next) => {
   User.findOne ({email: req.body.email})
     .then (user => {
       let transporter = nodemailer.createTransport ({
-        host: 'smtp.gmail.com',
+        host: 'felix.o2switch.net',
         port: 465,
         secure: true, // use SSL
         auth: {
-          user: 'loopyourbox@gmail.com',
-          pass: '123Banane!',
+          user: '_mainaccount@heqo8419.odns.fr',
+          pass: process.env.EMAIL_PSWD,
         },
+        tls: {
+          rejectUnauthorized: false
+        }
       });
 
       let mailOptions = {
-        from: 'contact@loopyourbox.com',
+        from: 'noreply@loopyourbox.com',
         to: req.body.email,
         subject: 'Password reset',
         html: `
             <h1>Loop Your Box</h1>
             <p>Please click on the link to change your password: </p>
             <p>
-                <a href="http://localhost:3000/changepwd?id=${user._id}">Change password</a>
+                <a href="http://localhost:3000/passwordrecovery?id=${user._id}">Change password</a>
             </p>
             `,
       };
@@ -164,7 +197,7 @@ exports.lostPwd = (req, res, next) => {
         if (error) {
           console.log (error);
         } else {
-          console.log ('Email sent: ' + info.response);
+          //console.log ('Email sent: ' + info.response);
           res.redirect ('/');
         }
       });
@@ -172,10 +205,16 @@ exports.lostPwd = (req, res, next) => {
     .catch (error => res.status (404).json ({error}));
 };
 
+
+
+
 exports.getLogout = (req, res) => {
   res.clearCookie ('token');
   res.redirect ('/');
 };
+
+
+
 
 exports.modifyPassword = (req, res, next) => {
 const schema = joi.object ().keys ({
@@ -234,3 +273,53 @@ const schema = joi.object ().keys ({
     return res.status (401).json ({error: 'Password doesnt match'});
   }
 };
+
+
+
+
+exports.recoveryPassword = (req, res, next) => {
+  const schema = joi.object ().keys ({
+      password: joi
+          .string ()
+          .pattern (
+          new RegExp (
+              '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+          )
+          )
+          .required (), //1 upper, 1 lower, 1 number, 1 special char, 8 min length
+      confirmPassword: joi
+          .any ()
+          .equal (joi.ref ('password'))
+          .required ()
+          .label ('Confirm password')
+          .messages ({'any.only': '{{#label}} does not match'}),
+      });
+  
+      const result = schema.validate (req.body);
+      if (result.error) {
+      res.status (400).send (result.error.details[0].message);
+      return;
+      }
+  
+    if (req.body.password == req.body.confirmPassword) {
+ 
+      User.findOne ({_id: req.params.id}).then (user => {
+        if (!user) {
+          return res.status (401).json ({error: 'User not found'});
+        }
+  
+        bcrypt.hash (req.body.password, 10)
+        .then (hash => {
+          User.updateOne ({_id: req.params.id}, {password: hash, _id: req.params.id})
+            .then (() => {
+              res.status (200).redirect ('/login');
+            })
+            .catch (error => res.status (400).json ({error}));
+        })
+        .catch (error => res.status (400).json ({error}));
+        });
+    } else {
+      return res.status (401).json ({error: 'Password doesnt match'});
+    }
+  };
+  

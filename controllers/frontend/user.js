@@ -76,3 +76,12 @@ exports.changePasswordPage = async (req, res) => {
 exports.loginPage = async (req, res) => { 
         res.render('pages/user/login')
 };
+
+exports.lostPasswordPage = async (req, res) => { 
+    res.render('pages/user/lostpassword')
+};
+
+exports.passwordRecoveryPage = async (req, res) => { 
+    const userId = req.query.id;
+    res.render('pages/user/passwordrecovery', {userId})
+};

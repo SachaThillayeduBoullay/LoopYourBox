@@ -36,6 +36,8 @@ router.get("/register", userCtrl.createUserPage);
 router.get("/updateUser/:id", userCtrl.updateUserPage);
 router.get("/login", userCtrl.loginPage);
 router.get("/changepassword/:id", userCtrl.changePasswordPage);
+router.get("/lostpassword", userCtrl.lostPasswordPage);
+router.get("/passwordrecovery", userCtrl.passwordRecoveryPage);
 
 
 router.get("/myaccount", myAccountCtrl.myAccountPage);

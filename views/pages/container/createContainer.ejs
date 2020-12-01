@@ -11,22 +11,35 @@
 <body>
    <div class="container">
       <div class="row">
-         <h2 class="col s12">Create new Container</h2>
+         <h2 class="col s12">Créer nouveau contenant</h2>
       </div>
       <div class="row">
-         <form class="col s12" action="api/container" method="POST" enctype="multipart/form-data">
+         <form class="col s12" action="api/container" method="POST" enctype="multipart/form-data">   
+            <% if (userStatus =="admin") { %>
+               <div hidden>
+            <p>
+               <label>
+                 <input type="checkbox" name="default" checked="checked"/>
+                 <span>Défaut</span>
+               </label>
+            </p>
+            <% } %>
+            <label for="defaultContainer">Contenant par défaut</label>
             <div class="input-field col s12">
-               <select id="defaultContainer">
-                  <option value="noDefault">No Default</option>
+               <select id="defaultContainer" class="browser-default">
+                  <option value="noDefault">Pas de contenant par défaut</option>
                   <% containerInfo.forEach(option => { %>
                   <option value="<%= option.name %>"><%= option.name %></option>
                   <%})%>
                </select>
-               <label for="defaultContainer">Default Container</label>
+               
             </div>
+            <% if (userStatus =="admin") { %>
+            </div>
+            <% } %>
             <div class="input-field col s12">
                <input id="name" type="text" name="name" class="validate" required>
-               <label for="name">Name</label>
+               <label id="nameLabel" for="name">Nom</label>
             </div>
             <div class="input-field col s12">
                <select id="material" name="material" required>
@@ -34,25 +47,25 @@
                   <option value="Verre">Verre</option>
                   <option value="Inox">Inox</option>
                </select>
-               <label for="material">Material</label>
+               <label for="material">Materiau</label>
             </div>
             <div class="input-field col s12">
-               <label for="credit">Credit</label>
+               <label id="creditLabel" for="credit">Credit</label>
                <input type="number" name="credit" id="credit" class="validate" required>
             </div>
-            <div class="input-field file-field col s12">
+            <div id="imageLabel" class="input-field file-field col s12">
                <div class="btn green darken-1">
-                  <span>File</span>
-                  <input name="image" type="file">
+                  <span >Fichier</span>
+                  <input id="image" name="image" type="file">
                </div>
                <div class="file-path-wrapper">
-                  <input class="file-path validate" type="text" placeholder="File to upload">
+                  <input  class="file-path validate" type="text" placeholder="Image à upload">
                </div>
             </div>
-
+            <input id="basedOnDefault" type="hidden" name="basedOnDefault" value="false">
             <input type="hidden" name="partnerId" value="<%= partnerId %>">
             <div class="row">
-               <button class="col s12 waves-effect waves-light btn green darken-1">Create</button>
+               <button class="col s12 waves-effect waves-light btn green darken-1">Créer</button>
             </div>
          </form>
       </div>
@@ -63,7 +76,7 @@
    <script src="/js/bin/materialize-init.js"></script>
    <script src="/js/bin/container.js"></script>
 
-   <script> let container = <% - JSON.stringify(containerInfo) %> </script>
+   <script> let container = <%- JSON.stringify(containerInfo) %></script>
    <script src="/js/defaultContainer.js"></script>
 </body>
 
