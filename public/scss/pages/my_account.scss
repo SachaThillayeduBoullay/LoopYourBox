@@ -39,7 +39,7 @@ body {
             padding: 0.5rem 0;
          }
 
-         #modal {
+         #modal, #modal2 {
 
             .modal-footer {
                text-align: center;
@@ -47,6 +47,7 @@ body {
                   margin: 0 0.5rem;
                }
             }
+            
             .danger {
                border-radius: 50px;
                background: red;

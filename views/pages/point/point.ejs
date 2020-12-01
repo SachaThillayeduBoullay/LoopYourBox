@@ -18,7 +18,7 @@
         <p>Points de fidélité : <%= pointInfo.loyaltyPoint %> </p>
         <p>Crédits: <%= pointInfo.credit%></p>
         <p>Impact environnemental: <%= pointInfo.environmentalImpact.$numberDecimal %></p>
-        <form action="/api/point/<%= pointInfo.userId %>?_method=PUT" method="POST">
+        <!-- <form action="/api/point/<%= pointInfo.userId %>?_method=PUT" method="POST">
             <label for="credit">Crédit</label>
             <input type="number" name="credit">
             <label for="loyaltyPoint">Points de fidélité</label>
@@ -26,7 +26,7 @@
             <label for="environmentalImpact">Impact environnemental</label>
             <input type="number" name="environmentalImpact">
             <input type="submit" value="Update">
-        </form>
+        </form> -->
     </main>
 
 </body>

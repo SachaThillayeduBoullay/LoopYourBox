@@ -1,14 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-.container #account-link a {
-  letter-spacing: 2px;
-  font-size: 0.8rem;
-  padding: 0.5rem;
-  text-align: center;
-  border-radius: 0.5rem;
-  text-transform: uppercase;
-  border: none;
-}
-
 .container {
   width: calc(100vw - 10px);
   margin: 0 auto;
@@ -425,99 +415,8 @@ body {
   font-size: 1.2rem;
 }
 
-body .title {
-  font-size: 1.7rem;
-  background: #43a047;
-  padding: 1rem 0;
-  color: #fff;
-  text-transform: uppercase;
-  text-align: center;
-  font-weight: 700;
+body .container .image-wrapper {
+  width: 70%;
+  margin: 35% auto;
 }
-
-.container {
-  margin-bottom: 60px;
-}
-
-.container #user-info {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.container #user-info .name-level, .container #user-info .user-point, .container #user-info .environment {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin: 2rem 0;
-}
-
-.container #user-info .name, .container #user-info .point, .container #user-info .effect {
-  text-transform: uppercase;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.container #user-info .demo-only {
-  width: 10rem;
-  height: 10rem;
-  border-radius: 100%;
-  border: 15px solid #43a047;
-  margin-bottom: 1rem;
-}
-
-.container #account-link {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.container #account-link a {
-  border: 2px solid #43a047;
-  width: 80%;
-  margin: 0.7rem auto;
-  color: #43a047;
-  font-weight: 600;
-}
-
-.container #account-link a:nth-child(4) {
-  color: #fff;
-  background: #43a047;
-}
-/*# sourceMappingURL=profile-user.css.map */
+/*# sourceMappingURL=qrcode_image.css.map */

@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./style.css" rel="stylesheet">
+    <link href="/css/qrcode_image.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
     <title>QR Code</title>
 </head>
+
 <body>
-    <h1>QR Code</h1>
-    <div>
-        <img src="<%= action %>" alt="QR code" />
-    </div>
+    <!-- NARBAR -->
+    <%- include('../../layouts/navbar.ejs') -%>
+    <!-- MAIN -->
+    <main class="container">
+        <h2 class="sub_page-heading">Scan this code</h2>
+        <div class="image-wrapper">
+            <img src="<%= action %>" alt="QR code" />
+        </div>
+    </main>
 </body>
+
 </html>

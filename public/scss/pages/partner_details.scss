@@ -27,6 +27,7 @@ body {
 
    .container {
       color: darken($base-grey, 60%);
+      margin-bottom: 5rem;
       .partner_info,
       .partner_openhours {
          @include flex(column, space-between, flex-start);
@@ -58,7 +59,7 @@ body {
 
       .admin-button {
          text-align: center;
-         margin: 1rem auto 5rem auto;
+         margin: 1rem auto;
          a {
             @extend %button-global;
             color: $secondary-color;
