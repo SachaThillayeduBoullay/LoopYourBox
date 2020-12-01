@@ -62,7 +62,7 @@ exports.createContainerPage = async (req, res) => {
 
         let urlContainer = `http://localhost:3000/api/container/partner/default`;
 
-        let containerInfo = await fetch(urlContainer, myInit);
+        let containerInfo = await fetch(urlContainer);
         containerInfo = await containerInfo.json();
 
 
@@ -78,13 +78,7 @@ exports.updateContainerPage = async (req, res) => {
         //const token = req.cookies['token'];
         let url = `http://localhost:3000/api/container/${req.params.id}`;
 
-        /*let myInit = {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        };*/
-
-        let containerInfo = await fetch(url /*, myInit*/);
+        let containerInfo = await fetch(url);
         containerInfo = await containerInfo.json();
 
         if (containerInfo.image != "noImage") {

@@ -7,7 +7,13 @@ exports.pointPage = async (req, res) => {
         const userId = decodedToken.userId;
         let urlPoint = `http://localhost:3000/api/point/${userId}`;
 
-        let pointInfo = await fetch(urlPoint);
+        let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        let pointInfo = await fetch(urlPoint, myInit);
         pointInfo = await pointInfo.json();
      
         res.render('pages/point/point.ejs', {pointInfo})

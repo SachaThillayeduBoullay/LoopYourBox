@@ -1,24 +1,12 @@
 global.fetch = require("node-fetch");
 const jwt = require('jsonwebtoken');
 
-exports.userPage = async (req, res) => { 
-    try {
-        let url = `http://localhost:3000/api/user/`;
-
-        let userInfo = await fetch(url);
-        userInfo = await userInfo.json();
-
-        res.render('pages/user/login', {userInfo})
-    } catch {
-        res.status(401).json({error: 'Failed Request'});
-    }
-};
 
 exports.userDetailsPage = async (req, res) => { 
     try {
         let url = `http://localhost:3000/api/user/${req.params.id}`;
 
-        let userInfo = await fetch(url);
+        let userInfo = await fetch(url, myInit);
         userInfo = await userInfo.json();
 
         res.render('pages/user/userDetails', {userInfo});
@@ -31,16 +19,16 @@ exports.createUserPage = (req, res) => { res.render('pages/user/register')};
 
 exports.updateUserPage = async (req, res) => { 
     try {
-        //const token = req.cookies['token'];
+        const token = req.cookies['token'];
         let url = `http://localhost:3000/api/user/${req.params.id}`;
 
-        /*let myInit = {
+        let myInit = {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
-        };*/
+        };
 
-        let userInfo = await fetch(url /*, myInit*/);
+        let userInfo = await fetch(url , myInit);
         userInfo = await userInfo.json();
 
         res.render('pages/user/updateUser', {userInfo})

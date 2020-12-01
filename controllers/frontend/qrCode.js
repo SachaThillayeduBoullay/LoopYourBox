@@ -10,10 +10,16 @@ exports.qrCodePage = async (req, res) => {
                 const token = req.cookies["token"];
                 const decodedToken = jwt.verify(token, process.env.JWT_PW);
                 const userId = decodedToken.userId;
-        
+                
+                let myInit = {
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                };
+
                 let url = `http://localhost:3000/api/partner/container/${userId}`;
         
-                let partnerInfo = await fetch(url);
+                let partnerInfo = await fetch(url, myInit);
                 partnerInfo = await partnerInfo.json();
         
                 let urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
@@ -38,11 +44,17 @@ exports.confirmationPage = async (req, res) => {
 
         let url = `http://localhost:3000/api/history/${reference}`;
 
-        let historyInfo = await fetch(url);
+        let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();
 
         let urlPartner = `http://localhost:3000/api/partner/${historyInfo.partnerId}`;
-        let partnerInfo = await fetch(urlPartner);
+        let partnerInfo = await fetch(urlPartner, myInit);
         partnerInfo = await partnerInfo.json();
 
         let urlContainer = `http://localhost:3000/api/container/${historyInfo.containerId}`;
@@ -83,7 +95,13 @@ exports.qrCodePartnerPage = async (req, res) => {
 
         let url = `http://localhost:3000/api/partner/container/${userId}`;
 
-        let partnerInfo = await fetch(url);
+        let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        let partnerInfo = await fetch(url, myInit);
         partnerInfo = await partnerInfo.json();
 
         let urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;

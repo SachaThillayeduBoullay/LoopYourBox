@@ -14,10 +14,10 @@ exports.createHistory = async (req, res, next) => {
   const {reference, token} = req.body;
   const decodedToken = jwt.verify(token, process.env.JWT_PW);
   const userId = decodedToken.userId;
-  
+
   const qrcode = await Qrcode.findOne({ reference });
   const container = await Container.findOne({ _id: qrcode.containerId });
-  const userPoint = await Point.findOne({ userid: qrcode.userId });
+  const userPoint = await Point.findOne({ userId });
 
   if (qrcode.action == "emprunt"){
     if (userPoint.credit < container.credit){
@@ -74,10 +74,9 @@ exports.createHistory = async (req, res, next) => {
 
 
   let point = {
-    $inc: {credit: deltaCredit},
-    $inc: {environmentalImpact: deltaEnvironmentalImpact}
+    $inc: {credit: deltaCredit, environmentalImpact: deltaEnvironmentalImpact},
   }
- 
+
   try {
     await Point.findOneAndUpdate({userId}, point, {
       new: true, useFindAndModify: false

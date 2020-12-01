@@ -10,7 +10,13 @@ exports.userPage = async (req, res) => {
     try {
         let url = `http://localhost:3000/api/user/`;
 
-        let userInfo = await fetch(url);
+        let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        let userInfo = await fetch(url, myInit);
         userInfo = await userInfo.json();
 
         res.render('pages/myaccount/admin/user', {userInfo})
@@ -21,6 +27,13 @@ exports.userPage = async (req, res) => {
 
 exports.partnerPage = async (req, res) => { 
     let url;
+
+    let myInit = {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    };
+
     if (req.query) {
         let urlStringFilter = "?";
         for (let property in req.query) {
@@ -34,10 +47,10 @@ exports.partnerPage = async (req, res) => {
     try {
         let urlSelect = `http://localhost:3000/api/partner`;
 
-        let partnerInfoForSelect = await fetch(urlSelect);
+        let partnerInfoForSelect = await fetch(urlSelect, myInit);
         partnerInfoForSelect = await partnerInfoForSelect.json();
 
-        let partnerInfo = await fetch(url);
+        let partnerInfo = await fetch(url, myInit);
         partnerInfo = await partnerInfo.json();
         
         partnerInfo.forEach(info => {
@@ -53,7 +66,7 @@ exports.partnerPage = async (req, res) => {
 
         let urlContainer = `http://localhost:3000/api/container/`;
 
-        let containerInfo = await fetch(urlContainer);
+        let containerInfo = await fetch(urlContainer, myInit);
         containerInfo = await containerInfo.json();
        
         let material = Array.from(new Set(containerInfo.map(element => element.material))).sort();
@@ -78,7 +91,13 @@ exports.containerPage = async (req, res) => {
     try {
         let url = `http://localhost:3000/api/container/`;
 
-        let containerInfo = await fetch(url);
+        let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        let containerInfo = await fetch(url, myInit);
         containerInfo = await containerInfo.json();
 
         res.render('pages/myaccount/admin/container', {containerInfo})
@@ -91,7 +110,13 @@ exports.historyPage = async (req, res) => {
     try {
         let url = `http://localhost:3000/api/history/`;
 
-        let historyInfo = await fetch(url);
+        let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
+        let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();
 
         res.render('pages/myaccount/admin/history', {historyInfo})

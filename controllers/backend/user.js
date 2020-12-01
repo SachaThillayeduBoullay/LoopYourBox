@@ -11,16 +11,16 @@ const Point = require ('../../models/point');
 
 exports.getAllUser = (req, res, next) => {
   User.find ()
-    .then (things => res.status (200).json (things))
-    .catch (error => res.status (400).json ({error}));
+    .then (things => res.status(200).json(things))
+    .catch (error => res.status(400).json({error}));
 };
 
 
 
 exports.getOneUser = (req, res, next) => {
   User.findOne ({_id: req.params.id})
-    .then (user => res.status (200).json (user))
-    .catch (error => res.status (404).json ({error}));
+    .then (user => res.status(200).json(user))
+    .catch (error => res.status(404).json({error}));
 };
 
 
@@ -30,23 +30,23 @@ exports.login = (req, res, next) => {
   User.findOne ({email: req.body.email})
     .then (user => {
       if (!user) {
-        return res.status (401).json ({error: 'User not found'});
+        return res.status(401).json({error: 'User not found'});
       }
       bcrypt
         .compare (req.body.password, user.password)
         .then (valid => {
           if (!valid) {
-            return res.status (401).json ({error: 'Wrong password'});
+            return res.status(401).json({error: 'Wrong password'});
           }
           const token = jwt.sign ({userId: user._id}, 'RANDOM_TOKEN_SECRET', {
             expiresIn: '24h',
           });
           res.cookie ('token', token);
-          res.status (200).redirect ('/partner');
+          res.status(200).redirect ('/partner');
         })
-        .catch (error => res.status (500).json ({error}));
+        .catch (error => res.status(500).json({error}));
     })
-    .catch (error => res.status (500).json ({error}));
+    .catch (error => res.status(500).json({error}));
 };
 
 
@@ -76,7 +76,7 @@ exports.signup = async (req, res, next) => {
 
   const result = schema.validate (req.body);
   if (result.error) {
-    res.status (400).send (result.error.details[0].message);
+    res.status(400).send (result.error.details[0].message);
     return;
   }
 
@@ -95,10 +95,10 @@ exports.signup = async (req, res, next) => {
       point.save ();
       user
         .save ()
-        .then (() => res.status (201).redirect ('/login'))
-        .catch (error => res.status (400).json ({error: 'user'}));
+        .then (() => res.status(201).redirect ('/login'))
+        .catch (error => res.status(400).json({error: 'user'}));
     })
-    .catch (error => res.status (500).json ({error: 'bcrypt'}));
+    .catch (error => res.status(500).json({error: 'bcrypt'}));
 };
 
 
@@ -113,7 +113,7 @@ exports.updateUser = (req, res, next) => {
     
       const result = schema.validate (req.body);
       if (result.error) {
-        res.status (400).send (result.error.details[0].message);
+        res.status(400).send (result.error.details[0].message);
         return;
     }
 
@@ -126,11 +126,11 @@ exports.updateUser = (req, res, next) => {
           {...req.body, _id: req.params.id, password: hash}
         )
           .then (() => {
-            res.status (200).redirect ('/myaccount');
+            res.status(200).redirect ('/myaccount');
           })
-          .catch (error => res.status (400).json ({error}));
+          .catch (error => res.status(400).json({error}));
       })
-      .catch (error => res.json ({error}));
+      .catch (error => res.json({error}));
   }
 
 
@@ -138,9 +138,9 @@ exports.updateUser = (req, res, next) => {
 
   User.updateOne ({_id: req.params.id}, {...req.body, _id: req.params.id})
     .then (() => {
-      res.status (200).redirect ('/myaccount');
+      res.status(200).redirect ('/myaccount');
     })
-    .catch (error => res.status (400).json ({error}));
+    .catch (error => res.status(400).json({error}));
 };
 
 
@@ -156,10 +156,10 @@ exports.deleteUser = async (req, res, next) => {
 
   await User.deleteOne ({_id: req.params.id})
 
-  res.status (200).json ({message: 'Your account has been deleted'})
+  res.status(200).json({message: 'Your account has been deleted'})
     
   } catch {
-    res.status (400).json ({error});
+    res.status(400).json({error});
   }
 };
 
@@ -202,7 +202,7 @@ exports.lostPwd = (req, res, next) => {
         }
       });
     })
-    .catch (error => res.status (404).json ({error}));
+    .catch (error => res.status(404).json({error}));
 };
 
 
@@ -237,22 +237,22 @@ const schema = joi.object ().keys ({
 
     const result = schema.validate (req.body);
     if (result.error) {
-    res.status (400).send (result.error.details[0].message);
+    res.status(400).send (result.error.details[0].message);
     return;
     }
 
   if (req.body.password == req.body.confirmPassword) {
     if (req.body.password == req.body.oldPassword) {
-      return res.status (401).json ({error: 'Please enter a new password'});
+      return res.status(401).json({error: 'Please enter a new password'});
     }
     User.findOne ({_id: req.params.id}).then (user => {
       if (!user) {
-        return res.status (401).json ({error: 'User not found'});
+        return res.status(401).json({error: 'User not found'});
       }
 
       bcrypt.compare (req.body.oldPassword, user.password).then (valid => {
         if (!valid) {
-          return res.status (401).json ({error: 'Wrong password'});
+          return res.status(401).json({error: 'Wrong password'});
         }
 
         bcrypt.hash (req.body.password, 10)
@@ -262,15 +262,15 @@ const schema = joi.object ().keys ({
             {password: hash, _id: req.params.id}
           )
             .then (() => {
-              res.status (200).redirect ('/myaccount');
+              res.status(200).redirect ('/myaccount');
             })
-            .catch (error => res.status (400).json ({error}));
+            .catch (error => res.status(400).json({error}));
         })
-        .catch (error => res.status (400).json ({error}));
+        .catch (error => res.status(400).json({error}));
       });
     });
   } else {
-    return res.status (401).json ({error: 'Password doesnt match'});
+    return res.status(401).json({error: 'Password doesnt match'});
   }
 };
 
@@ -297,7 +297,7 @@ exports.recoveryPassword = (req, res, next) => {
   
       const result = schema.validate (req.body);
       if (result.error) {
-      res.status (400).send (result.error.details[0].message);
+      res.status(400).send (result.error.details[0].message);
       return;
       }
   
@@ -305,21 +305,21 @@ exports.recoveryPassword = (req, res, next) => {
  
       User.findOne ({_id: req.params.id}).then (user => {
         if (!user) {
-          return res.status (401).json ({error: 'User not found'});
+          return res.status(401).json({error: 'User not found'});
         }
   
         bcrypt.hash (req.body.password, 10)
         .then (hash => {
           User.updateOne ({_id: req.params.id}, {password: hash, _id: req.params.id})
             .then (() => {
-              res.status (200).redirect ('/login');
+              res.status(200).redirect ('/login');
             })
-            .catch (error => res.status (400).json ({error}));
+            .catch (error => res.status(400).json({error}));
         })
-        .catch (error => res.status (400).json ({error}));
+        .catch (error => res.status(400).json({error}));
         });
     } else {
-      return res.status (401).json ({error: 'Password doesnt match'});
+      return res.status(401).json({error: 'Password doesnt match'});
     }
   };
   

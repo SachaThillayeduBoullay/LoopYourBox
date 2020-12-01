@@ -115,9 +115,10 @@ async function validation() {
     };
 
     try {
+        
         let data = await fetch(url, myInit); 
         data = await data.json();
-
+        
         //if save in history & and delete qrcode successful
         if (data) {
             if (data.hasOwnProperty('error')) {

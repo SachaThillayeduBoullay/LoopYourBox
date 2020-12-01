@@ -4,6 +4,7 @@ const checkStatus = require('../../public/js/checkstatus');
 
 exports.partnerPage = async (req, res) => { 
     let url;
+
     if (req.query) {
         let urlStringFilter = "?";
         for (let property in req.query) {
@@ -62,7 +63,7 @@ exports.partnerDetailsPage = async (req, res) => {
         if(req.cookies["token"]) {
             statusInfo = await checkStatus(req.cookies["token"]);
         }
-
+        console.log(statusInfo)
         let url = `http://localhost:3000/api/partner/${req.params.id}`;
 
         let partnerInfo = await fetch(url);
@@ -94,13 +95,7 @@ exports.updatePartnerPage = async (req, res) => {
         const token = req.cookies['token'];
         let url = `http://localhost:3000/api/partner/${req.params.id}`;
 
-        let myInit = {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        };
-
-        let partnerInfo = await fetch(url, myInit);
+        let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
         if (partnerInfo.image != "noImage") {
