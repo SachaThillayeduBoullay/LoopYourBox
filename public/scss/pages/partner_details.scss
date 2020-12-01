@@ -17,15 +17,16 @@ body {
          left: 0;
          padding: 0 0 2rem 0;
          font-weight: 600;
-         font-size: 1.3rem;
+         font-size: 1.5rem;
          text-transform: uppercase;
          @include flex(row, center, flex-end);
          color: $secondary-color;
-         background: rgba(0, 0, 0, 0.248);
+         background: rgba(0, 0, 0, 0.305);
       }
    }
+
    .container {
-      color: darken($base-grey, 70%);
+      color: darken($base-grey, 60%);
       .partner_info,
       .partner_openhours {
          @include flex(column, space-between, flex-start);
@@ -41,6 +42,9 @@ body {
          }
          .heading {
             align-self: center;
+            color: darken($base-grey, 30%);
+            font-size: 1.2rem;
+            @include flex(row, center, center);
          }
       }
 
@@ -53,9 +57,13 @@ body {
       }
 
       .admin-button {
-         padding-top: 1rem;
+         text-align: center;
+         margin: 1rem auto 5rem auto;
          a {
+            @extend %button-global;
             color: $secondary-color;
+            background: $primary-color;
+            width: 7rem;
          }
       }
    }

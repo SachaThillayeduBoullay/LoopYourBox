@@ -27,7 +27,6 @@ body {
          }
       }
       .setting-wrapper {
-
          a {
             color: darken($base-grey, 60%);
          }
@@ -40,32 +39,28 @@ body {
             padding: 0.5rem 0;
          }
 
-         %heading {
+         #modal {
+
+            .modal-footer {
+               text-align: center;
+               a {
+                  margin: 0 0.5rem;
+               }
+            }
+            .danger {
+               border-radius: 50px;
+               background: red;
+               color: $secondary-color;
+            }
+
+         }
+
+         .user_account-heading,
+         .partner_account-heading,
+         .container_account-heading,
+         .admin_account-heading {
             font-weight: 600;
             font-size: 0.9rem;
-         }
-         .user_account {
-            &-heading {
-               @extend %heading;
-            }
-         }
-
-         .partner_account {
-            &-heading {
-               @extend %heading;
-            }
-         }
-
-         .container_account {
-            &-heading {
-               @extend %heading;
-            }
-         }
-
-         .admin_account{
-            &-heading {
-               @extend %heading;
-            }
          }
 
          #logout {
@@ -77,8 +72,6 @@ body {
                color: $secondary-color;
             }
          }
-
-
       }
    }
 }

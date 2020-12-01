@@ -1,14 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-body .container button {
-  letter-spacing: 2px;
-  font-size: 0.8rem;
-  padding: 0.5rem;
-  text-align: center;
-  border-radius: 0.5rem;
-  text-transform: uppercase;
-  border: none;
-}
-
 .container {
   width: calc(100vw - 10px);
   margin: 0 auto;
@@ -427,10 +417,58 @@ body {
 
 body .container {
   width: 90%;
+  padding-bottom: 60px;
 }
 
-body .container button {
-  font-size: 0.9rem;
-  margin: 1rem 0;
+body .container .user-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
-/*# sourceMappingURL=update_user.css.map */
+
+body .container .user-container .item-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 90%;
+  padding: 1.2rem 0.5rem 1.2rem 1rem;
+  border-radius: 5px;
+}
+
+body .container .user-container .item-wrapper a {
+  color: rgba(76, 76, 76, 0.976);
+  font-weight: 500;
+}
+
+body .container .user-container .item-wrapper:nth-child(odd) {
+  background: rgba(254, 254, 254, 0.976);
+}
+
+body .container .btn {
+  margin-top: 1rem;
+  color: #fff;
+}
+/*# sourceMappingURL=my_container.css.map */

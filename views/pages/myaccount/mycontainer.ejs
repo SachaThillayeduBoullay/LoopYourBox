@@ -6,27 +6,33 @@
    <title>Local search app</title>
    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
    <link rel="stylesheet" href="/css/materialize.css">
-
-
+   <link rel="stylesheet" href="/css/my_container.css">
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-        <!-- NARBAR -->
-        <%- include('../../layouts/navbar.ejs') -%>
-   <div class="container">
+   <!-- NARBAR -->
+
+   <%- include('../../layouts/navbar.ejs') -%>
+
+   <!-- MAIN -->
+
+   <main class="container">
       <div class="row">
-         <h2 class="col s12">List of containers</h2>
+         <h2 class="sub_page-heading">List of containers</h2>
       </div>
-      <div class="row collection">
+      <div class="user-container">
          <% containerInfo.forEach((container) => { %>
-         <a href="/container/<%= container._id %>" class="col s12 collection-item"><%= container.name %></a>
+            <div class="item-wrapper">
+               <a href="/container/<%= container._id %>" class="container-item"><%= container.name %></a><i class="fas fa-chevron-right"></i>
+            </div>
          <% }); %>
       </div>
       <div class="row">
-         <a class="col s12 btn green darken-1" href="/createContainer">Add container</a>
+         <a class="col s8 offset-s2 btn green darken-1" href="/createContainer">Add container</a>
       </div>
 
-   </div>
+   </main>
 
 </body>
 

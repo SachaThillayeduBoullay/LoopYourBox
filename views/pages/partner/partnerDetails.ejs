@@ -25,24 +25,26 @@
         <div class="container">
             <div class="partner_info">
                 <div class="heading"><i class="fas fa-info-circle"></i>info</div>
-                <div class="partner_info-tel"><%= partnerInfo.phoneNumber %></div>
-                <div class="partner_info-address"><%= partnerInfo.address.street %></div>
-                <div class="partner_info-location"> 
-                    <span><%= partnerInfo.address.postcode %></span> -
-                    <span><%= partnerInfo.address.city %></span> -
-                    <span><%= partnerInfo.address.country %></span>
+                <div class="info">
+                    <div class="partner_info-address"><%= partnerInfo.address.street %></div>
+                    <div class="partner_info-location"> 
+                        <span><%= partnerInfo.address.postcode %></span> -
+                        <span><%= partnerInfo.address.city %></span> -
+                        <span><%= partnerInfo.address.country %></span>
+                    </div>
+                    <div class="partner_info-tel"><%= partnerInfo.phoneNumber %></div>
+                    <% if (partnerInfo.foodType != "noType"){ %>
+                        <div><%= partnerInfo.foodType %></div>
+                    <% } %>
+                    <% if (partnerInfo.chain != "noChain"){ %>
+                        <div><%= partnerInfo.chain %></div>
+                    <% } %>
+                    <% if (partnerInfo.website != "noWebsite"){ %>
+                    <div class="partner_info-website">
+                        <a href="<%= partnerInfo.website %>">Website</a>
+                    </div>
+                    <% } %>
                 </div>
-                <% if (partnerInfo.foodType != "noType"){ %>
-                    <div><%= partnerInfo.foodType %></div>
-                <% } %>
-                <% if (partnerInfo.chain != "noChain"){ %>
-                    <div><%= partnerInfo.chain %></div>
-                <% } %>
-                <% if (partnerInfo.website != "noWebsite"){ %>
-                <div class="partner_info-website">
-                    <a href="<%= partnerInfo.website %>">Website</a>
-                </div>
-                <% } %>
 
             </div>
             <div class="partner_openhours">
@@ -58,10 +60,9 @@
 
             <!-- =========== -->
             <% if(statusInfo.userStatus == 'admin' || statusInfo.partnerId == partnerInfo._id) {%>
-            <div class="admin-button">
-                <a class="col s3 offset-s2 btn green darken-1 " href="/updatePartner/<%= partnerInfo._id %>">Edit</a>
-                <a class="col s3 offset-s2 btn green darken-1 "
-                    href="/api/partner/delete/<%= partnerInfo._id %>">Delete</a>
+            <div class="admin-button row">
+                <a class="col s4 offset-s1" href="/updatePartner/<%= partnerInfo._id %>">Edit</a>
+                <a class="col s4 offset-s2" href="/api/partner/delete/<%= partnerInfo._id %>">Delete</a>
             </div>
             <%}%>
         </div>
