@@ -18,13 +18,11 @@ module.exports = async (req, res, next) => {
         userInfo = await userInfo.json();
 
         if (!userInfo || userInfo.status != 'admin' ) {
-            throw `Ce membre n'existe pas administrateur`;
+            throw `Vous n'êtes pas administrateur`;
         } else {
             next();
         }
-    } catch {
-        res.status(401).json({
-            error: new Error('Invalid request')
-        });
+    } catch (error) {
+        res.status(401).render('pages/error',{error});
     }
 };

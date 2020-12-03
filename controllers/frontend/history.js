@@ -27,6 +27,6 @@ exports.historyDetailsPage = async (req, res) => {
 
         res.render('pages/myaccount/historydetails', {historyInfo});
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };  

@@ -19,7 +19,7 @@ exports.userDetailsPage = async (req, res) => {
 
         res.render('pages/user/userDetails', {userInfo});
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -41,7 +41,7 @@ exports.updateUserPage = async (req, res) => {
 
         res.render('pages/user/updateUser', {userInfo})
     } catch {
-        res.status(401).json({error: 'Unauthenticated Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -65,7 +65,7 @@ exports.changePasswordPage = async (req, res) => {
 
         res.render('pages/user/changepassword', {userId})
     } catch {
-        res.status(401).json({error: 'Unauthenticated Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 

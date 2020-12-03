@@ -29,11 +29,9 @@ module.exports = async (req, res, next) => {
         if ((userInfo && userInfo._id == partnerInfo.idUser && userInfo.status != 'member') || userInfo.status == 'admin') {
             next();
         } else {
-            throw `Ce membre n'est pas partenaire`;
+            throw `Vous n'êtes pas partenaire`;
         }
-    } catch {
-        res.status(401).json({
-            error: new Error('Invalid request')
-        });
+    } catch (error){
+        res.status(401).render('pages/error',{error})
     }
 };

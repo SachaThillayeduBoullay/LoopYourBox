@@ -52,7 +52,7 @@ exports.partnerPage = async (req, res) => {
 
         res.render('pages/partner/partner', { selectInfo, containerInfo, partnerInfo})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -74,7 +74,7 @@ exports.partnerDetailsPage = async (req, res) => {
         }
         res.render('pages/partner/partnerDetails', {partnerInfo, statusInfo});
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -85,7 +85,7 @@ exports.createPartnerPage = (req, res) => {
         const userId = decodedToken.userId;
         res.render('pages/partner/createPartner', {userId})
     } catch {
-        res.status(401).json({error: 'You cannot access this page'});
+        res.status(401).render('pages/noaccess');
     }
     
 };
@@ -104,6 +104,6 @@ exports.updatePartnerPage = async (req, res) => {
 
         res.render('pages/partner/updatePartner', {partnerInfo})
     } catch {
-        res.status(401).json({error: 'Unauthenticated Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };

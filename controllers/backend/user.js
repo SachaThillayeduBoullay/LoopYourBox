@@ -12,7 +12,7 @@ const Point = require ('../../models/point');
 exports.getAllUser = (req, res, next) => {
   User.find ()
     .then (things => res.status(200).json(things))
-    .catch (error => res.status(400).json({error}));
+    .catch (error => res.status(400).render('pages/error',{ error: `Membres introuvables`}));
 };
 
 
@@ -20,7 +20,7 @@ exports.getAllUser = (req, res, next) => {
 exports.getOneUser = (req, res, next) => {
   User.findOne ({_id: req.params.id})
     .then (user => res.status(200).json(user))
-    .catch (error => res.status(404).json({error}));
+    .catch (error => res.status(404).render('pages/error',{ error: `Membre introuvable`}));
 };
 
 
@@ -30,23 +30,23 @@ exports.login = (req, res, next) => {
   User.findOne ({email: req.body.email})
     .then (user => {
       if (!user) {
-        return res.status(401).json({error: 'User not found'});
+        return res.status(401).render('pages/error',{ error: `Membre introuvable`});
       }
       bcrypt
         .compare (req.body.password, user.password)
         .then (valid => {
           if (!valid) {
-            return res.status(401).json({error: 'Wrong password'});
+            return res.status(401).render('pages/error', {error: 'Email ou mot de passe incorrect'});
           }
-          const token = jwt.sign ({userId: user._id}, 'RANDOM_TOKEN_SECRET', {
+          const token = jwt.sign ({userId: user._id}, process.env.JWT_PW, {
             expiresIn: '24h',
           });
           res.cookie ('token', token);
           res.status(200).redirect ('/partner');
         })
-        .catch (error => res.status(500).json({error}));
+        .catch (error => res.status(500).render('pages/error',{ error: `Cryptage du mot de passe raté`}));
     })
-    .catch (error => res.status(500).json({error}));
+    .catch (error => res.status(500).render('pages/error',{ error: `Membre introuvable`}));
 };
 
 
@@ -76,7 +76,7 @@ exports.signup = async (req, res, next) => {
 
   const result = schema.validate (req.body);
   if (result.error) {
-    res.status(400).send (result.error.details[0].message);
+    res.status(400).render('pages/error',{ error: result.error.details[0].message});
     return;
   }
 
@@ -96,9 +96,9 @@ exports.signup = async (req, res, next) => {
       user
         .save ()
         .then (() => res.status(201).redirect ('/login'))
-        .catch (error => res.status(400).json({error: 'user'}));
+        .catch (() => res.status(400).render('pages/error', { error: `Le membre n'a pas pu être créé`}));
     })
-    .catch (error => res.status(500).json({error: 'bcrypt'}));
+    .catch (() => res.status(500).render('pages/error', { error: `Le membre n'a pas pu être créé`}));
 };
 
 
@@ -113,7 +113,7 @@ exports.updateUser = (req, res, next) => {
     
       const result = schema.validate (req.body);
       if (result.error) {
-        res.status(400).send (result.error.details[0].message);
+        res.status(400).render('pages/error',{ error: result.error.details[0].message});
         return;
     }
 
@@ -128,9 +128,9 @@ exports.updateUser = (req, res, next) => {
           .then (() => {
             res.status(200).redirect ('/myaccount');
           })
-          .catch (error => res.status(400).json({error}));
+          .catch (error => res.status(400).render('pages/error',{ error: `Le membre n'a pas pu être modifié`}));
       })
-      .catch (error => res.json({error}));
+      .catch (error => res.render('pages/error',{ error: `Le mot de passe n'a pas pu être crypté`}));
   }
 
 
@@ -140,7 +140,7 @@ exports.updateUser = (req, res, next) => {
     .then (() => {
       res.status(200).redirect ('/myaccount');
     })
-    .catch (error => res.status(400).json({error}));
+    .catch (error => res.status(400).render('pages/error',{ error: `Membre non modifié`}));
 };
 
 
@@ -159,10 +159,10 @@ exports.deleteUser = async (req, res, next) => {
 
   await User.deleteOne ({_id: req.params.id})
 
-  res.status(200).json({message: 'Your account has been deleted'})
+  res.status(200).render('pages/error',{ error: `Ce compte a été supprimé`})
     
   } catch {
-    res.status(400).json({error: 'ce compte ne peut pas être supprimé'});
+    res.status(400).render('pages/error',{ error: `Ce compte n'a pas pu être supprimé`});
   }
 };
 
@@ -205,7 +205,7 @@ exports.lostPwd = (req, res, next) => {
         }
       });
     })
-    .catch (error => res.status(404).json({error}));
+    .catch (error => res.status(404).render('pages/error',{ error: `Membre introuvable`}));
 };
 
 
@@ -248,22 +248,22 @@ const schema = joi.object ().keys ({
 
     const result = schema.validate (req.body);
     if (result.error) {
-    res.status(400).send (result.error.details[0].message);
+    res.status(400).render('pages/error',{ error: result.error.details[0].message});
     return;
     }
 
   if (req.body.password == req.body.confirmPassword) {
     if (req.body.password == req.body.oldPassword) {
-      return res.status(401).json({error: 'Please enter a new password'});
+      return res.status(401).render('pages/error',{ error: `Veuillez entrer un nouveau mot de passe`});
     }
     User.findOne ({_id: req.params.id}).then (user => {
       if (!user) {
-        return res.status(401).json({error: 'User not found'});
+        return res.status(401).render('pages/error',{ error: `Membre introuvable`});
       }
 
       bcrypt.compare (req.body.oldPassword, user.password).then (valid => {
         if (!valid) {
-          return res.status(401).json({error: 'Wrong password'});
+          return res.status(401).render('pages/error',{ error: `Mauvais mot de passe`});
         }
 
         bcrypt.hash (req.body.password, 10)
@@ -275,13 +275,13 @@ const schema = joi.object ().keys ({
             .then (() => {
               res.status(200).redirect ('/myaccount');
             })
-            .catch (error => res.status(400).json({error}));
+            .catch (error => res.status(400).render('pages/error',{ error: `Membre non modifié`}));
         })
-        .catch (error => res.status(400).json({error}));
+        .catch (error => res.status(400).render('pages/error',{ error: `Le mot de passe n'a pas pu être crypté`}));
       });
     });
   } else {
-    return res.status(401).json({error: 'Password doesnt match'});
+    return res.status(401).render('pages/error',{ error: `Les mots de passe ne correspondent pas`});
   }
 };
 
@@ -308,7 +308,7 @@ exports.recoveryPassword = (req, res, next) => {
   
       const result = schema.validate (req.body);
       if (result.error) {
-      res.status(400).send (result.error.details[0].message);
+      res.status(400).render('pages/error',{ error: result.error.details[0].message});
       return;
       }
   
@@ -316,7 +316,7 @@ exports.recoveryPassword = (req, res, next) => {
  
       User.findOne ({_id: req.params.id}).then (user => {
         if (!user) {
-          return res.status(401).json({error: 'User not found'});
+          return res.status(401).render('pages/error',{ error: `Membre introuvable`});
         }
   
         bcrypt.hash (req.body.password, 10)
@@ -325,12 +325,12 @@ exports.recoveryPassword = (req, res, next) => {
             .then (() => {
               res.status(200).redirect ('/login');
             })
-            .catch (error => res.status(400).json({error}));
+            .catch (error => res.status(400).render('pages/error',{ error: `Membre non modifié`}));
         })
-        .catch (error => res.status(400).json({error}));
+        .catch (error => res.status(400).render('pages/error',{ error: `Le mot de passe n'a pas pu être crypté`}));
         });
     } else {
-      return res.status(401).json({error: 'Password doesnt match'});
+      return res.status(401).render('pages/error',{ error: `Les mots de passe ne correspondent pas`});
     }
   };
   

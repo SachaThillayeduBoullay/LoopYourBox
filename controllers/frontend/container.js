@@ -11,7 +11,7 @@ exports.containerPage = async (req, res) => {
 
         res.render('pages/container/container', {containerInfo})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -30,7 +30,7 @@ exports.containerDetailsPage = async (req, res) => {
         }
         res.render('pages/container/containerDetails', {containerInfo, status});
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -69,7 +69,7 @@ exports.createContainerPage = async (req, res) => {
 
         res.render('pages/container/createContainer', {partnerId, containerInfo, userStatus: userInfo.status})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -87,6 +87,6 @@ exports.updateContainerPage = async (req, res) => {
 
         res.render('pages/container/updateContainer', {containerInfo})
     } catch {
-        res.status(401).json({error: 'Unauthenticated Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };

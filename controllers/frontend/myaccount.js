@@ -26,7 +26,7 @@ exports.myAccountPage = async (req, res) => {
         res.render('pages/myaccount/myaccount', {userInfo, partnerInfo});
 
     } catch {
-    res.status(401).json({ error: "Unauthenticated Request" });
+    res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 }
 
@@ -35,7 +35,7 @@ exports.myContainerPage = async (req, res) => {
       const token = req.cookies["token"];
       let status = await checkStatus(token);
       status = status.userStatus;
-      const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+      const decodedToken = jwt.verify(token, process.env.JWT_PW);
       const userId = decodedToken.userId;
       let urlContainer= "";
 
@@ -64,7 +64,7 @@ exports.myContainerPage = async (req, res) => {
       res.render('pages/myaccount/mycontainer', {containerInfo});
 
   } catch {
-  res.status(401).json({ error: "Unauthenticated Request" });
+  res.status(401).render('pages/error',{ error: `Requête invalide`});
   }
 }
 
@@ -76,7 +76,7 @@ exports.myHistoryPage = async (req, res) => {
       const token = req.cookies["token"];
       let status = await checkStatus(token);
       status = status.userStatus;
-      const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
+      const decodedToken = jwt.verify(token, process.env.JWT_PW);
       const userId = decodedToken.userId;
 
       myInit = {
@@ -114,6 +114,6 @@ exports.myHistoryPage = async (req, res) => {
       res.render('pages/myaccount/myhistory', {historyInfo});
 
   } catch {
-  res.status(401).json({ error: "Unauthenticated Request" });
+  res.status(401).render('pages/error',{ error: `Requête invalide`});
   }
 }

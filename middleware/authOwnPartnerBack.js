@@ -16,16 +16,14 @@ module.exports = async (req, res, next) => {
       const partner = await Partner.findOne({ _id: req.params.id })
         if(partner.idUser != userId) {  
 
-          res.status(401).json({ error: `T'as pas le droit`});
+          res.status(401).json({ error: `Vous n'avez pas accès à cette page`});
         } else {
           next();
         }
     } else {
       next();
     }
-  } catch {
-    res.status(401).json({
-      error: new Error('Unauthorized request')
-    });
+  } catch (error) {
+    res.status(401).render('pages/error',{error})
   }
 };

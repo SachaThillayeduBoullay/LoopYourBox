@@ -23,7 +23,7 @@ exports.createHistory = async (req, res, next) => {
 
   if (qrcode.action == "emprunt"){
     if (userPoint.credit < container.credit){
-      res.status(404).json({ error: "Crédit insuffisant" });
+      res.status(404).render('pages/error',{ error: "Crédit insuffisant" });
       return;
     }
   }
@@ -84,13 +84,13 @@ exports.createHistory = async (req, res, next) => {
       new: true, useFindAndModify: false
     });
 
-  } catch {console.log('probleme')}
+  } catch {res.status(400).render('pages/error',{ error: "Les crédits n'ont pas été modifiés"} )}
 
 
   res.status(201).json({ reference });
 
   }catch{
-    res.status(404).json({ error: "tout est faux" })
+    res.status(404).render('pages/error',{ error: "L'historique n'as pas pu être créé"} )
   }
   
 };
@@ -98,7 +98,7 @@ exports.createHistory = async (req, res, next) => {
 exports.getAllHistory = (req, res, next) => {
     History.find()
     .then(histories => res.status(200).json(histories))
-    .catch(error => res.status(400).json({error}));
+    .catch(error => res.status(400).render('pages/error',{ error: "Historique introuvable"} ));
 };
 
 exports.getOneHistory = (req, res, next) => {
@@ -165,7 +165,7 @@ exports.getOneHistory = (req, res, next) => {
       throw new Error("Vous n'avez pas accès à cette page")
     }
   })
-  .catch((error) => res.status(404).json({ error }));
+  .catch((error) => res.status(400).render('pages/noaccess',{ error: `Vous n'avez pas accès à cette page`} ));
 };
 
 exports.getAllHistoryForOneUser = async (req, res, next) => {
@@ -184,10 +184,10 @@ exports.getAllHistoryForOneUser = async (req, res, next) => {
   
       History.find(filter)
       .then(histories => res.status(200).json(histories))
-      .catch(error => res.status(400).json({error}));
+      .catch(error => res.status(400).render('pages/error',{ error: "Historique introuvable"} ));
     }
 
   } catch {
-    res.status(400).json({error: "Vous n'avez pas accès à cette page"});
+    res.status(400).render('pages/noaccess',{ error: `Vous n'avez pas accès à cette page`} );
   }
 };

@@ -23,7 +23,7 @@ exports.userPage = async (req, res) => {
 
         res.render('pages/myaccount/admin/user', {userInfo})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 }
 
@@ -86,7 +86,7 @@ exports.partnerPage = async (req, res) => {
 
         res.render('pages/myaccount/admin/partner', { selectInfo, containerInfo, partnerInfo})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 }
 
@@ -106,7 +106,7 @@ exports.containerPage = async (req, res) => {
 
         res.render('pages/myaccount/admin/container', {containerInfo})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 }
 
@@ -124,8 +124,8 @@ exports.historyPage = async (req, res) => {
         let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();
 
-        res.render('pages/myaccount/admin/history', {historyInfo})
+        res.render('pages/myaccount/admin/history', {historyInfo});
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 }

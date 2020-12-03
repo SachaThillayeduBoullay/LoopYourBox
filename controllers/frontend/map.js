@@ -24,6 +24,6 @@ exports.mapPage = async (req, res) => {
 
         res.render('pages/map/map', {partnerInfo, selectInfo})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };

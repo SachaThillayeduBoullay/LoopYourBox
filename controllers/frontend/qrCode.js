@@ -28,12 +28,12 @@ exports.qrCodePage = async (req, res) => {
         
                 res.render('pages/qrcode/qrcodegenerator', {partnerId : partnerInfo._id, containerInfo});
             } catch {
-                res.status(401).json({error: 'Failed Request'});
+                res.status(401).render('pages/error',{ error: `Requête invalide`});
             }
         } else if (statusInfo.userStatus == "member" || statusInfo.userStatus == "admin")
             res.render('pages/qrcode/qrcode');
     } else {
-        res.status(401).json({error: 'You need to signup to see this page'});
+        res.status(401).render('pages/noaccess');
     }
 }
 
@@ -83,7 +83,7 @@ exports.confirmationPage = async (req, res) => {
 
         res.render('pages/qrcode/confirmation', {result});
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 }
 
@@ -110,6 +110,6 @@ exports.qrCodePartnerPage = async (req, res) => {
 
         res.render('pages/qrcode/qrcodegenerator', {partnerId : partnerInfo._id, containerInfo});
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 }

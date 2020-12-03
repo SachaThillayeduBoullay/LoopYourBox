@@ -16,11 +16,11 @@ exports.saveQrcode = (req, res, next) => {
             })
         )
 
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).render('pages/error',{ error: `Le QrCode n'a pas pu être sauvé`}));
     };
 
 exports.getOneQrcode = (req, res, next) => {
     Qrcode.findOne({ reference: req.params.reference })
         .then((qrcode) => res.status(200).json(qrcode))
-        .catch((error) => res.status(404).json({ error }));
+        .catch((error) => res.status(404).render('pages/error',{ error: `QrCode introuvable`}));
     };
