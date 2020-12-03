@@ -1,15 +1,19 @@
 global.fetch = require("node-fetch");
 const jwt = require('jsonwebtoken');
-const checkStatus = require('../../public/js/checkstatus');
-
 
 exports.historyDetailsPage = async (req, res) => { 
     try {
         const token = req.cookies["token"];
 
+        let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+
         let url = `http://localhost:3000/api/history/${req.params.reference}`;
 
-        let historyInfo = await fetch(url);
+        let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();
 
         let date = historyInfo[0].date.split('T')[0].split('-');

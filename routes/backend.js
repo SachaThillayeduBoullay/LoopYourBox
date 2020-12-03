@@ -45,8 +45,8 @@ router.get('/logout', userCtrl.getLogout);
 
 router.get('/history', authAdminBack, historyCtrl.getAllHistory);
 router.post('/history', authMemberBack, historyCtrl.createHistory);
-router.get('/history/:reference', historyCtrl.getOneHistory); // nouveau auth
-router.get('/history/:param/:id', historyCtrl.getAllHistoryForOneUser);
+router.get('/history/:reference', historyCtrl.getOneHistory); // custom auth in controller
+router.get('/history/:param/:id', historyCtrl.getAllHistoryForOneUser); // custom auth in controller
 /*router.put('/history/:id', historyCtrl.updateHistory);
 router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
 

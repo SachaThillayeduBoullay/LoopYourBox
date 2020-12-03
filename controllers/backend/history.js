@@ -5,7 +5,9 @@ const Container = require("../../models/container");
 const Partner = require("../../models/partner");
 const Point = require("../../models/point")
 const jwt = require("jsonwebtoken");
-const UserContainer = require("../../models/userContainer")
+const UserContainer = require("../../models/userContainer");
+const User = require("../../models/user");
+const partner = require("../../models/partner");
 
 exports.createHistory = async (req, res, next) => {
   
@@ -149,15 +151,43 @@ exports.getOneHistory = (req, res, next) => {
     }
   ]
   )
-  .then((history) => res.status(200).json(history))
+  .then(async (history) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_PW);
+    const userId = decodedToken.userId;
+
+    const user = await User.findOne ({_id: userId});
+    const partner = await Partner.findOne ({idUser: userId});
+  
+    if(userId == history[0].userInfo._id || user.status == "admin" || partner._id.toString() == history[0].partnerInfo._id.toString()) {
+      res.status(200).json(history);
+    } else {
+      throw new Error("Vous n'avez pas accès à cette page")
+    }
+  })
   .catch((error) => res.status(404).json({ error }));
 };
 
-exports.getAllHistoryForOneUser = (req, res, next) => {
-  let filter = {};
-  filter[req.params.param] = req.params.id;
+exports.getAllHistoryForOneUser = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_PW);
+    const userId = decodedToken.userId;
 
-  History.find(filter)
-  .then(histories => res.status(200).json(histories))
-  .catch(error => res.status(400).json({error}));
+    const user = await User.findOne ({_id: userId});
+    const partner = await Partner.findOne ({idUser: userId});
+    
+    if ((req.params.param == "userId" && req.params.id == userId) || user.status == "admin" || (req.params.param == "partnerId" && req.params.id == partner._id)) {
+
+      let filter = {};
+      filter[req.params.param] = req.params.id;
+  
+      History.find(filter)
+      .then(histories => res.status(200).json(histories))
+      .catch(error => res.status(400).json({error}));
+    }
+
+  } catch {
+    res.status(400).json({error: "Vous n'avez pas accès à cette page"});
+  }
 };

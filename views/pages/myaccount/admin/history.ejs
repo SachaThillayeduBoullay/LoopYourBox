@@ -14,11 +14,12 @@
     <%- include('../../../layouts/navbar.ejs') -%>
 <div class="container">
   <div class="row">
+    <a class="backBtn" onclick="window.history.back();">Retour</a>
      <h2 class="col s12">History</h2>
   </div>
   <div class="row collection">
     <% historyInfo.forEach((history) => { %>
-        <a href="/history/<%= history._id %>" class="col s12 collection-item"><%= history.reference %></a>
+        <a href="/history/<%= history.reference %>" class="col s12 collection-item"><%= history.reference %></a>
     <% }); %>
   </div>
 

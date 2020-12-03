@@ -34,11 +34,12 @@
       <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
     </div>
   </div>
-
+            <% if(userInfo.status !="admin") {%>
             <div>
                 <h5>Historique</h5>
-            <p><a href="/myhistory/<%= userInfo._id %>">Mon historique</a></p>
+                <p><a href="/myhistory/<%= userInfo._id %>">Mon historique</a></p>
             </div>
+            <%}%> 
 
 
             <% if(userInfo.status =="partner") {%>

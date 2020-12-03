@@ -78,7 +78,6 @@ exports.myHistoryPage = async (req, res) => {
       status = status.userStatus;
       const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
       const userId = decodedToken.userId;
-      let urlContainer= "";
 
       myInit = {
         headers: {

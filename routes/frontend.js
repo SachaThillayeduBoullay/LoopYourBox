@@ -25,7 +25,7 @@ router.get("/home", indexCtrl.homePage);
 // PARTNER
 router.get("/partner", partnerCtrl.partnerPage);
 router.get("/partner/:id", partnerCtrl.partnerDetailsPage);
-router.get("/createPartner", /*authPartner,*/ partnerCtrl.createPartnerPage);
+router.get("/createPartner", authPartner, partnerCtrl.createPartnerPage);
 router.get("/updatePartner/:id", authOwnPartner, partnerCtrl.updatePartnerPage);
 
 // CONTAINER
