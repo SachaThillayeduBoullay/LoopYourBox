@@ -1,6 +1,8 @@
 const Partner = require("../../models/partner");
+const User = require("../../models/user");
 const joi = require("joi-oid");
 const fs = require("fs");
+const jwt = require('jsonwebtoken');
 
 exports.createPartner = (req, res, next) => {
   const schemaSchedule = joi.object().keys({
@@ -74,7 +76,8 @@ exports.getOnePartner = (req, res, next) => {
     .catch((error) => res.status(404).json({ error }));
 };
 
-exports.updatePartner = (req, res, next) => {
+exports.updatePartner = async (req, res, next) => {
+
   const schemaSchedule = joi.object().keys({
     monday: joi.string().trim(),
     tuesday: joi.string().trim(),

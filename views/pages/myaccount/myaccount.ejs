@@ -34,17 +34,29 @@
       <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
     </div>
   </div>
+
+            <div>
+                <h5>Historique</h5>
+            <p><a href="/myhistory/<%= userInfo._id %>">Mon historique</a></p>
+            </div>
+
+
             <% if(userInfo.status =="partner") {%>
             <div>
                 <h5>Partenaire</h5>
-                <a href="/mypartner">Mon partenaire</a>
+                <% if (!partnerInfo) {%> 
+                    <a  href="/createpartner">Ajouter</a>
+                <%} else {%> 
+                    <a href="/updatePartner/<%= partnerInfo._id %>">Modifer</a>
+                <%}%>
             </div>
             <%}%> 
+        
 
             <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
             <div>
                 <h5>Contenants</h5>
-            <p><a href="/mycontainer">Mes contenants</a></p>
+            <p><a href="/mycontainer/<%= userInfo._id %>">Mes contenants</a></p>
             </div>
             <%}%>
 

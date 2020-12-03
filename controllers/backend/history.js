@@ -100,7 +100,64 @@ exports.getAllHistory = (req, res, next) => {
 };
 
 exports.getOneHistory = (req, res, next) => {
-  History.findOne({ reference: req.params.reference })
-    .then((history) => res.status(200).json(history))
-    .catch((error) => res.status(404).json({ error }));
+  History.aggregate(
+  [        
+    {
+    '$match': {
+    'reference': req.params.reference
+    }
+    },
+    {
+      '$lookup': {
+        'from': 'partners', 
+        'localField': 'partnerId', 
+        'foreignField': '_id', 
+        'as': 'partnerInfo'
+      }
+    }, {
+      '$lookup': {
+        'from': 'containers', 
+        'localField': 'containerId', 
+        'foreignField': '_id', 
+        'as': 'containerInfo'
+      }
+    }, {
+      '$lookup': {
+        'from': 'users', 
+        'localField': 'userId', 
+        'foreignField': '_id', 
+        'as': 'userInfo'
+      }
+    }, {
+      '$unwind': {
+        'path': '$containerInfo'
+      }
+    }, {
+      '$unwind': {
+        'path': '$partnerInfo'
+      }
+    }, {
+      '$unwind': {
+        'path': '$userInfo'
+      }
+    }, {
+      '$project': {
+        'containerId': 0, 
+        'partnerId': 0, 
+        'userId': 0
+      }
+    }
+  ]
+  )
+  .then((history) => res.status(200).json(history))
+  .catch((error) => res.status(404).json({ error }));
+};
+
+exports.getAllHistoryForOneUser = (req, res, next) => {
+  let filter = {};
+  filter[req.params.param] = req.params.id;
+
+  History.find(filter)
+  .then(histories => res.status(200).json(histories))
+  .catch(error => res.status(400).json({error}));
 };

@@ -90,20 +90,20 @@ exports.updateContainer = (req, res, next) => {
 
         }
     }
-    Container.updateOne({_id: req.params.id}, {        
+    Container.updateOne({_id: req.params.containerId}, {        
         ...container, 
-        _id: req.params.id,
+        _id: req.params.containerId,
         
     })
     .then(() => {
 
-        res.status(200).redirect(`/container/${req.params.id}`);
+        res.status(200).redirect(`/container/${req.params.containerId}`);
     })
     .catch(error => res.status(400).json({ error }));
 };
 
 exports.deleteContainer = (req, res, next) => {
-    Container.findOne({_id:req.params.id})
+    Container.findOne({_id:req.params.containerId})
     .then(container => {
         if ((container.image != "noImage" && container.basedOnDefault == false) || (container.image != "noImage" && container.default == true)) {
             fs.unlink(`./public/img/container/${JSON.parse(container.image).filename}`, () => {});
@@ -118,7 +118,7 @@ exports.deleteContainer = (req, res, next) => {
                 }
             })
             
-        Container.deleteOne({_id: req.params.id})
+        Container.deleteOne({_id: req.params.containerId})
                 .then(()=> res.status(200).redirect(redirect))
                 .catch(error => res.status(400).json({error}));
     })

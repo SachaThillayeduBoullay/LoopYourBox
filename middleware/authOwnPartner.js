@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 
-
 module.exports = async (req, res, next) => {
     try {
         const token = req.cookies['token'];
@@ -17,11 +16,20 @@ module.exports = async (req, res, next) => {
 
         let userInfo = await fetch(url, myInit);
         userInfo = await userInfo.json();
+        
+        let urlPartner = `http://localhost:3000/api/partner/container/${userId}`;
 
-        if (!userInfo || (userInfo._id != req.params.id && userInfo.status != 'admin')) {
-            throw `Vous n'avez pas accès à cette page`;
-        } else {
+        let partnerInfo = await fetch(urlPartner, myInit);
+        partnerInfo = await partnerInfo.json();
+
+        if (!partnerInfo) {
+            partnerInfo = {};
+            partnerInfo.idUser = "none";
+        }
+        if ((userInfo && userInfo._id == partnerInfo.idUser && userInfo.status != 'member') || userInfo.status == 'admin') {
             next();
+        } else {
+            throw `Ce membre n'est pas partenaire`;
         }
     } catch {
         res.status(401).json({

@@ -3,6 +3,7 @@ const router = express.Router();
 
 const authAdmin = require("../middleware/authAdmin");
 const authPartner = require("../middleware/authPartner");
+const authOwnPartner = require("../middleware/authOwnPartner");
 const authMember = require("../middleware/authMember");
 const authUser = require("../middleware/authUser");
 
@@ -15,7 +16,7 @@ const pointCtrl = require("../controllers/frontend/point");
 const mapCtrl = require("../controllers/frontend/map");
 const qrCodeCtrl = require("../controllers/frontend/qrCode");
 const myAccountCtrl = require("../controllers/frontend/myaccount");
-
+const myHistoryCtrl = require("../controllers/frontend/history");
 const dashboardCtrl = require("../controllers/frontend/dashboard");
 
 router.get("/", indexCtrl.indexPage);
@@ -24,14 +25,14 @@ router.get("/home", indexCtrl.homePage);
 // PARTNER
 router.get("/partner", partnerCtrl.partnerPage);
 router.get("/partner/:id", partnerCtrl.partnerDetailsPage);
-router.get("/createPartner", authPartner, partnerCtrl.createPartnerPage);
-router.get("/updatePartner/:id", authPartner, partnerCtrl.updatePartnerPage);
+router.get("/createPartner", /*authPartner,*/ partnerCtrl.createPartnerPage);
+router.get("/updatePartner/:id", authOwnPartner, partnerCtrl.updatePartnerPage);
 
 // CONTAINER
 router.get("/container", containerCtrl.containerPage);
 router.get("/container/:id", containerCtrl.containerDetailsPage);
-router.get("/createContainer", authPartner, containerCtrl.createContainerPage);
-router.get("/updateContainer/:id", authPartner, containerCtrl.updateContainerPage);
+router.get("/createContainer", authOwnPartner, containerCtrl.createContainerPage);
+router.get("/updateContainer/:id", authOwnPartner, containerCtrl.updateContainerPage);
 
 // USER
 router.get("/user/:id", authUser, userCtrl.userDetailsPage);
@@ -44,8 +45,10 @@ router.get("/passwordrecovery", userCtrl.passwordRecoveryPage);
 
 
 router.get("/myaccount", authMember, myAccountCtrl.myAccountPage);
-router.get("/mypartner", authPartner, myAccountCtrl.myPartnerPage);
-router.get("/mycontainer", authMember, myAccountCtrl.myContainerPage);
+router.get("/mycontainer/:id", authUser, myAccountCtrl.myContainerPage);
+router.get("/myhistory/:id", authUser, myAccountCtrl.myHistoryPage);
+
+router.get("/history/:reference", myHistoryCtrl.historyDetailsPage);
 
 
 router.get("/dashboard", authAdmin, dashboardCtrl.dashboardPage);
@@ -59,7 +62,7 @@ router.get("/point", authMember, pointCtrl.pointPage);
 router.get("/map", mapCtrl.mapPage);
 
 router.get("/qrcode", authMember, qrCodeCtrl.qrCodePage);
-//router.get("/qrcodepartner", authPartner, qrCodeCtrl.qrCodePartnerPage);
+//router.get("/qrcodepartner", authOwnPartner, qrCodeCtrl.qrCodePartnerPage);
 router.get("/confirmation", qrCodeCtrl.confirmationPage); /////////////
 
 module.exports = router;

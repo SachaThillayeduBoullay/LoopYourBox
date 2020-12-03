@@ -151,15 +151,18 @@ exports.deleteUser = async (req, res, next) => {
   await Point.deleteOne ({userId: req.params.id})
 
   const partner = await Partner.findOne({idUser: req.params.id});
-  await Container.deleteMany ({partnerId: partner._id})
-  await Partner.deleteOne ({_id: partner._id})
+
+  if (partner) {
+    await Container.deleteMany ({partnerId: partner._id})
+    await Partner.deleteOne ({_id: partner._id})
+  }
 
   await User.deleteOne ({_id: req.params.id})
 
   res.status(200).json({message: 'Your account has been deleted'})
     
   } catch {
-    res.status(400).json({error});
+    res.status(400).json({error: 'ce compte ne peut pas être supprimé'});
   }
 };
 
@@ -218,6 +221,14 @@ exports.getLogout = (req, res) => {
 
 exports.modifyPassword = (req, res, next) => {
 const schema = joi.object ().keys ({
+    oldPassword: joi
+    .string ()
+    .pattern (
+    new RegExp (
+        '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+    )
+    )
+    .required (),
     password: joi
         .string ()
         .pattern (

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 
 exports.getOneUserContainer = (req, res, next) => {
-    UserContainer.findOne({userId:req.params.userId, containerId:req.params.containerId})
+    UserContainer.findOne({userId:req.params.id, containerId:req.params.containerId})
     .then(container => res.status(200).json(container))
     .catch(error => res.status(404).json({error}));
 };
@@ -13,7 +13,7 @@ exports.getAllUserContainer = (req, res, next) => {
     [
         {
             '$match': {
-            'userId': mongoose.Types.ObjectId(req.params.userId)
+            'userId': mongoose.Types.ObjectId(req.params.id)
             }
         }, {
             '$lookup': {

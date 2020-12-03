@@ -63,7 +63,7 @@ exports.partnerDetailsPage = async (req, res) => {
         if(req.cookies["token"]) {
             statusInfo = await checkStatus(req.cookies["token"]);
         }
-        console.log(statusInfo)
+        
         let url = `http://localhost:3000/api/partner/${req.params.id}`;
 
         let partnerInfo = await fetch(url);

@@ -12,6 +12,7 @@ const authAdminBack = require("../middleware/authAdminBack");
 const authPartnerBack = require("../middleware/authPartnerBack");
 const authMemberBack = require("../middleware/authMemberBack");
 const authUserBack = require("../middleware/authUserBack");
+const authOwnPartnerBack = require("../middleware/authOwnPartnerBack");
 
 
 
@@ -19,45 +20,46 @@ router.post('/partner', authPartnerBack, multer, partnerCtrl.createPartner);
 router.get('/partner/container/:userId', partnerCtrl.getPartnerFromUserId);
 router.get('/partner', partnerCtrl.getAllPartner);
 router.get('/partner/:id', partnerCtrl.getOnePartner);
-router.put('/partner/:id', authPartnerBack, multer, partnerCtrl.updatePartner);
-router.get('/partner/delete/:id', authPartnerBack, partnerCtrl.deletePartner);
+router.put('/partner/:id', authOwnPartnerBack, multer, partnerCtrl.updatePartner); 
+router.get('/partner/delete/:id', authOwnPartnerBack, partnerCtrl.deletePartner);
 
 
-router.post('/container', authPartnerBack, multer, containerCtrl.createContainer);
+router.post('/container/:id', authOwnPartnerBack, multer, containerCtrl.createContainer);
 router.get('/container', containerCtrl.getAllContainer);
 router.get('/container/partner/:default', containerCtrl.getAllDefaultContainer);
 router.get('/containerpartner/:id', containerCtrl.getAllPartnerContainer);
 router.get('/container/:id', containerCtrl.getOneContainer);
-router.put('/container/:id', authPartnerBack, multer, containerCtrl.updateContainer);
-router.get('/container/delete/:id', authPartnerBack, containerCtrl.deleteContainer);
+router.put('/container/:containerId/:id', authOwnPartnerBack, multer, containerCtrl.updateContainer);
+router.get('/container/delete/:containerId/:id', authOwnPartnerBack, containerCtrl.deleteContainer);
 
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/user', authAdminBack, userCtrl.getAllUser);
-router.get('/user/:id', /*authUserBack,*/ userCtrl.getOneUser);
-router.put('/user/:id', /*authUserBack,*/ userCtrl.updateUser);
-router.put('/user/password/:id', /*authUserBack,*/ userCtrl.modifyPassword);
+router.get('/user/:id', authUserBack, userCtrl.getOneUser);
+router.put('/user/:id', authUserBack, userCtrl.updateUser);
+router.put('/user/password/:id', authUserBack, userCtrl.modifyPassword);
 router.put('/user/passwordrecovery/:id', userCtrl.recoveryPassword);
-router.get('/user/delete/:id',  /*authUserBack,*/ userCtrl.deleteUser);
+router.get('/user/delete/:id',  authUserBack, userCtrl.deleteUser);
 router.post('/lostpwd', userCtrl.lostPwd);
-router.get('/logout', /*authUserBack,*/ userCtrl.getLogout);
+router.get('/logout', userCtrl.getLogout);
 
 router.get('/history', authAdminBack, historyCtrl.getAllHistory);
 router.post('/history', authMemberBack, historyCtrl.createHistory);
 router.get('/history/:reference', historyCtrl.getOneHistory); // nouveau auth
+router.get('/history/:param/:id', historyCtrl.getAllHistoryForOneUser);
 /*router.put('/history/:id', historyCtrl.updateHistory);
 router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
 
 router.post('/qrcode', authPartnerBack, qrcodeCtrl.saveQrcode);
 router.get('/qrcode/:reference', authMemberBack, qrcodeCtrl.getOneQrcode);
 
-router.get('/point/:userId', /*authUserBack,*/ pointCtrl.getOneUserPoint);
-router.put('/point/:userId', pointCtrl.updateOneUserPoint); //a supprimer plus tard
+router.get('/point/:id', authUserBack, pointCtrl.getOneUserPoint);
+router.put('/point/:userId', pointCtrl.updateOneUserPoint); //à supprimer plus tard
 
 
 
-router.get('/userContainer/:userId', /*authUserBack,*/ userContainerCtrl.getAllUserContainer);
-router.get('/userContainer/:containerId/:userId', /*authUserBack,*/ userContainerCtrl.getOneUserContainer);
+router.get('/userContainer/:id', authUserBack, userContainerCtrl.getAllUserContainer);
+router.get('/userContainer/:containerId/:id', authUserBack, userContainerCtrl.getOneUserContainer);
 
 
 

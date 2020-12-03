@@ -2,9 +2,17 @@ global.fetch = require("node-fetch");
 const jwt = require('jsonwebtoken');
 
 
+
 exports.userDetailsPage = async (req, res) => { 
     try {
+        const token = req.cookies['token'];
         let url = `http://localhost:3000/api/user/${req.params.id}`;
+
+        let myInit = {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
 
         let userInfo = await fetch(url, myInit);
         userInfo = await userInfo.json();

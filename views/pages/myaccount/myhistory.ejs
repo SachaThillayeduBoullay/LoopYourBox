@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset='utf-8' />
+   <title>Local search app</title>
+   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+   <link rel="stylesheet" href="/css/materialize.css">
+
+
+</head>
+
+<body>
+        <!-- NARBAR -->
+        <%- include('../../layouts/navbar.ejs') -%>
+   <div class="container">
+      <div class="row">
+         <h2 class="col s12">Mon historique</h2>
+      </div>
+      <div class="row collection">
+         <% historyInfo.forEach((history) => { %>
+         <a href="/history/<%= history.reference %>" class="col s12 collection-item"><%= history.date %> <%= history.action %></a>
+         <% }); %>
+      </div>
+
+
+   </div>
+
+</body>
+
+<script src="/js/bin/materialize.js"></script>
+<script src="/js/bin/materialize-init.js"></script>
+
+</html>

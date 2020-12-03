@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const User = require("../models/user");
 
 module.exports = async (req, res, next) => {
     try {
@@ -6,16 +7,7 @@ module.exports = async (req, res, next) => {
         const decodedToken = jwt.verify(token, process.env.JWT_PW)
         const userId = decodedToken.userId;
 
-        let url = `http://localhost:3000/api/user/${userId}`;
-
-        let myInit = {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        };  
-
-        let userInfo = await fetch(url, myInit);
-        userInfo = await userInfo.json();
+        const userInfo = await User.findOne ({_id: userId});
 
         if (!userInfo) {
             throw `Ce membre n'existe pas`;

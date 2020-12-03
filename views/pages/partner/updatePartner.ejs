@@ -20,6 +20,7 @@
       </div>
       <div class="row">
          <form action="/api/partner/<%= partnerInfo._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+         <!--<form method="POST" enctype="multipart/form-data" id="updatePartnerForm" >-->
             <div class="input-field">
                <label for="name">Name</label>
                <input value="<%= partnerInfo.name %>" type="text" name="name" class="validate" required>

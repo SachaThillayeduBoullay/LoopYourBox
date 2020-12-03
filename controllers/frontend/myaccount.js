@@ -46,10 +46,9 @@ exports.myContainerPage = async (req, res) => {
       };
 
       if (status == "partner") {
-
+        console.log('partner')
         let url = `http://localhost:3000/api/partner/container/${userId}`;
-        
-        let partnerInfo = await fetch(url, myInit);
+        let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
         urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
@@ -69,12 +68,17 @@ exports.myContainerPage = async (req, res) => {
   }
 }
 
-exports.myPartnerPage = async (req, res) => { 
+
+
+exports.myHistoryPage = async (req, res) => { 
   try {
+    
       const token = req.cookies["token"];
+      let status = await checkStatus(token);
+      status = status.userStatus;
       const decodedToken = jwt.verify(token, "RANDOM_TOKEN_SECRET");
       const userId = decodedToken.userId;
-      let url = `http://localhost:3000/api/user/${userId}`;
+      let urlContainer= "";
 
       myInit = {
         headers: {
@@ -82,15 +86,33 @@ exports.myPartnerPage = async (req, res) => {
         },
       };
 
-      let userInfo = await fetch(url, myInit);
-      userInfo = await userInfo.json();
+      if (status == "partner") {
+        let url = `http://localhost:3000/api/partner/container/${userId}`;
+        let partnerInfo = await fetch(url);
+        partnerInfo = await partnerInfo.json();
 
-      let urlPartner = `http://localhost:3000/api/partner/container/${userId}`;
+        urlHistory = `http://localhost:3000/api/history/partnerId/${partnerInfo._id}`;
 
-      let partnerInfo = await fetch(urlPartner, myInit);
-      partnerInfo = await partnerInfo.json();
+      } else if( status == "member") {
+        urlHistory = `http://localhost:3000/api/history/userId/${userId}`;
+      }
 
-      res.render('pages/myaccount/partner/mypartner', {userInfo, partnerInfo});
+      let historyInfo = await fetch(urlHistory, myInit);
+      historyInfo = await historyInfo.json();
+
+      historyInfo.forEach( history => {
+        let date = history.date.split('T')[0].split('-');
+        let dateString = `${date[2]}/${date[1]}/${date[0]}`;
+        let hour = history.date.split("T")[1].slice(0,2);
+        hour = parseInt(hour) + 1;
+        let min = history.date.split("T")[1].slice(2,5);
+        let time = `${hour}${min}`;
+
+        history.date = `${dateString} - ${time}`;
+      })
+
+
+      res.render('pages/myaccount/myhistory', {historyInfo});
 
   } catch {
   res.status(401).json({ error: "Unauthenticated Request" });

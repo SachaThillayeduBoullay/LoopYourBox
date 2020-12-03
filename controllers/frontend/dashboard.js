@@ -8,6 +8,8 @@ exports.dashboardPage = (req, res) => { res.render("pages/myaccount/admin/dashbo
 
 exports.userPage = async (req, res) => { 
     try {
+        const token = req.cookies["token"];
+
         let url = `http://localhost:3000/api/user/`;
 
         let myInit = {
@@ -26,6 +28,7 @@ exports.userPage = async (req, res) => {
 }
 
 exports.partnerPage = async (req, res) => { 
+    const token = req.cookies["token"];
     let url;
 
     let myInit = {
@@ -89,6 +92,7 @@ exports.partnerPage = async (req, res) => {
 
 exports.containerPage = async (req, res) => { 
     try {
+        const token = req.cookies["token"];
         let url = `http://localhost:3000/api/container/`;
 
         let myInit = {
@@ -108,6 +112,7 @@ exports.containerPage = async (req, res) => {
 
 exports.historyPage = async (req, res) => { 
     try {
+        const token = req.cookies["token"];
         let url = `http://localhost:3000/api/history/`;
 
         let myInit = {

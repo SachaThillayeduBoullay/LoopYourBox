@@ -62,13 +62,20 @@ async function tick() {
             drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
     
             info = code.data;
-            
+ 
             try {
 
-                let urlQrcode = `http://localhost:3000/api/qrcode/${info}`;
-                let qrcodeInfo = await fetch(urlQrcode);
+                let urlQrcode = `http://localhost:3000/api/qrcode/${info}`   
+                myInit = {
+                        method: "GET",
+                        headers: {
+                            'Authorization': 'Bearer ' + getCookie('token')
+                        }
+                    };
+                    
+                let qrcodeInfo = await fetch(urlQrcode , myInit);
                 qrcodeInfo = await qrcodeInfo.json();
-
+                    
                 if (qrcodeInfo){
                     let urlContainer = `http://localhost:3000/api/container/${qrcodeInfo.containerId}`;
                     let containerInfo = await fetch(urlContainer);
