@@ -62,12 +62,14 @@ new mapboxgl.Marker() // initialize a new marker
           .addTo(map);*/ // Add the marker to the map
 
  //});
- console.log(partnerInfo);
+ //console.log(partnerInfo);
 let features = partnerInfo.map(element => {
     return  {
         'type': 'Feature',
         'properties': {
-            'description': `<a href="/partner/${element._id}">${element.name}</a>`,
+            'description': `<a href="/partner/${element._id}">${element.name}</a>
+            <p>${element.address.street}</p>
+            <p>${element.address.postcode} ${element.address.city}</p>`,
             'icon': 'rocket'
         },
         'geometry': {

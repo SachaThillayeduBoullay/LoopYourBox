@@ -9,32 +9,33 @@
 </head>
 
 <body>
+   <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
    <div class="container">
       <div class="row">
          <h2 class="col s12">Créer nouveau contenant</h2>
       </div>
       <div class="row">
-         <form class="col s12" action="api/container" method="POST" enctype="multipart/form-data">   
+         <form class="col s12" action="api/container/<%= partnerId %>" method="POST" enctype="multipart/form-data">
             <% if (userStatus =="admin") { %>
-               <div hidden>
-            <p>
-               <label>
-                 <input type="checkbox" name="default" checked="checked"/>
-                 <span>Défaut</span>
-               </label>
-            </p>
-            <% } %>
-            <label for="defaultContainer">Contenant par défaut</label>
-            <div class="input-field col s12">
-               <select id="defaultContainer" class="browser-default">
-                  <option value="noDefault">Pas de contenant par défaut</option>
-                  <% containerInfo.forEach(option => { %>
-                  <option value="<%= option.name %>"><%= option.name %></option>
-                  <%})%>
-               </select>
-               
-            </div>
-            <% if (userStatus =="admin") { %>
+            <div hidden>
+               <p>
+                  <label>
+                     <input type="checkbox" name="default" checked="checked" />
+                     <span>Défaut</span>
+                  </label>
+               </p>
+               <% } %>
+               <label for="defaultContainer">Contenant par défaut</label>
+               <div class="input-field col s12">
+                  <select id="defaultContainer" class="browser-default">
+                     <option value="noDefault">Pas de contenant par défaut</option>
+                     <% containerInfo.forEach(option => { %>
+                     <option value="<%= option.name %>"><%= option.name %></option>
+                     <%})%>
+                  </select>
+
+               </div>
+               <% if (userStatus =="admin") { %>
             </div>
             <% } %>
             <div class="input-field col s12">
@@ -55,11 +56,11 @@
             </div>
             <div id="imageLabel" class="input-field file-field col s12">
                <div class="btn green darken-1">
-                  <span >Fichier</span>
+                  <span>Fichier</span>
                   <input id="image" name="image" type="file">
                </div>
                <div class="file-path-wrapper">
-                  <input  class="file-path validate" type="text" placeholder="Image à upload">
+                  <input class="file-path validate" type="text" placeholder="Image à upload">
                </div>
             </div>
             <input id="basedOnDefault" type="hidden" name="basedOnDefault" value="false">
@@ -76,7 +77,7 @@
    <script src="/js/bin/materialize-init.js"></script>
    <script src="/js/bin/container.js"></script>
 
-   <script> let container = <%- JSON.stringify(containerInfo) %></script>
+   <script> let container = <% - JSON.stringify(containerInfo) %></script>
    <script src="/js/defaultContainer.js"></script>
 </body>
 

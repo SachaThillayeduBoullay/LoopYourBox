@@ -2,32 +2,33 @@
 <html>
 
 <head>
-   <meta charset='utf-8' />
-   <title>Local search app</title>
-   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-   <link rel="stylesheet" href="/css/materialize.css">
-
+  <meta charset='utf-8' />
+  <title>Local search app</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <link rel="stylesheet" href="/css/materialize.css">
+  <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 
 </head>
 
 
 <body>
-    <!-- NARBAR -->
-    <%- include('../../../layouts/navbar.ejs') -%>
-<div class="container">
-  <div class="row">
-     <h2 class="col s12">List of containers</h2>
+  <!-- NARBAR -->
+  <%- include('../../../layouts/navbar.ejs') -%>
+  <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
+  <div class="container">
+    <div class="row">
+      <h2 class="col s12">List of containers</h2>
+    </div>
+    <div class="row collection">
+      <% containerInfo.forEach((container) => { %>
+
+      <a href="/container/<%= container._id %>" class="col s12 collection-item"><%= container.name %></a>
+
+      <% }); %>
+    </div>
+
+
   </div>
-  <div class="row collection">
-    <% containerInfo.forEach((container) => { %>
-
-        <a href="/container/<%= container._id %>" class="col s12 collection-item"><%= container.name %></a>
-
-        <% }); %>
-  </div>
-
-
-</div>
 
 </body>
 

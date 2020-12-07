@@ -35,9 +35,24 @@
                     <a class="" href="/updateUser/<%= userInfo._id %>">Modifier mes informations</a> <i
                         class="fas fa-chevron-right"></i>
                 </div>
+
                 <div class="link padding">
                     <a class="modal-trigger" href="#modal">Supprimer moncompte</a> <i class="fas fa-chevron-right"></i>
                 </div>
+                <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
+                    <div class="link padding">
+                        <a href="/mycontainer/<%= userInfo._id %>">Mes contenants</a> <i
+                        class="fas fa-chevron-right"></i>
+                    </div>
+                    <% } %>
+                <% if(userInfo.status != "admin") {%>
+                    <div class="link padding">
+                        <a href="/myhistory/<%= userInfo._id %>">Mon historique</a> <i
+                        class="fas fa-chevron-right"></i>
+                    </div>
+                <%}%> 
+                
+                <!-- Modal Structure -->
                 <div id="modal" class="modal">
                     <div class="modal-content">
                         <h4>Supprimer son compte ? </h4>
@@ -48,58 +63,61 @@
                         <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
                     </div>
                 </div>
+         
 
-            </div>
 
-            <% if(userInfo.status =="partner") {%>
-            <div class="partner_account">
-                <div class="partner_account-heading padding">Mon Partenaire</div>
-                <% if (!partnerInfo) {%>
-                <div class="link padding">
-                    <a href="/createpartner">Ajouter</a><i class="fas fa-chevron-right"></i>
-                </div>
+            <!-- ============= -->
 
-                <%} else {%>
-                <div class="link padding">
-                    <a href="/updatePartner/<%= partnerInfo._id %>">Modifier</a><i class="fas fa-chevron-right"></i>
-                </div>
-                <div class="link padding">
-                    <a class="modal-trigger" href="#modal2">Supprimer</a><i class="fas fa-chevron-right"></i>
-                </div>
-                <div id="modal2" class="modal">
-                    <div class="modal-content">
-                        <h4>Supprimer son compte ? </h4>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="modal-close waves-effect waves-green btn-flat danger"
-                            href="/api/partner/delete/<%= partnerInfo._id %>">Confirmer</a></i>
-                        <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
-                    </div>
-                </div>
-                <%}%> 
-                <!-- <div class="link padding">
-                    <a href="/mypartner">Mon partenaire</a> <i class="fas fa-chevron-right"></i>
-                </div> -->
-            </div>
-            <%}%>
+                 
 
-                <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
-                <div class="container_account">
-                    <div class="container_account-heading padding">Contenants</div>
-                    <div class="link padding">
-                        <a href="/mycontainer">Mes contenants</a> <i class="fas fa-chevron-right"></i>
+                    <!-- ============ -->
+
+                    
+                    <% if(userInfo.status =="partner") {%>
+                    <div class="partner_account">
+                        <div class="partner_account-heading padding">Mon Partenaire</div>
+                        <% if (!partnerInfo) {%>
+                        <div class="link padding">
+                            <a href="/createpartner">Ajouter</a><i class="fas fa-chevron-right"></i>
+                        </div>
+
+                        <%} else {%>
+                        <div class="link padding">
+                            <a href="/updatePartner/<%= partnerInfo._id %>">Modifier</a><i
+                                class="fas fa-chevron-right"></i>
+                        </div>
+                        <div class="link padding">
+                            <a class="modal-trigger" href="#modal2">Supprimer</a><i class="fas fa-chevron-right"></i>
+                        </div>
+                        <div id="modal2" class="modal">
+                            <div class="modal-content">
+                                <h4>Supprimer son compte ? </h4>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="modal-close waves-effect waves-green btn-flat danger"
+                                    href="/api/partner/delete/<%= partnerInfo._id %>">Confirmer</a></i>
+                                <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <%}%>
-    
-            <% if(userInfo.status =="admin") {%>
-                <div class="admin_account">
-                    <div class="admin_account-heading padding">Dashboard</div>
-                    <div class="link padding">
-                        <a href="/dashboard">Dashboard</a> <i class="fas fa-chevron-right"></i>
+                    <%}%>
+                    <% } %>
+
+
+                    <!-- ====== -->
+
+
+                    <!-- ====== -->
+
+
+                 <% if(userInfo.status =="admin") {%>
+                    <div class="admin_account">
+                        <div class="admin_account-heading padding">Dashboard</div>
+                        <div class="link padding">
+                            <a href="/dashboard">Dashboard</a> <i class="fas fa-chevron-right"></i>
+                        </div>
                     </div>
-                </div>
-                <%}%>
+                    <%}%>
     
             <div class="padding" id="logout">
                 <a href="/api/logout">Déconnexion</a> 

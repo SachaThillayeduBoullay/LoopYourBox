@@ -8,7 +8,7 @@
    <link rel="stylesheet"
       href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
       type="text/css" />
-      <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
    <link rel="stylesheet" href="/css/materialize.css">
    <link rel="stylesheet" href="/css/update_partner.css">
 </head>
@@ -19,13 +19,15 @@
    <%- include('../../layouts/navbar.ejs') -%>
    <!-- MAIN -->
 
+   <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
    <div class="container">
       <div class="row">
-         <h1 class="sub_page-heading">Update partner</h1>
+         <h2 class="col s12 page-title">Modifier son partenaire</h2>
       </div>
 
       <div class="row">
          <form action="/api/partner/<%= partnerInfo._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <!--<form method="POST" enctype="multipart/form-data" id="updatePartnerForm" >-->
             <div class="input-field">
                <label for="name">Name</label>
                <input value="<%= partnerInfo.name %>" type="text" name="name" class="validate" required>

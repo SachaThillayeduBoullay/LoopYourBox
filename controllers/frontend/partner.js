@@ -4,6 +4,7 @@ const checkStatus = require('../../public/js/checkstatus');
 
 exports.partnerPage = async (req, res) => { 
     let url;
+
     if (req.query) {
         let urlStringFilter = "?";
         for (let property in req.query) {
@@ -51,7 +52,7 @@ exports.partnerPage = async (req, res) => {
 
         res.render('pages/partner/partner', { selectInfo, containerInfo, partnerInfo})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -62,7 +63,7 @@ exports.partnerDetailsPage = async (req, res) => {
         if(req.cookies["token"]) {
             statusInfo = await checkStatus(req.cookies["token"]);
         }
-
+        
         let url = `http://localhost:3000/api/partner/${req.params.id}`;
 
         let partnerInfo = await fetch(url);
@@ -73,7 +74,7 @@ exports.partnerDetailsPage = async (req, res) => {
         }
         res.render('pages/partner/partnerDetails', {partnerInfo, statusInfo});
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };
 
@@ -84,7 +85,7 @@ exports.createPartnerPage = (req, res) => {
         const userId = decodedToken.userId;
         res.render('pages/partner/createPartner', {userId})
     } catch {
-        res.status(401).json({error: 'You cannot access this page'});
+        res.status(401).render('pages/noaccess');
     }
     
 };
@@ -94,13 +95,7 @@ exports.updatePartnerPage = async (req, res) => {
         const token = req.cookies['token'];
         let url = `http://localhost:3000/api/partner/${req.params.id}`;
 
-        let myInit = {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        };
-
-        let partnerInfo = await fetch(url, myInit);
+        let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
         if (partnerInfo.image != "noImage") {
@@ -109,6 +104,6 @@ exports.updatePartnerPage = async (req, res) => {
 
         res.render('pages/partner/updatePartner', {partnerInfo})
     } catch {
-        res.status(401).json({error: 'Unauthenticated Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };

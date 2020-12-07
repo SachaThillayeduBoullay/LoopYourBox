@@ -32,6 +32,7 @@
 }
 
 body {
+    position: relative;
     background: lighten($base-grey, 17%);
     font-family: $primary-font;
 }

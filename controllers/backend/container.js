@@ -16,7 +16,7 @@ exports.createContainer = (req, res, next) => {
         if (req.file) {
             fs.unlink(`./public/img/container/${req.file.filename}`, () => {});
         }
-        res.status(400).send(result.error.details[0].message);
+        res.status(400).render('pages/error', {error: result.error.details[0].message});
         return;
     }
 
@@ -42,26 +42,26 @@ exports.createContainer = (req, res, next) => {
     
     container.save()
         .then(() => res.status(201).redirect(redirect))
-        .catch(error => res.status(400).json({ error }));
+        .catch(() => res.status(400).render('pages/error',{ error: "Le contenant n'as pas pu être sauvé"} ));
 };
 
 
 exports.getAllContainer = (req, res, next) => {
     Container.find()
     .then(containers => res.status(200).json(containers))
-    .catch(error => res.status(400).json({error}));
+    .catch(error => res.status(400).render('pages/error',{ error: "Nous n'avons pas trouvé les contenants"} ));
 };
 
 exports.getAllDefaultContainer = (req, res, next) => {
     Container.find({default:true})
     .then(containers => res.status(200).json(containers))
-    .catch(error => res.status(400).json({error}));
+    .catch(error => res.status(400).render('pages/error',{ error: "Contenants introuvables"} ));
 };
 
 exports.getOneContainer = (req, res, next) => {
     Container.findOne({_id:req.params.id})
     .then(container => res.status(200).json(container))
-    .catch(error => res.status(404).json({error}));
+    .catch(error => res.status(404).render('pages/error',{ error: "Contenant introuvable"} ));
 };
 
 exports.updateContainer = (req, res, next) => {
@@ -77,7 +77,7 @@ exports.updateContainer = (req, res, next) => {
         if (req.file) {
             fs.unlink(`./public/img/container/${req.file.filename}`, () => {});
         }
-        res.status(400).send(result.error.details[0].message);
+        res.status(400).render('pages/error',{ error: result.error.details[0].message});
         return;
     }
 
@@ -90,20 +90,20 @@ exports.updateContainer = (req, res, next) => {
 
         }
     }
-    Container.updateOne({_id: req.params.id}, {        
+    Container.updateOne({_id: req.params.containerId}, {        
         ...container, 
-        _id: req.params.id,
+        _id: req.params.containerId,
         
     })
     .then(() => {
 
-        res.status(200).redirect(`/container/${req.params.id}`);
+        res.status(200).redirect(`/container/${req.params.containerId}`);
     })
-    .catch(error => res.status(400).json({ error }));
+    .catch(error => res.status(400).render('pages/error',{ error: "Le contenant n'a pas pu être modifié"} ));
 };
 
 exports.deleteContainer = (req, res, next) => {
-    Container.findOne({_id:req.params.id})
+    Container.findOne({_id:req.params.containerId})
     .then(container => {
         if ((container.image != "noImage" && container.basedOnDefault == false) || (container.image != "noImage" && container.default == true)) {
             fs.unlink(`./public/img/container/${JSON.parse(container.image).filename}`, () => {});
@@ -118,9 +118,9 @@ exports.deleteContainer = (req, res, next) => {
                 }
             })
             
-        Container.deleteOne({_id: req.params.id})
+        Container.deleteOne({_id: req.params.containerId})
                 .then(()=> res.status(200).redirect(redirect))
-                .catch(error => res.status(400).json({error}));
+                .catch(() => res.status(400).render('pages/error',{ error: "Le contenant n'a pas pu être supprimé"} ));
     })
     .catch(error => res.status(404).json({error}));
 };
@@ -128,5 +128,5 @@ exports.deleteContainer = (req, res, next) => {
 exports.getAllPartnerContainer = (req, res, next) => {
     Container.find({partnerId:req.params.id})
     .then(container => res.status(200).json(container))
-    .catch(error => res.status(404).json({error}));
+    .catch(error => res.status(404).render('pages/error',{ error: "Contenants introuvables"} ));
 };

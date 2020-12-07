@@ -1,6 +1,8 @@
 const Partner = require("../../models/partner");
+const User = require("../../models/user");
 const joi = require("joi-oid");
 const fs = require("fs");
+const jwt = require('jsonwebtoken');
 
 exports.createPartner = (req, res, next) => {
   const schemaSchedule = joi.object().keys({
@@ -29,7 +31,7 @@ exports.createPartner = (req, res, next) => {
     if (req.file) {
       fs.unlink(`./public/img/partner/${req.file.filename}`, () => {});
     }
-    res.status(400).send(result.error.details[0].message);
+    res.status(400).render('pages/error',{ error: result.error.details[0].message});
     return;
   }
 
@@ -53,28 +55,23 @@ exports.createPartner = (req, res, next) => {
   partner
     .save()
     .then(() => res.status(201).redirect("/partner"))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).render('pages/error',{ error: `Le partenaire n'a pas pu être créé`}));
 };
-
-/*exports.getAllPartner = (req, res, next) => {
-    Partner.find()
-    .then(partners => res.status(200).json(partners))
-    .catch(error => res.status(400).json({error}));
-};*/
 
 exports.getPartnerFromUserId = (req, res, next) => {
   Partner.findOne({ idUser: req.params.userId })
     .then((container) => res.status(200).json(container))
-    .catch((error) => res.status(404).json({ error }));
+    .catch((error) => res.status(404).render('pages/error',{ error: `Partenaire introuvable`}));
 };
 
 exports.getOnePartner = (req, res, next) => {
   Partner.findOne({ _id: req.params.id })
     .then((partner) => res.status(200).json(partner))
-    .catch((error) => res.status(404).json({ error }));
+    .catch((error) => res.status(404).render('pages/error',{ error: `Partenaire introuvable`}));
 };
 
-exports.updatePartner = (req, res, next) => {
+exports.updatePartner = async (req, res, next) => {
+
   const schemaSchedule = joi.object().keys({
     monday: joi.string().trim(),
     tuesday: joi.string().trim(),
@@ -100,7 +97,7 @@ exports.updatePartner = (req, res, next) => {
     if (req.file) {
       fs.unlink(`./public/img/partner/${req.file.filename}`, () => {});
     }
-    res.status(400).send(result.error.details[0].message);
+    res.status(400).render('pages/error',{ error: result.error.details[0].message});
     return;
   }
 
@@ -135,7 +132,7 @@ exports.updatePartner = (req, res, next) => {
     .then(() => {
       res.status(200).redirect(`/partner/${req.params.id}`);
     })
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).render('pages/error',{ error: `Le partenaire n'a pas pu être modifié`}));
 };
 
 exports.deletePartner = (req, res, next) => {
@@ -149,9 +146,9 @@ exports.deletePartner = (req, res, next) => {
       }
       Partner.deleteOne({ _id: req.params.id })
         .then(() => res.status(200).redirect("/partner"))
-        .catch((error) => res.status(400).json({ error }));
+        .catch((error) => res.status(400).render('pages/error',{ error: `Le partenaire n'a pas pu être supprimé`}));
     })
-    .catch((error) => res.status(404).json({ error }));
+    .catch((error) => res.status(404).render('pages/error',{ error: `Partenaire introuvable`}));
 };
 
 exports.getAllPartner = (req, res, next) => {
@@ -191,6 +188,6 @@ exports.getAllPartner = (req, res, next) => {
     },
   ])
     .then((partnerInfo) => res.status(200).json(partnerInfo))
-    .catch((error) => res.status(400).json({ error }));
+    .catch((error) => res.status(400).render('pages/error',{ error: `Partenaires introuvables`}));
 };
 

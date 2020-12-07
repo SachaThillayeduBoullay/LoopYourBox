@@ -5,7 +5,9 @@ const Container = require("../../models/container");
 const Partner = require("../../models/partner");
 const Point = require("../../models/point")
 const jwt = require("jsonwebtoken");
-const UserContainer = require("../../models/userContainer")
+const UserContainer = require("../../models/userContainer");
+const User = require("../../models/user");
+const partner = require("../../models/partner");
 
 exports.createHistory = async (req, res, next) => {
   
@@ -14,14 +16,14 @@ exports.createHistory = async (req, res, next) => {
   const {reference, token} = req.body;
   const decodedToken = jwt.verify(token, process.env.JWT_PW);
   const userId = decodedToken.userId;
-  
+
   const qrcode = await Qrcode.findOne({ reference });
   const container = await Container.findOne({ _id: qrcode.containerId });
-  const userPoint = await Point.findOne({ userid: qrcode.userId });
+  const userPoint = await Point.findOne({ userId });
 
   if (qrcode.action == "emprunt"){
     if (userPoint.credit < container.credit){
-      res.status(404).json({ error: "Crédit insuffisant" });
+      res.status(404).render('pages/error',{ error: "Crédit insuffisant" });
       return;
     }
   }
@@ -74,22 +76,21 @@ exports.createHistory = async (req, res, next) => {
 
 
   let point = {
-    $inc: {credit: deltaCredit},
-    $inc: {environmentalImpact: deltaEnvironmentalImpact}
+    $inc: {credit: deltaCredit, environmentalImpact: deltaEnvironmentalImpact},
   }
- 
+
   try {
     await Point.findOneAndUpdate({userId}, point, {
       new: true, useFindAndModify: false
     });
 
-  } catch {console.log('probleme')}
+  } catch {res.status(400).render('pages/error',{ error: "Les crédits n'ont pas été modifiés"} )}
 
 
   res.status(201).json({ reference });
 
   }catch{
-    res.status(404).json({ error: "tout est faux" })
+    res.status(404).render('pages/error',{ error: "L'historique n'as pas pu être créé"} )
   }
   
 };
@@ -97,11 +98,96 @@ exports.createHistory = async (req, res, next) => {
 exports.getAllHistory = (req, res, next) => {
     History.find()
     .then(histories => res.status(200).json(histories))
-    .catch(error => res.status(400).json({error}));
+    .catch(error => res.status(400).render('pages/error',{ error: "Historique introuvable"} ));
 };
 
 exports.getOneHistory = (req, res, next) => {
-  History.findOne({ reference: req.params.reference })
-    .then((history) => res.status(200).json(history))
-    .catch((error) => res.status(404).json({ error }));
+  History.aggregate(
+  [        
+    {
+    '$match': {
+    'reference': req.params.reference
+    }
+    },
+    {
+      '$lookup': {
+        'from': 'partners', 
+        'localField': 'partnerId', 
+        'foreignField': '_id', 
+        'as': 'partnerInfo'
+      }
+    }, {
+      '$lookup': {
+        'from': 'containers', 
+        'localField': 'containerId', 
+        'foreignField': '_id', 
+        'as': 'containerInfo'
+      }
+    }, {
+      '$lookup': {
+        'from': 'users', 
+        'localField': 'userId', 
+        'foreignField': '_id', 
+        'as': 'userInfo'
+      }
+    }, {
+      '$unwind': {
+        'path': '$containerInfo'
+      }
+    }, {
+      '$unwind': {
+        'path': '$partnerInfo'
+      }
+    }, {
+      '$unwind': {
+        'path': '$userInfo'
+      }
+    }, {
+      '$project': {
+        'containerId': 0, 
+        'partnerId': 0, 
+        'userId': 0
+      }
+    }
+  ]
+  )
+  .then(async (history) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_PW);
+    const userId = decodedToken.userId;
+
+    const user = await User.findOne ({_id: userId});
+    const partner = await Partner.findOne ({idUser: userId});
+  
+    if(userId == history[0].userInfo._id || user.status == "admin" || partner._id.toString() == history[0].partnerInfo._id.toString()) {
+      res.status(200).json(history);
+    } else {
+      throw new Error("Vous n'avez pas accès à cette page")
+    }
+  })
+  .catch((error) => res.status(400).render('pages/noaccess',{ error: `Vous n'avez pas accès à cette page`} ));
+};
+
+exports.getAllHistoryForOneUser = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_PW);
+    const userId = decodedToken.userId;
+
+    const user = await User.findOne ({_id: userId});
+    const partner = await Partner.findOne ({idUser: userId});
+    
+    if ((req.params.param == "userId" && req.params.id == userId) || user.status == "admin" || (req.params.param == "partnerId" && req.params.id == partner._id)) {
+
+      let filter = {};
+      filter[req.params.param] = req.params.id;
+  
+      History.find(filter)
+      .then(histories => res.status(200).json(histories))
+      .catch(error => res.status(400).render('pages/error',{ error: "Historique introuvable"} ));
+    }
+
+  } catch {
+    res.status(400).render('pages/noaccess',{ error: `Vous n'avez pas accès à cette page`} );
+  }
 };

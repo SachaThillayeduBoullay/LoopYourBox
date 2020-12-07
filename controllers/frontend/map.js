@@ -4,10 +4,10 @@ global.fetch = require("node-fetch");
 exports.mapPage = async (req, res) => { 
     try {
         let url = `http://localhost:3000/api/partner/`;
-
+        
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
-
+        
         let foodType = Array.from(new Set(partnerInfo.map(element => element.foodType)));
         let chain = Array.from(new Set(partnerInfo.map(element => element.chain)));
         let postcode = Array.from(new Set(partnerInfo.map(element => element.address.postcode)));
@@ -24,6 +24,6 @@ exports.mapPage = async (req, res) => {
 
         res.render('pages/map/map', {partnerInfo, selectInfo})
     } catch {
-        res.status(401).json({error: 'Failed Request'});
+        res.status(401).render('pages/error',{ error: `Requête invalide`});
     }
 };

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <meta charset='utf-8' />
+   <title>Local search app</title>
+   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+   <link rel="stylesheet" href="/css/materialize.css">
+   <link rel="stylesheet" href="/css/my_history.css">
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+   <!-- NARBAR -->
+   <%- include('../../layouts/navbar.ejs') -%>
+   <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
+   <div class="container">
+      <div class="row">
+         <h2 class="sub_page-heading">Mon historique</h2>
+      </div>
+      <div class="user-history">
+         <% historyInfo.forEach((history) => { %>
+            <div class="history-wrapper">
+               <a href="/history/<%= history.reference %>"><span class="history-action"><%= history.action %></span> <%= history.date %> 
+                  </a><i
+                  class="fas fa-chevron-right"></i>
+            </div>
+         <% }); %>
+      </div>
+
+   </div>
+
+</body>
+
+<script src="/js/bin/materialize.js"></script>
+<script src="/js/bin/materialize-init.js"></script>
+
+</html>

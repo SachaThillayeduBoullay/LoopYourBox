@@ -67,5 +67,20 @@ body {
             width: 7rem;
          }
       }
+      
+      #modal {
+         .modal-footer {
+            text-align: center;
+            a {
+               margin: 0 0.5rem;
+            }
+         }
+
+         .danger {
+            border-radius: 50px;
+            background: red;
+            color: $secondary-color;
+         }
+      }
    }
 }

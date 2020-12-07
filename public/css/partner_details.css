@@ -29,6 +29,17 @@ body .container .admin-button a {
   border-bottom: 1px solid rgba(203, 203, 203, 0.976);
 }
 
+.backBtn {
+  position: fixed;
+  top: 0.7rem;
+  left: 1rem;
+  border-radius: 100%;
+  background: rgba(236, 236, 236, 0.976);
+  color: #43a047;
+  padding: 0.9rem 1rem;
+  z-index: 1000;
+}
+
 .m-1 {
   margin: 1rem;
 }
@@ -344,6 +355,7 @@ body .container .admin-button a {
 }
 
 body {
+  position: relative;
   background: rgba(246, 246, 246, 0.976);
   font-family: "Montserrat", sans-serif;
 }
@@ -546,5 +558,19 @@ body .container .admin-button a {
   color: #fff;
   background: #43a047;
   width: 7rem;
+}
+
+body .container #modal .modal-footer {
+  text-align: center;
+}
+
+body .container #modal .modal-footer a {
+  margin: 0 0.5rem;
+}
+
+body .container #modal .danger {
+  border-radius: 50px;
+  background: red;
+  color: #fff;
 }
 /*# sourceMappingURL=partner_details.css.map */
