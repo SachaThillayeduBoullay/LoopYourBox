@@ -1,0 +1,35 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+
+body {
+   .container {
+      .block {
+         padding: 2rem 0;
+         margin: 0 auto;
+         @include flex(row, flex-start, center);
+         width: 80%;
+         border-bottom: 1px solid darken($base-grey, 30%);
+
+         &:last-child {
+            border-bottom: none;
+         }
+         i {
+            color: $primary-color;
+            width: 30%;
+            text-align: center;
+         }
+         a {
+            font-size: 1.4rem;
+            color: darken($base-grey, 55%);
+            text-transform: uppercase;
+            font-weight: 500;
+         }
+      }
+   }
+}

@@ -14,10 +14,22 @@
     <%- include('../../layouts/navbar.ejs') -%>
     <!-- MAIN -->
     <main class="container">
+        <div class="row">
+            <h2 class="sub_page-heading">Hello!</h2>
+         </div>
+        <div class="wrapper">
+            <div class="points fidelite"><%= pointInfo.loyaltyPoint %> </div>
+            <div class="fidelite">Points de fidélité</div>
+        </div>
+        <div class="wrapper">
+            <div class="points credit"><%= pointInfo.credit%></div>
+            <div class="credit">Crédits</div>
+        </div>
 
-        <p>Points de fidélité : <%= pointInfo.loyaltyPoint %> </p>
-        <p>Crédits: <%= pointInfo.credit%></p>
-        <p>Impact environnemental: <%= pointInfo.environmentalImpact.$numberDecimal %></p>
+        <div class="wrapper">
+            <div class="points impact"><%= pointInfo.environmentalImpact.$numberDecimal %></div>
+            <div class="impact">Impact environnemental</div>
+        </div>
         <!-- <form action="/api/point/<%= pointInfo.userId %>?_method=PUT" method="POST">
             <label for="credit">Crédit</label>
             <input type="number" name="credit">

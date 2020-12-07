@@ -6,16 +6,18 @@
    <title>Use the geocoder without a map</title>
    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
    <link rel="stylesheet" href="/css/materialize.css">
+   <link rel="stylesheet" href="/css/container_details.css">
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
    <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
    <div class="container">
       <div class="row">
-         <h2 class="col s12">Créer nouveau contenant</h2>
+         <h2 class="sub_page-heading">Créer contenant</h2>
       </div>
       <div class="row">
-         <form class="col s12" action="api/container/<%= partnerId %>" method="POST" enctype="multipart/form-data">
+         <form class="" action="api/container/<%= partnerId %>" method="POST" enctype="multipart/form-data">
             <% if (userStatus =="admin") { %>
             <div hidden>
                <p>

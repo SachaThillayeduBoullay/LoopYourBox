@@ -427,23 +427,12 @@ body {
   font-size: 1.2rem;
 }
 
-body .container {
-  margin-bottom: 5rem;
-}
-
-body .container .wrapper {
-  margin: 2rem auto;
-  text-align: center;
-  font-size: 1.5rem;
-}
-
-body .container .wrapper .points {
-  margin: 0 auto;
-  height: 130px;
-  width: 130px;
-  border-radius: 100%;
-  border: 15px solid #43a047;
-  font-size: 1.8rem;
+body .container .list-item {
+  border-radius: 5px;
+  margin: 0.8rem auto;
+  background: rgba(229, 229, 229, 0.976);
+  width: 90%;
+  padding: 1.2rem 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -453,11 +442,26 @@ body .container .wrapper .points {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
-/*# sourceMappingURL=point.css.map */
+
+body .container .list-item:nth-child(odd) {
+  background: rgba(241, 241, 241, 0.976);
+}
+
+body .container .list-item a {
+  color: rgba(25, 25, 25, 0.976);
+  font-weight: 500;
+  margin-left: 1rem;
+  font-size: 1.1rem;
+}
+
+body .container .list-item i {
+  margin-right: 1rem;
+}
+/*# sourceMappingURL=dashboard_pages.css.map */

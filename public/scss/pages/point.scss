@@ -9,6 +9,26 @@
 
 body {
    .container {
-      
+      .wrapper {
+         margin: 2rem auto;
+         text-align: center;
+         font-size: 1.5rem;
+         .points {
+            margin: 0 auto;
+            height: 130px;
+            width: 130px;
+            border-radius: 100%;
+            border: 15px solid $primary-color;
+            font-size: 1.8rem;
+            @include flex(row, center, center);
+         }
+
+         // .fidelite {
+         //    color: blue;
+         //    border: 20px solid blue;
+         // }
+      }
+
+      margin-bottom: 5rem;
    }
 }

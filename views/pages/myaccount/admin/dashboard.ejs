@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Account</title>
-    <link rel="stylesheet" href="/css/home.css">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/admin_dashboard.css">
     <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
 
@@ -15,16 +15,27 @@
     <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
     <div class="container">
         <div class="row">
-
-            <p><a class="col s4 offset-s1 btn green darken-1" href="/dashboard/user">Utilisateur</a></p>
-            <p><a class="col s4 offset-s2 btn green darken-1" href="/dashboard/partner">Partenaire</a></p>
-            <p><a class="col s3 offset-s2 btn green darken-1 " href="/dashboard/container">Contenant</a></p>
-            <p><a class="col s3 offset-s2 btn green darken-1 " href="/dashboard/history">Historique</a></p>
-
+            <h2 class="sub_page-heading">Admin Dashboard</h2>
+         </div>
+        <div class="row">
+            <div class="block">
+                <i class="fas fa-3x fa-users"></i>
+                <a class="col s4 offset-s1 btn green darken-1" href="/dashboard/user">Utilisateurs</a> 
+            </div>
+            <div class="block">
+                <i class="far fa-3x fa-handshake"></i>
+                <a class="col s4 offset-s2 btn green darken-1" href="/dashboard/partner">Partenaires</a>
+            </div>
+            <div class="block">
+                <i class="fas fa-3x fa-archive"></i>
+                <a class="col s3 offset-s2 btn green darken-1 " href="/dashboard/container">Contenants</a>
+            </div>
+            <div class="block">
+                <i class="fas fa-3x  fa-history"></i>
+                <a class="col s3 offset-s2 btn green darken-1 " href="/dashboard/history">Historique</a>
+            </div>
         </div>
-
     </div>
-
 </body>
 
 </html>

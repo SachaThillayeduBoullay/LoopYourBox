@@ -427,23 +427,9 @@ body {
   font-size: 1.2rem;
 }
 
-body .container {
-  margin-bottom: 5rem;
-}
-
-body .container .wrapper {
-  margin: 2rem auto;
-  text-align: center;
-  font-size: 1.5rem;
-}
-
-body .container .wrapper .points {
+body .container .block {
+  padding: 2rem 0;
   margin: 0 auto;
-  height: 130px;
-  width: 130px;
-  border-radius: 100%;
-  border: 15px solid #43a047;
-  font-size: 1.8rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -453,11 +439,30 @@ body .container .wrapper .points {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  width: 80%;
+  border-bottom: 1px solid rgba(127, 127, 127, 0.976);
 }
-/*# sourceMappingURL=point.css.map */
+
+body .container .block:last-child {
+  border-bottom: none;
+}
+
+body .container .block i {
+  color: #43a047;
+  width: 30%;
+  text-align: center;
+}
+
+body .container .block a {
+  font-size: 1.4rem;
+  color: rgba(63, 63, 63, 0.976);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+/*# sourceMappingURL=admin_dashboard.css.map */

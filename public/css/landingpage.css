@@ -503,4 +503,17 @@ body {
   background: #43a047;
   color: #fff;
 }
+
+.container .error {
+  padding: 12rem 0 0 0;
+  color: black;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+.container .error-message {
+  color: red;
+  font-size: 2rem;
+  padding: 2rem 0;
+}
 /*# sourceMappingURL=landingpage.css.map */
