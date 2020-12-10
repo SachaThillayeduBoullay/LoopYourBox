@@ -46,7 +46,7 @@ exports.myContainerPage = async (req, res) => {
       };
 
       if (status == "partner") {
-        console.log('partner')
+        
         let url = `http://localhost:3000/api/partner/container/${userId}`;
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
@@ -94,6 +94,7 @@ exports.myHistoryPage = async (req, res) => {
 
       } else if( status == "member") {
         urlHistory = `http://localhost:3000/api/history/userId/${userId}`;
+      
       }
 
       let historyInfo = await fetch(urlHistory, myInit);
@@ -114,6 +115,22 @@ exports.myHistoryPage = async (req, res) => {
       res.render('pages/myaccount/myhistory', {historyInfo});
 
   } catch {
-  res.status(401).render('pages/error',{ error: `Requête invalide`});
+    res.status(401).render('pages/error',{ error: `Requête invalide`});
   }
 }
+
+exports.cgvPage = async (req, res) => { 
+  res.render('pages/myaccount/CGV')
+};
+
+exports.faqPage = async (req, res) => { 
+  res.render('pages/myaccount/FAQ')
+};
+
+exports.contactPage = async (req, res) => { 
+  res.render('pages/myaccount/contact')
+};
+
+exports.aboutUsPage = async (req, res) => { 
+  res.render('pages/myaccount/aboutus')
+};

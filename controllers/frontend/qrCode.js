@@ -52,14 +52,7 @@ exports.confirmationPage = async (req, res) => {
 
         let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();
-
-        let urlPartner = `http://localhost:3000/api/partner/${historyInfo.partnerId}`;
-        let partnerInfo = await fetch(urlPartner, myInit);
-        partnerInfo = await partnerInfo.json();
-
-        let urlContainer = `http://localhost:3000/api/container/${historyInfo.containerId}`;
-        let containerInfo = await fetch(urlContainer);
-        containerInfo = await containerInfo.json();
+        historyInfo = historyInfo[0];
 
         //const localNow = new Date (historyInfo.date.getTime() -  ( historyInfo.timeOffset * 60000 ));
         let date = historyInfo.date.split('T')[0].split('-');
@@ -73,10 +66,10 @@ exports.confirmationPage = async (req, res) => {
             date: `${dateString} - ${time}`,
             
             partner: {
-                name: partnerInfo.name,
-                city: partnerInfo.address.city
+                name: historyInfo.partnerInfo.name,
+                city: historyInfo.partnerInfo.address.city
             },
-            containerName: containerInfo.name,
+            containerName: historyInfo.containerInfo.name,
             action: historyInfo.action,
             //time: localNow
         }

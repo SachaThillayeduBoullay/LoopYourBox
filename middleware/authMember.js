@@ -23,6 +23,6 @@ module.exports = async (req, res, next) => {
             next();
         }
     } catch (error) {
-        res.status(401).render('pages/noacces',{error})
+        res.status(401).render('pages/noaccess',{error})
     }
 };
