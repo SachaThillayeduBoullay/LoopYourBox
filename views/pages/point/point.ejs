@@ -15,7 +15,7 @@
     <!-- MAIN -->
     <main class="container">
         <div class="row">
-            <h2 class="sub_page-heading">Hello!</h2>
+            <h2 class="sub_page-heading">Points</h2>
          </div>
         <div class="wrapper">
             <div class="points fidelite"><%= pointInfo.loyaltyPoint %> </div>
@@ -30,7 +30,7 @@
             <div class="points impact"><%= pointInfo.environmentalImpact.$numberDecimal %></div>
             <div class="impact">Impact environnemental</div>
         </div>
-        <!-- <form action="/api/point/<%= pointInfo.userId %>?_method=PUT" method="POST">
+        <form action="/api/point/<%= pointInfo.userId %>?_method=PUT" method="POST">
             <label for="credit">Crédit</label>
             <input type="number" name="credit">
             <label for="loyaltyPoint">Points de fidélité</label>
@@ -38,7 +38,7 @@
             <label for="environmentalImpact">Impact environnemental</label>
             <input type="number" name="environmentalImpact">
             <input type="submit" value="Update">
-        </form> -->
+        </form> 
     </main>
 
 </body>

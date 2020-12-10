@@ -31,25 +31,31 @@
         <div class="setting-wrapper">
             <div class="user_account">
                 <div class="user_account-heading padding">Mon Compte</div>
-                <div class="link padding">
-                    <a class="" href="/updateUser/<%= userInfo._id %>">Modifier mes informations</a> <i
-                        class="fas fa-chevron-right"></i>
-                </div>
-
-                <div class="link padding">
-                    <a class="modal-trigger" href="#modal">Supprimer moncompte</a> <i class="fas fa-chevron-right"></i>
-                </div>
+                <a class="" href="/updateUser/<%= userInfo._id %>">
+                    <div class="link padding">
+                        Modifier mes informations <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
+                <a class="modal-trigger" href="#modal">
+                    <div class="link padding">
+                        Supprimer mon compte <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
                 <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
+                <a href="/mycontainer/<%= userInfo._id %>">
                     <div class="link padding">
-                        <a href="/mycontainer/<%= userInfo._id %>">Mes contenants</a> <i
+                        Mes contenants<i
                         class="fas fa-chevron-right"></i>
                     </div>
-                    <% } %>
+                </a> 
+                <% } %>
                 <% if(userInfo.status != "admin") {%>
+                <a href="/myhistory/<%= userInfo._id %>">
                     <div class="link padding">
-                        <a href="/myhistory/<%= userInfo._id %>">Mon historique</a> <i
+                        Mon historique <i
                         class="fas fa-chevron-right"></i>
                     </div>
+                </a>
                 <%}%> 
                 
                 <!-- Modal Structure -->
@@ -65,28 +71,32 @@
                 </div>
          
 
-<<<<<<< HEAD
-            <% if(userInfo.status =="admin") {%>
             <div>
-                            <h5>Dashboard</h5>
-            <p><a href="/dashboard">Dashboard</a></p>
+                <h5 class="user_account-heading padding">Informations</h5>
+                <a href="/cgv">
+                <div class="link padding">
+                    Conditions générales de vente 
+                    <i class="fas fa-chevron-right"></i>
+                </div></a>
+                <a href="/faq">
+                <div class="link padding">
+                    FAQ
+                    <i class="fas fa-chevron-right"></i>
+                </div></a> 
+                <a href="/contact">
+                <div class="link padding">
+                    Contact
+                    <i class="fas fa-chevron-right"></i>
+                </div></a> 
+                <a href="/aboutus">
+                <div class="link padding">
+                    A propos
+                    <i class="fas fa-chevron-right"></i>
+                </div></a>
+         
+        
             </div>
-            <%}%>
-            <div>
-                <h5>Informations</h5>
-            <p><a href="/cgv">Conditions générales de vente</a></p>
-            <p><a href="/faq">FAQ</a></p>
-            <p><a href="/contact">Contact</a></p>
-            <p><a href="/aboutus">A propos</a></p>
-            </div>
-            <div>
-                <h5>Déconnexion</h5>
-            <p><a href="/api/logout">Déconnexion</a></p>
-            </div>
-=======
 
-            <!-- ============= -->
->>>>>>> Lap
 
                  
 
@@ -133,9 +143,10 @@
                  <% if(userInfo.status =="admin") {%>
                     <div class="admin_account">
                         <div class="admin_account-heading padding">Dashboard</div>
+                        <a href="/dashboard">
                         <div class="link padding">
-                            <a href="/dashboard">Dashboard</a> <i class="fas fa-chevron-right"></i>
-                        </div>
+                            Dashboard <i class="fas fa-chevron-right"></i>
+                        </div></a>
                     </div>
                     <%}%>
     

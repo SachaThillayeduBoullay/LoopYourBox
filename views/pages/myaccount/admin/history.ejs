@@ -12,18 +12,22 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-    <!-- NARBAR -->
-    <%- include('../../../layouts/navbar.ejs') -%>
-<div class="container">
-  <div class="row">
-    <a class="backBtn" href="/dashboard ">Retour</a>
-     <h2 class="col s12">History</h2>
-  </div>
-  <div class="row collection">
-    <% historyInfo.forEach((history) => { %>
-        <a href="/history/<%= history.reference %>" class="col s12 collection-item"><%= history.reference %></a>
-    <% }); %>
+
+  <!-- NARBAR -->
+  <%- include('../../../layouts/navbar.ejs') -%>
+  <a class="backBtn" href="/dashboard"><i class="fas fa-arrow-left"></i></a>
+  <div class="container">
+    <div class="row">
+      <h2 class="sub_page-heading">History</h2>
+    </div>
+    <div class="list">
+      <% historyInfo.forEach((history) => { %>
+         <a href="/history/<%= history.reference %>">
+      <div class="list-item">
+         <%= history.reference %><i class="fas fa-chevron-right"></i>
+      </div></a>
+      <% }); %>
+   </div>
   </div>
 
   <div id='filter' data-target="filter-form" class="waves-effect waves-light btn modal-trigger">
@@ -117,24 +121,6 @@
 
 </div>
 
-=======
-  <!-- NARBAR -->
-  <%- include('../../../layouts/navbar.ejs') -%>
-  <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
-  <div class="container">
-    <div class="row">
-      <h2 class="sub_page-heading">History</h2>
-    </div>
-    <div class="list">
-      <% historyInfo.forEach((history) => { %>
-      <div class="list-item">
-         <a href="/history/<%= history.reference %>"><%= history.reference %></a><i class="fas fa-chevron-right"></i>
-      </div>
-      <% }); %>
-   </div>
-  </div>
-
->>>>>>> Lap
 </body>
    <!-- SCRIPTS -->
    <script src="/js/bin/materialize.js"></script>

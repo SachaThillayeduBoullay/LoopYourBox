@@ -20,9 +20,11 @@
       </div>
       <div class="list">
          <% partnerInfo.forEach((partner) => { %>
-         <div class="list-item">
-            <a href="/partner/<%= partner._id %>"><%= partner.name %></a><i class="fas fa-chevron-right"></i>
-         </div>
+         <a href="/partner/<%= partner._id %>">
+            <div class="list-item">
+               <%= partner.name %><i class="fas fa-chevron-right"></i>
+            </div>
+         </a>
          <% }); %>
       </div>
    </div>
