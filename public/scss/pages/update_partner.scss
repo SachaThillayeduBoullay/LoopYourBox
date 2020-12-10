@@ -1,0 +1,16 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+
+body {
+   .container {
+      width: 90%;
+
+      padding-bottom: 70px;
+   }
+}

@@ -2,6 +2,7 @@
 <html>
 
 <head>
+<<<<<<< HEAD
    <meta charset='utf-8' />
    <title>Local search app</title>
    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
@@ -42,5 +43,34 @@
 <script src="/js/bin/materialize.js"></script>
 <script src="/js/bin/materialize-init.js"></script>
 
+=======
+  <meta charset='utf-8' />
+  <title>Local search app</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <link rel="stylesheet" href="/css/materialize.css">
+  <link rel="stylesheet" href="/css/dashboard_pages.css">
+  <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <!-- NARBAR -->
+  <%- include('../../../layouts/navbar.ejs') -%>
+  <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
+  <div class="container">
+    <div class="row">
+      <h2 class="sub_page-heading">List of users</h2>
+    </div>
+    <div class="list">
+      <% userInfo.forEach((user) => { %>
+      <div class="list-item">
+         <a href="/user/<%= user._id %>"><%= user.firstname %></a><i class="fas fa-chevron-right"></i>
+      </div>
+      <% }); %>
+   </div>
+
+  </div>
+
+>>>>>>> Lap
 </body>
 </html>

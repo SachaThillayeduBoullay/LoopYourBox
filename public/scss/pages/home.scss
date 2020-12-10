@@ -11,9 +11,7 @@
         font-size: $title-fontSize;
         color: lighten($base-black, 20%);
     }
-
     .carousel-wrapper {
-
         .carousel {
             height: 200px;
         }
@@ -24,8 +22,6 @@
             font-weight: 600;
             padding: 1rem 0;
         }
-
-       
     }
     
     section:last-child {

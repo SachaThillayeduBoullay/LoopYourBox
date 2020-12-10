@@ -1,0 +1,38 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+
+body {
+   .container {
+
+      .list {
+         &-item {
+            border-radius: 5px;
+            margin: 0.8rem auto;
+            background: lighten($base-grey, 10%);
+            width: 90%;
+            padding: 1.2rem 0;
+            @include flex(row, space-between, center);
+            &:nth-child(odd) {
+               background: lighten($base-grey, 15%);
+            }
+
+            a {
+               color: darken($base-grey, 70%);
+               font-weight: 500;
+               margin-left: 1rem;
+               font-size: 1.1rem;
+            }
+
+            i {
+               margin-right: 1rem;
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,32 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+
+
+body {
+   .container {
+      width: 90%;
+   }
+
+   .confirmation-content {
+      .heading, .message {
+         color: $primary-color;
+         font-size: 1.5rem;
+         font-weight: 600;
+         text-align: center;
+         padding: 1rem 0;
+      }
+
+      .date, .partner {
+         padding: 1rem 0;
+         font-size: 1.2rem;
+         font-weight: 500;
+         text-align: center;
+      }
+   }
+}

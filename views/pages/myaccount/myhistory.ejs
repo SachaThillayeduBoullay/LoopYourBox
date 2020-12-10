@@ -6,24 +6,27 @@
    <title>Local search app</title>
    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
    <link rel="stylesheet" href="/css/materialize.css">
-
-
+   <link rel="stylesheet" href="/css/my_history.css">
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-        <!-- NARBAR -->
-        <%- include('../../layouts/navbar.ejs') -%>
+   <!-- NARBAR -->
+   <%- include('../../layouts/navbar.ejs') -%>
+   <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
    <div class="container">
       <div class="row">
-         <a class="backBtn" onclick="window.history.back();">Retour</a>
-         <h2 class="col s12">Mon historique</h2>
+         <h2 class="sub_page-heading">Mon historique</h2>
       </div>
-      <div class="row collection">
+      <div class="user-history">
          <% historyInfo.forEach((history) => { %>
-         <a href="/history/<%= history.reference %>" class="col s12 collection-item"><%= history.date %> <%= history.action %></a>
+            <div class="history-wrapper">
+               <a href="/history/<%= history.reference %>"><span class="history-action"><%= history.action %></span> <%= history.date %> 
+                  </a><i
+                  class="fas fa-chevron-right"></i>
+            </div>
          <% }); %>
       </div>
-
 
    </div>
 

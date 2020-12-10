@@ -1,0 +1,46 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+
+body {
+   .container {
+      width: 90%;
+
+      .user-history {
+         @include flex(column, space-around, center);
+
+         .history-wrapper {
+            @include flex(row, space-between, center);
+            width: 90%;
+            padding: 1.2rem 0.5rem 1.2rem 1rem;
+            border-radius: 5px;
+
+            a {
+               color: darken($base-grey, 50%);
+               font-weight: 500;
+            }
+
+            &:nth-child(odd) {
+               background: lighten($base-grey, 20%);
+            }
+         }
+
+         .history-action {
+            color: $primary-color;
+            // margin-left: 0.5rem;
+         }
+      }
+
+      .btn {
+         margin-top: 1rem;
+         color: $secondary-color;
+      }
+
+      padding-bottom: 60px;
+   }
+}

@@ -1,0 +1,55 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+body {
+   .container {
+      margin-bottom: 3rem;
+
+      .reference {
+         text-align: center;
+         padding: 0 0 1rem 0;
+         font-weight: 500;
+         letter-spacing: 1px;
+      }
+
+      .container-img {
+         width: 90%;
+         margin: 0 auto;
+         img {
+            border-radius: $card-radius;
+         }
+      }
+
+      .history,
+      .container-details,
+      .partner-details {
+         width: 90%;
+         background: $secondary-color;
+         border-radius: $card-radius;
+         padding: 1rem 0;
+         margin: 2rem auto;
+
+         .block {
+            padding: 0.5rem 0;
+            margin-left: 1rem;
+            height: auto;
+            .left {
+               width: 30%;
+               font-weight: 500;
+            }
+         }
+
+         .heading {
+            color: $primary-color;
+            font-weight: 500;
+            font-size: 1.2rem;
+         }
+
+      }
+   }
+}

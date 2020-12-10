@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="/css/qrcode_generator.css">
+    <link rel="stylesheet" href="/css/materialize.css">
+    <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
+    <!-- NARBAR -->
+    <%- include('../../layouts/navbar.ejs') -%>
+    <!-- MAIN -->
+    <main class="container">
+        <div class="row">
+            <h2 class="sub_page-heading">Generate new QR code</h2>
+        </div>
+        <form action="api/qrcode" method="POST" class="row">
+            <select name="action">
+                <option value="emprunt">Emprunt</option>
+                <option value="réutilisation">Réutilisation</option>
+                <option value="retour">Retour</option>
+            </select>
+            <select name="containerId">
+                <% containerInfo.forEach((container)=>{%>
+                <option value="<%= container._id%>"><%= container.name%></option>
+                <%})%>
+            </select>
+            <input type="hidden" name="partnerId" id="partnerId" value="<%= partnerId%>" required>
 
-    <form action="api/qrcode" method="POST" >
-        
-        <select name="action">
-            <option value="emprunt">Emprunt</option>
-            <option value="réutilisation">Réutilisation</option>
-            <option value="retour">Retour</option>
-        </select>
-        <select name="containerId">
-        <% containerInfo.forEach((container)=>{%>
-            <option value="<%= container._id%>"><%= container.name%></option>
-        <%})%>
-        </select>
-        <input type="hidden" name="partnerId" id="partnerId" value="<%= partnerId%>" required>
-
-        <button class="waves-effect waves-light btn blue-grey darken-3">Create</button>
-    </form>
-
-
+            <button class="col s8 offset-s2 waves-effect waves-light btn green darken-1">Create</button>
+        </form>
+    </main>
+    <!-- SCRIPTS -->
+    <script src="/js/bin/materialize.js"></script>
+    <script src="/js/bin/materialize-init.js"></script>
 </body>
+
 </html>
