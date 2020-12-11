@@ -574,3 +574,7 @@ body .container #modal .danger {
   color: #fff;
 }
 /*# sourceMappingURL=partner_details.css.map */
+
+.fa-info-circle, .fa-clock {
+  margin-right: 10px;
+} 
