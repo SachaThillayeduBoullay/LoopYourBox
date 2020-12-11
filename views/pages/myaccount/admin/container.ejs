@@ -22,10 +22,9 @@
     </div>
     <div class="list">
       <% containerInfo.forEach((container) => { %>
-        <a href="/container/<%= container._id %>">
-        <div class="list-item">
-          <%= container.name %> <i class="fas fa-chevron-right"></i>
-        </div>
+        <a class="list-item" href="/container/<%= container._id %>">
+        <span ><%= container.name %></span> <i class="fas fa-chevron-right"></i>
+        
       </a>
       <% }); %>
     </div>

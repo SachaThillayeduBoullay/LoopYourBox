@@ -22,12 +22,11 @@
       </div>
       <div class="list">
          <% historyInfo.forEach((history) => { %>
-         <div class="list-item">
-            <a href="/history/<%= history.reference %>"><%= history.reference %></a><i class="fas fa-chevron-right"></i>
-         </div>
+         <a class="list-item" href="/history/<%= history.reference %>"> <span><%= history.reference %></span> <i
+            class="fas fa-chevron-right"></i></a>
          <% }); %>
       </div>
-      
+
       <div id='filter' data-target="filter-form" class="waves-effect waves-light btn modal-trigger">
          <a><i class="fas fa-filter"></i></a>
       </div>

@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Account</title>
-    <!-- <link rel="stylesheet" href="/css/home.css"> -->
     <link rel="stylesheet" href="/css/my_account.css">
     <link rel="stylesheet" href="/css/materialize.css">
     <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
@@ -34,51 +33,18 @@
         <div class="setting-wrapper">
             <div class="user_account">
                 <div class="user_account-heading padding">Mon Compte</div>
-<<<<<<< HEAD
-                <div class="link padding">
-                    <a class="" href="/updateUser/<%= userInfo._id %>">Modifier mes informations</a> <i
-                        class="fas fa-chevron-right"></i>
-                </div>
-
-                <div class="link padding">
-                    <a class="modal-trigger" href="#modal">Supprimer mon compte</a> <i class="fas fa-chevron-right"></i>
-                </div>
+                <a class="link padding" class="" href="/updateUser/<%= userInfo._id %>"> <span>Modifier mes informations
+                    </span>
+                    <i class="fas fa-chevron-right"></i></a>
+                <a class="link padding" class="modal-trigger" href="#modal"><span>Supprimer mon compte </span><i
+                        class="fas fa-chevron-right"></i></a>
                 <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
-                <div class="link padding">
-                    <a href="/mycontainer/<%= userInfo._id %>">Mes contenants</a> <i class="fas fa-chevron-right"></i>
-                </div>
+                <a class="link padding" href="/mycontainer/<%= userInfo._id %>"><span>Mes contenants </span><i
+                        class="fas fa-chevron-right"></i></a>
                 <% } %>
                 <% if(userInfo.status != "admin") {%>
-                <div class="link padding">
-                    <a href="/myhistory/<%= userInfo._id %>">Mon historique</a> <i class="fas fa-chevron-right"></i>
-                </div>
-=======
-                <a class="" href="/updateUser/<%= userInfo._id %>">
-                    <div class="link padding">
-                        Modifier mes informations <i class="fas fa-chevron-right"></i>
-                    </div>
-                </a>
-                <a class="modal-trigger" href="#modal">
-                    <div class="link padding">
-                        Supprimer mon compte <i class="fas fa-chevron-right"></i>
-                    </div>
-                </a>
-                <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
-                <a href="/mycontainer/<%= userInfo._id %>">
-                    <div class="link padding">
-                        Mes contenants<i
-                        class="fas fa-chevron-right"></i>
-                    </div>
-                </a> 
-                <% } %>
-                <% if(userInfo.status != "admin") {%>
-                <a href="/myhistory/<%= userInfo._id %>">
-                    <div class="link padding">
-                        Mon historique <i
-                        class="fas fa-chevron-right"></i>
-                    </div>
-                </a>
->>>>>>> Nath
+                <a class="link padding" href="/myhistory/<%= userInfo._id %>"><span>Mon historique </span><i
+                        class="fas fa-chevron-right"></i></a>
                 <%}%> 
                 
                 <!-- Modal Structure -->
@@ -93,120 +59,33 @@
             </div>
         </div>
 
-<<<<<<< HEAD
-
-=======
-            <div>
-                <h5 class="user_account-heading padding">Informations</h5>
-                <a href="/cgv">
-                <div class="link padding">
-                    Conditions générales de vente 
-                    <i class="fas fa-chevron-right"></i>
-                </div></a>
-                <a href="/faq">
-                <div class="link padding">
-                    FAQ
-                    <i class="fas fa-chevron-right"></i>
-                </div></a> 
-                <a href="/contact">
-                <div class="link padding">
-                    Contact
-                    <i class="fas fa-chevron-right"></i>
-                </div></a> 
-                <a href="/aboutus">
-                <div class="link padding">
-                    A propos
-                    <i class="fas fa-chevron-right"></i>
-                </div></a>
-         
-        
-            </div>
 
 
-                 
 
-                    <!-- ============ -->
+        <a class="link padding" href="/cgv"> <span>Conditions générales de vente</span> <i
+                class="fas fa-chevron-right"></i></a>
 
-                    
-                    <% if(userInfo.status =="partner") {%>
-                    <div class="partner_account">
-                        <div class="partner_account-heading padding">Mon Partenaire</div>
-                        <% if (!partnerInfo) {%>
-                        <div class="link padding">
-                            <a href="/createpartner">Ajouter</a><i class="fas fa-chevron-right"></i>
-                        </div>
+        <a class="link padding" href="/faq"> <span>FAQ</span> <i class="fas fa-chevron-right"></i></a>
 
-                        <%} else {%>
-                        <div class="link padding">
-                            <a href="/updatePartner/<%= partnerInfo._id %>">Modifier</a><i
-                                class="fas fa-chevron-right"></i>
-                        </div>
-                        <div class="link padding">
-                            <a class="modal-trigger" href="#modal2">Supprimer</a><i class="fas fa-chevron-right"></i>
-                        </div>
-                        <div id="modal2" class="modal">
-                            <div class="modal-content">
-                                <h4>Supprimer son compte ? </h4>
-                            </div>
-                            <div class="modal-footer">
-                                <a class="modal-close waves-effect waves-green btn-flat danger"
-                                    href="/api/partner/delete/<%= partnerInfo._id %>">Confirmer</a></i>
-                                <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
-                            </div>
-                        </div>
-                    </div>
-                    <%}%>
-                    <% } %>
->>>>>>> Nath
+        <a class="link padding" href="/contact"><span>Contact</span> <i class="fas fa-chevron-right"></i></a>
 
+        <a class="link padding" href="/aboutus"><span>A propos </span> <i class="fas fa-chevron-right"></i></a>
 
-        <div class="link padding">
-            <a href="/cgv">Conditions générales de vente</a> <i class="fas fa-chevron-right"></i>
-        </div>
-        <div class="link padding">
-            <a href="/faq">FAQ</a> <i class="fas fa-chevron-right"></i>
-        </div>
-        <div class="link padding">
-            <a href="/contact">Contact</a> <i class="fas fa-chevron-right"></i>
-        </div>
-        <div class="link padding">
-            <a href="/aboutus">A propos</a> <i class="fas fa-chevron-right"></i>
-        </div>
 
 
 
         <!-- ============ -->
 
-<<<<<<< HEAD
         <% if(userInfo.status =="partner") {%>
         <div class="partner_account">
             <div class="partner_account-heading padding">Mon Partenaire</div>
             <% if (!partnerInfo) {%>
-            <div class="link padding">
-                <a href="/createpartner">Ajouter</a><i class="fas fa-chevron-right"></i>
-=======
-                 <% if(userInfo.status =="admin") {%>
-                    <div class="admin_account">
-                        <div class="admin_account-heading padding">Dashboard</div>
-                        <a href="/dashboard">
-                        <div class="link padding">
-                            Dashboard <i class="fas fa-chevron-right"></i>
-                        </div></a>
-                    </div>
-                    <%}%>
-    
-            <div class="padding" id="logout">
-                <a href="/api/logout">Déconnexion</a> 
->>>>>>> Nath
-            </div>
-
+            <a class="link padding" href="/createpartner"> <span>Ajouter</span> <i class="fas fa-chevron-right"></i></a>
             <%} else {%>
-            <div class="link padding">
-                <a href="/updatePartner/<%= partnerInfo._id %>">Modifier</a><i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="link padding">
-                <a class="modal-trigger" href="#modal2">Supprimer</a><i class="fas fa-chevron-right"></i>
-            </div>
+            <a class="link padding" href="/updatePartner/<%= partnerInfo._id %>"><span>Modifier</span><i
+                    class="fas fa-chevron-right"></i></a>
+            <a class="link padding modal-trigger" href="#modal2"><span>Supprimer</span><i
+                    class="fas fa-chevron-right"></i></a>
             <div id="modal2" class="modal">
                 <div class="modal-content">
                     <h4>Supprimer son compte ? </h4>
@@ -226,9 +105,7 @@
         <% if(userInfo.status =="admin") {%>
         <div class="admin_account">
             <div class="admin_account-heading padding">Dashboard</div>
-            <div class="link padding">
-                <a href="/dashboard">Dashboard</a> <i class="fas fa-chevron-right"></i>
-            </div>
+            <a class="link padding" href="/dashboard"> <span>Admin Dashboard</span> <i class="fas fa-chevron-right"></i> </a>
         </div>
         <%}%>
     
