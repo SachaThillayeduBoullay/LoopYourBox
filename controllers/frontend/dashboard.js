@@ -112,8 +112,19 @@ exports.containerPage = async (req, res) => {
 
 exports.historyPage = async (req, res) => { 
     try {
+        let url;
+
+        if (req.query) {
+            let urlStringFilter = "?";
+            for (let property in req.query) {
+                urlStringFilter += `${property}=${req.query[property]}&`
+            }
+            urlStringFilter = urlStringFilter.slice(0, urlStringFilter.length-1)
+            url = `http://localhost:3000/api/history${urlStringFilter}`;
+        }
+
         const token = req.cookies["token"];
-        let url = `http://localhost:3000/api/history/`;
+        let urlAll = `http://localhost:3000/api/history/`;
 
         let myInit = {
             headers: {
@@ -124,7 +135,10 @@ exports.historyPage = async (req, res) => {
         let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();
 
-        res.render('pages/myaccount/admin/history', {historyInfo});
+        let selectInfo = await fetch(urlAll, myInit);
+        selectInfo = await selectInfo.json();
+
+        res.render('pages/myaccount/admin/history', {historyInfo, selectInfo});
     } catch {
         res.status(401).render('pages/error',{ error: `Requête invalide`});
     }

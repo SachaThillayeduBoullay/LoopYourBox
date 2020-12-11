@@ -47,6 +47,10 @@ router.get("/passwordrecovery", userCtrl.passwordRecoveryPage);
 router.get("/myaccount", authMember, myAccountCtrl.myAccountPage);
 router.get("/mycontainer/:id", authUser, myAccountCtrl.myContainerPage);
 router.get("/myhistory/:id", authUser, myAccountCtrl.myHistoryPage);
+router.get("/cgv", myAccountCtrl.cgvPage);
+router.get("/contact", myAccountCtrl.contactPage);
+router.get("/faq", myAccountCtrl.faqPage);
+router.get("/aboutus", myAccountCtrl.aboutUsPage);
 
 router.get("/history/:reference", myHistoryCtrl.historyDetailsPage);
 

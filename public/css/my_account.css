@@ -438,6 +438,7 @@ body {
 }
 
 body .container {
+  padding-bottom: 5rem;
   width: 80%;
   color: rgba(50, 50, 50, 0.976);
 }
@@ -494,7 +495,7 @@ body .container .setting-wrapper .link {
 }
 
 body .container .setting-wrapper .padding {
-  padding: 0.5rem 0;
+  padding: 0.7rem 0;
 }
 
 body .container .setting-wrapper #modal .modal-footer, body .container .setting-wrapper #modal2 .modal-footer {
