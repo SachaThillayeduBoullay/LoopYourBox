@@ -17,12 +17,12 @@ exports.qrCodePage = async (req, res) => {
                     }
                 };
 
-                let url = `http://localhost:3000/api/partner/container/${userId}`;
+                let url = `${process.env.DOMAIN}/api/partner/container/${userId}`;
         
                 let partnerInfo = await fetch(url, myInit);
                 partnerInfo = await partnerInfo.json();
         
-                let urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
+                let urlContainer = `${process.env.DOMAIN}/api/containerpartner/${partnerInfo._id}`;
                 let containerInfo = await fetch(urlContainer);
                 containerInfo = await containerInfo.json();
         
@@ -42,7 +42,7 @@ exports.confirmationPage = async (req, res) => {
         const reference = req.query.ref;
         const token = req.cookies["token"];
 
-        let url = `http://localhost:3000/api/history/${reference}`;
+        let url = `${process.env.DOMAIN}/api/history/${reference}`;
 
         let myInit = {
             headers: {
@@ -86,7 +86,7 @@ exports.qrCodePartnerPage = async (req, res) => {
         const decodedToken = jwt.verify(token, process.env.JWT_PW);
         const userId = decodedToken.userId;
 
-        let url = `http://localhost:3000/api/partner/container/${userId}`;
+        let url = `${process.env.DOMAIN}/api/partner/container/${userId}`;
 
         let myInit = {
             headers: {
@@ -97,7 +97,7 @@ exports.qrCodePartnerPage = async (req, res) => {
         let partnerInfo = await fetch(url, myInit);
         partnerInfo = await partnerInfo.json();
 
-        let urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
+        let urlContainer = `${process.env.DOMAIN}/api/containerpartner/${partnerInfo._id}`;
         let containerInfo = await fetch(urlContainer);
         containerInfo = await containerInfo.json();
 

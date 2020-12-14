@@ -11,12 +11,12 @@ exports.partnerPage = async (req, res) => {
             urlStringFilter += `${property}=${req.query[property]}&`
         }
         urlStringFilter = urlStringFilter.slice(0, urlStringFilter.length-1)
-        url = `http://localhost:3000/api/partner${urlStringFilter}`;
+        url = `${process.env.DOMAIN}/api/partner${urlStringFilter}`;
     
     }
     
     try {
-        let urlSelect = `http://localhost:3000/api/partner`;
+        let urlSelect = `${process.env.DOMAIN}/api/partner`;
 
         let partnerInfoForSelect = await fetch(urlSelect);
         partnerInfoForSelect = await partnerInfoForSelect.json();
@@ -35,7 +35,7 @@ exports.partnerPage = async (req, res) => {
         let postcode = Array.from(new Set(partnerInfoForSelect.map(element => element.address.postcode))).sort();
         let city = Array.from(new Set(partnerInfoForSelect.map(element => element.address.city))).sort();
 
-        let urlContainer = `http://localhost:3000/api/container/`;
+        let urlContainer = `${process.env.DOMAIN}/api/container/`;
 
         let containerInfo = await fetch(urlContainer);
         containerInfo = await containerInfo.json();
@@ -64,7 +64,7 @@ exports.partnerDetailsPage = async (req, res) => {
             statusInfo = await checkStatus(req.cookies["token"]);
         }
         
-        let url = `http://localhost:3000/api/partner/${req.params.id}`;
+        let url = `${process.env.DOMAIN}/api/partner/${req.params.id}`;
 
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
@@ -93,7 +93,7 @@ exports.createPartnerPage = (req, res) => {
 exports.updatePartnerPage = async (req, res) => { 
     try {
         const token = req.cookies['token'];
-        let url = `http://localhost:3000/api/partner/${req.params.id}`;
+        let url = `${process.env.DOMAIN}/api/partner/${req.params.id}`;
 
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();

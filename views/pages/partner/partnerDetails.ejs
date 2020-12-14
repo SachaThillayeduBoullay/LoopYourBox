@@ -18,7 +18,7 @@
     <main>
         <div class="hero-wrapper">
             <% if (partnerInfo.image!="noImage") {%>
-            <img src="http://localhost:3000/img/partner/<%= partnerInfo.image.filename %>"
+            <img src="/img/partner/<%= partnerInfo.image.filename %>"
                 alt="<%= partnerInfo.name %>">
             <% } %>
             <div class="partner_name"><%= partnerInfo.name %></div>

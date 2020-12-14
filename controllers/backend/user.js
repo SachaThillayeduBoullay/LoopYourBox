@@ -210,7 +210,7 @@ exports.lostPwd = (req, res, next) => {
             <h1>Loop Your Box</h1>
             <p>Please click on the link to change your password: </p>
             <p>
-                <a href="http://localhost:3000/passwordrecovery?id=${user._id}">Change password</a>
+                <a href="${process.env.DOMAIN}/passwordrecovery?id=${user._id}">Change password</a>
             </p>
             `,
       };

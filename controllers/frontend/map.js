@@ -3,7 +3,7 @@ global.fetch = require("node-fetch");
 
 exports.mapPage = async (req, res) => { 
     try {
-        let url = `http://localhost:3000/api/partner/`;
+        let url = `${process.env.DOMAIN}/api/partner/`;
         
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
