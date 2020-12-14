@@ -28,9 +28,11 @@
          </div>
          <% }); %>
       </div>
+      <% if (status === "partner" || status === "admin"){%>
       <div class="row">
          <a class="col s8 offset-s2 btn green darken-1" href="/createContainer">Add container</a>
       </div>
+      <%}%>
 
    </main>
 

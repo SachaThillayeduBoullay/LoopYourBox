@@ -61,7 +61,7 @@ exports.myContainerPage = async (req, res) => {
       let containerInfo = await fetch(urlContainer, myInit);
       containerInfo = await containerInfo.json();
 
-      res.render('pages/myaccount/mycontainer', {containerInfo});
+      res.render('pages/myaccount/mycontainer', {containerInfo, status});
 
   } catch {
   res.status(401).render('pages/error',{ error: `Requête invalide`});
