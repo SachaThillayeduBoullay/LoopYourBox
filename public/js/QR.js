@@ -65,7 +65,7 @@ async function tick() {
  
             try {
 
-                let urlQrcode = `${process.env.DOMAIN}/api/qrcode/${info}`   
+                let urlQrcode = `https://loopyourbox.herokuapp.com/api/qrcode/${info}`   
                 myInit = {
                         method: "GET",
                         headers: {
@@ -77,11 +77,11 @@ async function tick() {
                 qrcodeInfo = await qrcodeInfo.json();
                     
                 if (qrcodeInfo){
-                    let urlContainer = `${process.env.DOMAIN}/api/container/${qrcodeInfo.containerId}`;
+                    let urlContainer = `https://loopyourbox.herokuapp.com/api/container/${qrcodeInfo.containerId}`;
                     let containerInfo = await fetch(urlContainer);
                     containerInfo = await containerInfo.json();
 
-                    let urlPartner = `${process.env.DOMAIN}/api/partner/${qrcodeInfo.partnerId}`;
+                    let urlPartner = `https://loopyourbox.herokuapp.com/api/partner/${qrcodeInfo.partnerId}`;
                     let partnerInfo = await fetch(urlPartner);
                     partnerInfo = await partnerInfo.json();
                     
