@@ -50,8 +50,6 @@ exports.login = (req, res, next) => {
 };
 
 
-
-
 exports.signup = async (req, res, next) => {
   const schema = joi.object ().keys ({
     firstname: joi.string ().trim ().required (),
