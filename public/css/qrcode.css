@@ -448,7 +448,7 @@ body .container .canvas-wrapper #scanning-message {
   padding: 1rem 0;
 }
 
-body .container .canvas-wrapper #canvas {
+body .container .canvas-wrapper {
   width: 100%;
   margin: 10% auto;
   border-radius: 5px;
