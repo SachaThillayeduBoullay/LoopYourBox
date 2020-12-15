@@ -13,8 +13,13 @@
 <body>
    <!-- NARBAR -->
    <%- include('../../layouts/navbar.ejs') -%>
-   <!-- MAIN -->
-   <a class="backBtn" href="/container"><i class="fas fa-arrow-left"></i></a>
+   <!-- MAIN --> 
+   <a class="backBtn" 
+   <% if (status=="admin){%>
+      href="/dashboard/container"
+   <%} else if (status =="partner") {%>
+      href="/mycontainer/<%= containerInfo.partnerId %>"
+   <%}%>><i class="fas fa-arrow-left"></i></a>
    <main class="container">
       <div class="row">
          <h2 class="sub_page-heading">Détails du contenant</h2>

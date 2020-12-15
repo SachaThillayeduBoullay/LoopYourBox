@@ -14,7 +14,12 @@
     <!-- NARBAR -->
     <%- include('../../layouts/navbar.ejs') -%>
     <!-- MAIN -->
-    <a class="backBtn" href="/partner"><i class="fas fa-arrow-left"></i></a>
+    <a class="backBtn" 
+    <% if(statusInfo.userStatus == 'admin') {%>
+        href="/dashboard/partner"
+    <%} else if (statusInfo.userStatus == 'partner') {%>
+        href="/partner"
+    <%}%>><i class="fas fa-arrow-left"></i></a>
     <main>
         <div class="hero-wrapper">
             <% if (partnerInfo.image!="noImage") {%>

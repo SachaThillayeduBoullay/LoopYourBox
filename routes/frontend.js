@@ -29,7 +29,7 @@ router.get("/createPartner", authPartner, partnerCtrl.createPartnerPage);
 router.get("/updatePartner/:id", authOwnPartner, partnerCtrl.updatePartnerPage);
 
 // CONTAINER
-router.get("/container", containerCtrl.containerPage);
+//router.get("/container", containerCtrl.containerPage);
 router.get("/container/:id", containerCtrl.containerDetailsPage);
 router.get("/createContainer", authOwnPartner, containerCtrl.createContainerPage);
 router.get("/updateContainer/:id", authOwnPartner, containerCtrl.updateContainerPage);
