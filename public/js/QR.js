@@ -107,7 +107,7 @@ async function tick() {
 
 async function validation() {
     const token = getCookie("token");
-    let url = `${process.env.DOMAIN}/api/history`
+    let url = `https://loopyourbox.herokuapp.com/api/history`
     myInit = {
         method: "POST",
         headers: {
