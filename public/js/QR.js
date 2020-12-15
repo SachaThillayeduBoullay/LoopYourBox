@@ -35,7 +35,11 @@ function drawLine(begin, end, color) {
     canvas.stroke();
 }
 // Use facingMode: environment to attemt to get the front camera on phones
-navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
+navigator.mediaDevices.getUserMedia({ video: { 
+        facingMode: "environment", 
+        width: 640,
+        height: 480, 
+} }).then(function(stream) {
     video.srcObject = stream;
     video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
     video.play();
