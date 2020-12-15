@@ -500,3 +500,7 @@ body #informations #validation {
       align-self: center;
 }
 /*# sourceMappingURL=qrcode.css.map */
+
+#video {
+  width: 100%;
+}
