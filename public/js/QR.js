@@ -37,7 +37,7 @@ function drawLine(begin, end, color) {
 // Use facingMode: environment to attemt to get the front camera on phones
 navigator.mediaDevices.getUserMedia({ audio: false, video: {facingMode: "environment"} }).then(function(stream) {
     video.srcObject = stream;
-    video.seAttrubute("muted" , true);
+    video.setAttrubute("muted" , true);
     video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
     video.setAttribute("autoplay" , true);
     video.play();
