@@ -27,7 +27,7 @@ exports.getOneUser = (req, res, next) => {
 
 
 exports.login = (req, res, next) => {
-  User.findOne ({email: req.body.email})
+  User.findOne ({email: req.body.email.toLowerCase()})
     .then (user => {
       if (!user) {
         return res.status(401).render('pages/error',{ error: `Membre introuvable`});
@@ -41,15 +41,13 @@ exports.login = (req, res, next) => {
           const token = jwt.sign ({userId: user._id}, process.env.JWT_PW, {
             expiresIn: '24h',
           });
-          res.cookie ('token', token);
+          res.cookie ('token', token, { maxAge: 1000*60*60*24*30*12 });
           res.status(200).redirect ('/partner');
         })
         .catch (error => res.status(500).render('pages/error',{ error: `Cryptage du mot de passe raté`}));
     })
     .catch (error => res.status(500).render('pages/error',{ error: `Membre introuvable`}));
 };
-
-
 
 
 exports.signup = async (req, res, next) => {
@@ -86,6 +84,7 @@ exports.signup = async (req, res, next) => {
       const user = new User ({
         ...req.body,
         password: hash,
+        email: req.body.email.toLowerCase()
       });
 
       const point = new Point ({
@@ -123,7 +122,11 @@ exports.updateUser = (req, res, next) => {
       .then (hash => {
         User.updateOne (
           {_id: req.params.id},
-          {...req.body, _id: req.params.id, password: hash}
+          {...req.body, 
+            _id: req.params.id, 
+            password: hash,
+            email: req.body.email.toLowerCase()
+          }
         )
           .then (() => {
             res.status(200).redirect ('/myaccount');
@@ -133,14 +136,29 @@ exports.updateUser = (req, res, next) => {
       .catch (error => res.render('pages/error',{ error: `Le mot de passe n'a pas pu être crypté`}));
   }
 
-
-
-
-  User.updateOne ({_id: req.params.id}, {...req.body, _id: req.params.id})
+  User.updateOne ({_id: req.params.id}, {...req.body, _id: req.params.id, email: req.body.email.toLowerCase()})
     .then (() => {
       res.status(200).redirect ('/myaccount');
     })
     .catch (error => res.status(400).render('pages/error',{ error: `Membre non modifié`}));
+};
+
+exports.updateUserStatus = (req, res, next) => {
+  const schema = joi.object ().keys ({
+      status: joi.string ().trim ().required (),
+    });
+  
+    const result = schema.validate (req.body);
+    if (result.error) {
+      res.status(400).render('pages/error',{ error: result.error.details[0].message});
+      return;
+  }
+
+User.updateOne ({_id: req.params.id}, {...req.body})
+  .then (() => {
+    res.status(200).redirect ('/dashboard/user');
+  })
+  .catch (error => res.status(400).render('pages/error',{ error: `Membre non modifié`}));
 };
 
 
@@ -158,8 +176,7 @@ exports.deleteUser = async (req, res, next) => {
   }
 
   await User.deleteOne ({_id: req.params.id})
-
-  res.status(200).render('pages/error',{ error: `Ce compte a été supprimé`})
+  res.clearCookie('token').status(200).redirect('/')
     
   } catch {
     res.status(400).render('pages/error',{ error: `Ce compte n'a pas pu être supprimé`});
@@ -168,7 +185,7 @@ exports.deleteUser = async (req, res, next) => {
 
 
 exports.lostPwd = (req, res, next) => {
-  User.findOne ({email: req.body.email})
+  User.findOne ({email: req.body.email.toLowerCase()})
     .then (user => {
       let transporter = nodemailer.createTransport ({
         host: 'felix.o2switch.net',
@@ -185,13 +202,13 @@ exports.lostPwd = (req, res, next) => {
 
       let mailOptions = {
         from: 'noreply@loopyourbox.com',
-        to: req.body.email,
+        to: req.body.email.toLowerCase(),
         subject: 'Password reset',
         html: `
             <h1>Loop Your Box</h1>
             <p>Please click on the link to change your password: </p>
             <p>
-                <a href="http://localhost:3000/passwordrecovery?id=${user._id}">Change password</a>
+                <a href="${process.env.DOMAIN}/passwordrecovery?id=${user._id}">Change password</a>
             </p>
             `,
       };

@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Confirmation</title>
+    <link rel="stylesheet" href="/css/qrcode_confirmation.css">
+    <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    
-
-<div class="content">
-<p>Merci pour <% if (result.action != "réutilisation"){%>ton <%= result.action%><%}else{%>ta <%= result.action%><%}%> de <%= result.containerName%> </p>
-    <p><%= result.date%></p>
-    <p><%= result.partner.name%> - <%= result.partner.city%></p>
-    
-    
-    
-
-    <p>Veuillez présenter cette confirmation au personnel.</p>
-</div>
-<!--<p><%= result.time%></p>-->
+    <!-- NARBAR -->
+    <%- include('../../layouts/navbar.ejs') -%>
+    <!-- MAIN -->
+    <main class="container">
+        <div class="row">
+            <h2 class="sub_page-heading">QR code confirmé!</h2>
+        </div>
+        <div class="confirmation-content">
+            <div class="heading">Merci pour <% if (result.action != "réutilisation"){%>ton <%= result.action%><%}else{%>ta
+                <%= result.action%><%}%> de <%= result.containerName%>
+            </div>
+            <!-- <div class="heading">Merci pour ta utilisation de this container mother fucker I dont fucking care!</div> -->
+            <div class="date"><%= result.date%></div>
+            <!-- <div class="date">01 December 2020</div> -->
+            <div class="partner"><%= result.partner.name%> - <%= result.partner.city%></div>
+            <!-- <div class="partner">De Pistolei - Etterbeek, Brussels</div> -->
+            <div class="message">Veuillez présentez cette confirmation au personnel!</div>
+            <!--<p><%= result.time%></p>-->
+        </div>
+    </main>
 </body>
-</html>
 
+</html>

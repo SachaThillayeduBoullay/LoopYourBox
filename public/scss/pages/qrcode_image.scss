@@ -1,0 +1,18 @@
+@import "../base/typography";
+@import "../utilities/variables";
+@import "../utilities/mixins";
+@import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
+
+
+
+body {
+   .container {
+      .image-wrapper {
+         width: 70%;
+         margin: 35% auto;
+      }
+   }
+}

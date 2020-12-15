@@ -6,27 +6,28 @@
    <title>Local search app</title>
    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
    <link rel="stylesheet" href="/css/materialize.css">
-
-
+   <link rel="stylesheet" href="/css/dashboard_pages.css">
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <!-- NARBAR -->
-    <%- include('../../../layouts/navbar.ejs') -%>
-<div class="container">
-  <div class="row">
-     <a class="backBtn" onclick="window.history.back();">Retour</a>
-     <h2 class="col s12">List of partners</h2>
-  </div>
-  <div class="row collection">
-    <% partnerInfo.forEach((partner) => { %>
-
-        <a href="/partner/<%= partner._id %>" class="col s12 collection-item"><%= partner.name %></a>
-
-   <% }); %>
-  </div>
-
-
-</div>
+   <!-- NARBAR -->
+   <%- include('../../../layouts/navbar.ejs') -%>
+   <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
+   <div class="container">
+      <div class="row">
+         <h2 class="sub_page-heading">List of partners</h2>
+      </div>
+      <div class="list">
+         <% partnerInfo.forEach((partner) => { %>
+         <a href="/partner/<%= partner._id %>">
+            <div class="list-item">
+               <%= partner.name %><i class="fas fa-chevron-right"></i>
+            </div>
+         </a>
+         <% }); %>
+      </div>
+   </div>
 
 </body>
 

@@ -1,18 +1,22 @@
 const express = require('express');
 const router = express.Router();
+
 const partnerCtrl = require('../controllers/backend/partner');
-const multer = require('../middleware/multer-config');
 const containerCtrl = require('../controllers/backend/container');
 const userCtrl = require('../controllers/backend/user');
 const historyCtrl = require('../controllers/backend/history');
 const qrcodeCtrl = require('../controllers/backend/qrcode');
 const pointCtrl = require('../controllers/backend/point');
 const userContainerCtrl = require('../controllers/backend/userContainer');
+const contactCtrl = require("../controllers/backend/contact");
+
 const authAdminBack = require("../middleware/authAdminBack");
 const authPartnerBack = require("../middleware/authPartnerBack");
 const authMemberBack = require("../middleware/authMemberBack");
 const authUserBack = require("../middleware/authUserBack");
 const authOwnPartnerBack = require("../middleware/authOwnPartnerBack");
+const multer = require('../middleware/multer-config');
+
 
 
 
@@ -37,6 +41,7 @@ router.post('/login', userCtrl.login);
 router.get('/user', authAdminBack, userCtrl.getAllUser);
 router.get('/user/:id', authUserBack, userCtrl.getOneUser);
 router.put('/user/:id', authUserBack, userCtrl.updateUser);
+router.put('/userStatus/:id', authUserBack, userCtrl.updateUserStatus);
 router.put('/user/password/:id', authUserBack, userCtrl.modifyPassword);
 router.put('/user/passwordrecovery/:id', userCtrl.recoveryPassword);
 router.get('/user/delete/:id',  authUserBack, userCtrl.deleteUser);
@@ -49,6 +54,8 @@ router.get('/history/:reference', historyCtrl.getOneHistory); // custom auth in 
 router.get('/history/:param/:id', historyCtrl.getAllHistoryForOneUser); // custom auth in controller
 /*router.put('/history/:id', historyCtrl.updateHistory);
 router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
+
+router.post('/contact', contactCtrl.sendEmail); 
 
 router.post('/qrcode', authPartnerBack, qrcodeCtrl.saveQrcode);
 router.get('/qrcode/:reference', authMemberBack, qrcodeCtrl.getOneQrcode);

@@ -6,54 +6,66 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Document</title>
    <link rel="stylesheet" href="/css/materialize.css">
+   <link rel="stylesheet" href="/css/history_details.css">
+   <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-   <div class="container">
+   <!-- NARBAR -->
+   <%- include('../../layouts/navbar.ejs') -%>
+   <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
+   <!-- MAIN -->
+   <main class="container">
+
       <div class="row">
-         <a class="backBtn" onclick="window.history.back();">Retour</a>
-         <h2 class="col s12"><%= historyInfo[0].reference %></h2>
+         <h2 class="sub_page-heading">History details</h2>
       </div>
+
       <div class="row">
-         <div class="col s12 container-img">
+         <div class="reference">REFERENCE: <%= historyInfo[0].reference %></div>
+
+         <div class="container-img">
             <% if (historyInfo[0].containerInfo.image!="noImage") {%>
-            <img src="http://localhost:3000/img/container/<%= JSON.parse(historyInfo[0].containerInfo.image).filename %>"
+            <img
+               src="/img/container/<%= JSON.parse(historyInfo[0].containerInfo.image).filename %>"
                alt="<%= historyInfo[0].containerInfo.name %>">
-            <% } %>
+         </div>
+         <% } %>
+
+         <div class="history">
+            <div class="block heading"><%= historyInfo[0].userInfo.firstname %> <%= historyInfo[0].userInfo.lastname %></div>
+            <div class="block">
+               <span class="left">Action:</span>  <%= historyInfo[0].action %>
+            </div>
+            <div class="block">
+               <span class="left">Time:</span> <%= historyInfo[0].date %>
+            </div>
          </div>
 
-         <ul class="collection with-header">
-            <li class="collection-header">
-               <h4><%= historyInfo[0].action %></h4>
-               <li class="collection-item"><%= historyInfo[0].date %></li>
-            </li>
-         </ul>
+         <div class="container-details">
+            <div class="block heading" ><%= historyInfo[0].containerInfo.name %></div>
+            <div class="block">
+              <span class="left">Credits:</span>  <%= historyInfo[0].containerInfo.credit %>
+            </div>
+            <div class="block">
+               <span class="left">Material:</span> <%= historyInfo[0].containerInfo.material %>
+            </div>
+         </div>
 
-         <ul class="collection with-header">
-            <li class="collection-header">
-               <h4><%= historyInfo[0].containerInfo.name %></h4>
-            </li>
-            <li class="collection-item"><%= historyInfo[0].containerInfo.credit %></li>
-            <li class="collection-item"><%= historyInfo[0].containerInfo.material %></li>
-         </ul>
-         <ul class="collection with-header">
-            <li class="collection-header">
-               <h4><%= historyInfo[0].userInfo.firstname %> <%= historyInfo[0].userInfo.lastname %></h4>
-            </li>
-         </ul>
-         <ul class="collection with-header">
-            <li class="collection-header">
-               <h4><%= historyInfo[0].partnerInfo.name %></h4>
-            </li>
-            <li class="collection-item"><%= historyInfo[0].partnerInfo.address.street %> <%= historyInfo[0].partnerInfo.address.postcode %> <%= historyInfo[0].partnerInfo.address.city %></li>
-         </ul>
-
-         
+         <div class="partner-details">
+            <div class="block heading"><%= historyInfo[0].partnerInfo.name %></div>
+            <div class="block">
+               <%= historyInfo[0].partnerInfo.address.street %>
+               <%= historyInfo[0].partnerInfo.address.postcode %>
+               <%= historyInfo[0].partnerInfo.address.city %>
+            </div>
+         </div>
       </div>
-   </div>
+   </main>
 
    <script src="/js/bin/materialize.js"></script>
-    <script src="/js/bin/materialize-init.js"></script>
+   <script src="/js/bin/materialize-init.js"></script>
 </body>
 
 </html>

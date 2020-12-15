@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
         const decodedToken = jwt.verify(token, process.env.JWT_PW)
         const userId = decodedToken.userId;
 
-        let url = `http://localhost:3000/api/user/${userId}`;
+        let url = `${process.env.DOMAIN}/api/user/${userId}`;
 
         let myInit = {
             headers: {
@@ -24,6 +24,6 @@ module.exports = async (req, res, next) => {
             next();
         }
     } catch (error) {
-        res.status(401).render('pages/noacces',{error})
+        res.status(401).render('pages/noaccess',{error})
     }
 };

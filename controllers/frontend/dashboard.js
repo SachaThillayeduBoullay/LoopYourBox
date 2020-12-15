@@ -10,7 +10,7 @@ exports.userPage = async (req, res) => {
     try {
         const token = req.cookies["token"];
 
-        let url = `http://localhost:3000/api/user/`;
+        let url = `${process.env.DOMAIN}/api/user/`;
 
         let myInit = {
             headers: {
@@ -43,12 +43,12 @@ exports.partnerPage = async (req, res) => {
             urlStringFilter += `${property}=${req.query[property]}&`
         }
         urlStringFilter = urlStringFilter.slice(0, urlStringFilter.length-1)
-        url = `http://localhost:3000/api/partner${urlStringFilter}`;
+        url = `${process.env.DOMAIN}/api/partner${urlStringFilter}`;
     
     }
     
     try {
-        let urlSelect = `http://localhost:3000/api/partner`;
+        let urlSelect = `${process.env.DOMAIN}/api/partner`;
 
         let partnerInfoForSelect = await fetch(urlSelect, myInit);
         partnerInfoForSelect = await partnerInfoForSelect.json();
@@ -67,7 +67,7 @@ exports.partnerPage = async (req, res) => {
         let postcode = Array.from(new Set(partnerInfoForSelect.map(element => element.address.postcode))).sort();
         let city = Array.from(new Set(partnerInfoForSelect.map(element => element.address.city))).sort();
 
-        let urlContainer = `http://localhost:3000/api/container/`;
+        let urlContainer = `${process.env.DOMAIN}/api/container/`;
 
         let containerInfo = await fetch(urlContainer, myInit);
         containerInfo = await containerInfo.json();
@@ -93,7 +93,7 @@ exports.partnerPage = async (req, res) => {
 exports.containerPage = async (req, res) => { 
     try {
         const token = req.cookies["token"];
-        let url = `http://localhost:3000/api/container/`;
+        let url = `${process.env.DOMAIN}/api/container/`;
 
         let myInit = {
             headers: {
@@ -112,8 +112,19 @@ exports.containerPage = async (req, res) => {
 
 exports.historyPage = async (req, res) => { 
     try {
+        let url;
+
+        if (req.query) {
+            let urlStringFilter = "?";
+            for (let property in req.query) {
+                urlStringFilter += `${property}=${req.query[property]}&`
+            }
+            urlStringFilter = urlStringFilter.slice(0, urlStringFilter.length-1)
+            url = `${process.env.DOMAIN}/api/history${urlStringFilter}`;
+        }
+
         const token = req.cookies["token"];
-        let url = `http://localhost:3000/api/history/`;
+        let urlAll = `${process.env.DOMAIN}/api/history/`;
 
         let myInit = {
             headers: {
@@ -124,7 +135,28 @@ exports.historyPage = async (req, res) => {
         let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();
 
-        res.render('pages/myaccount/admin/history', {historyInfo});
+        let selectInfo = await fetch(urlAll, myInit);
+        selectInfo = await selectInfo.json();
+
+        let day = [... new Set(selectInfo.map( history => {
+            if(history.day<10) {
+                return "0"+history.day
+            } else {
+                return history.day
+            }
+        }))].sort()
+
+        let month = [... new Set(selectInfo.map( history => {
+            if(history.month<10) {
+                return "0"+history.month
+            } else {
+                return history.month
+            }
+        }))].sort()
+
+        selectDateInfo = {day, month}
+
+        res.render('pages/myaccount/admin/history', {historyInfo, selectInfo, selectDateInfo});
     } catch {
         res.status(401).render('pages/error',{ error: `Requête invalide`});
     }

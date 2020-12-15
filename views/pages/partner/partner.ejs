@@ -27,7 +27,7 @@
             <div class="partner">
                <div class="partner-img">
                   <% if (partner.image!="noImage") {%>
-                  <img src="http://localhost:3000/img/partner/<%= partner.image.filename %>" alt="<%= partner.name %>">
+                  <img src="/img/partner/<%= partner.image.filename %>" alt="<%= partner.name %>">
                   <% } %>
                </div>
                <div class="partner-info">
@@ -131,7 +131,7 @@
    <script src="/js/bin/materialize.js"></script>
    <script src="/js/bin/materialize-init.js"></script>
    <script>
-      let partnerInfo = <% - JSON.stringify(partnerInfo) %>
+      let partnerInfo = <%- JSON.stringify(partnerInfo) %>
    </script>
    <script src="/js/selectfilter.js"></script>
 

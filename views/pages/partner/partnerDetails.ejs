@@ -6,56 +6,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/materialize.css">
-    <link rel="stylesheet" href="/css/partner.css">
+    <link rel="stylesheet" href="/css/partner_details.css">
+    <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <a class="backBtn" onclick="window.history.back();">Retour</a>
-            <h2 class="page-title">Partner Details</h2>
+    <!-- NARBAR -->
+    <%- include('../../layouts/navbar.ejs') -%>
+    <!-- MAIN -->
+    <a class="backBtn" 
+    <% if(statusInfo.userStatus == 'admin') {%>
+        href="/dashboard/partner"
+    <%} else if (statusInfo.userStatus == 'partner') {%>
+        href="/partner"
+    <%}%>><i class="fas fa-arrow-left"></i></a>
+    <main>
+        <div class="hero-wrapper">
+            <% if (partnerInfo.image!="noImage") {%>
+            <img src="/img/partner/<%= partnerInfo.image.filename %>"
+                alt="<%= partnerInfo.name %>">
+            <% } %>
+            <div class="partner_name"><%= partnerInfo.name %></div>
+
         </div>
-        <div class="row">
-            <div class="col s12 partner-img">
-                <% if (partnerInfo.image!="noImage") {%>
-                <img src="http://localhost:3000/img/partner/<%= partnerInfo.image.filename %>"
-                    alt="<%= partnerInfo.name %>">
-                <% } %>
+        <div class="container">
+            <div class="partner_info">
+                <div class="heading"><i class="fas fa-info-circle"></i>info</div>
+                <div class="info">
+                    <div class="partner_info-address"><%= partnerInfo.address.street %></div>
+                    <div class="partner_info-location">
+                        <span><%= partnerInfo.address.postcode %></span> -
+                        <span><%= partnerInfo.address.city %></span> -
+                        <span><%= partnerInfo.address.country %></span>
+                    </div>
+                    <div class="partner_info-tel"><%= partnerInfo.phoneNumber %></div>
+                    <% if (partnerInfo.foodType != "noType"){ %>
+                    <div><%= partnerInfo.foodType %></div>
+                    <% } %>
+                    <% if (partnerInfo.chain != "noChain"){ %>
+                    <div><%= partnerInfo.chain %></div>
+                    <% } %>
+                    <% if (partnerInfo.website != "noWebsite"){ %>
+                    <div class="partner_info-website">
+                        <a href="<%= partnerInfo.website %>">Website</a>
+                    </div>
+                    <% } %>
+                </div>
+
             </div>
-            <ul class="col s12 collection with-header">
-                <li class="collection-header">
-                    <h4><%= partnerInfo.name %></h4>
-                </li>
-                <li class="collection-item"><%= partnerInfo.phoneNumber %></li>
-                <li class="collection-item"><%= partnerInfo.address.street %></li>
-                <li class="collection-item"><%= partnerInfo.address.postcode %></li>
-                <li class="collection-item"><%= partnerInfo.address.city %></li>
-                <li class="collection-item"><%= partnerInfo.address.country %></li>
-                <% if (partnerInfo.website != "noWebsite"){ %><li class="collection-item"><a
-                        href="<%= partnerInfo.website %>">Website</a></li><% } %>
-                <li class="collection-item">Lundi: <%= partnerInfo.schedule.monday %></li>
-                <li class="collection-item">Mardi: <%= partnerInfo.schedule.tuesday %></li>
-                <li class="collection-item">Mercredi: <%= partnerInfo.schedule.wednesday %></li>
-                <li class="collection-item">Jeudi: <%= partnerInfo.schedule.thursday %></li>
-                <li class="collection-item">Vendredi: <%= partnerInfo.schedule.friday %></li>
-                <li class="collection-item">Samedi: <%= partnerInfo.schedule.saturday %></li>
-                <li class="collection-item">Dimanche: <%= partnerInfo.schedule.sunday %></li>
-                <% if (partnerInfo.foodType != "noType"){ %><li class="collection-item"><%= partnerInfo.foodType %></li>
-                <% } %>
-                <% if (partnerInfo.chain != "noChain"){ %><li class="collection-item"><%= partnerInfo.chain %></li>
-                <% } %>
-            </ul>
+            <div class="partner_openhours">
+                <div class="heading"><i class="fas fa-clock"></i>opening hours</div>
+                <div class="day"><span>Lundi: </span> <span><%= partnerInfo.schedule.monday %></span></div>
+                <div class="day"><span> Mardi: </span> <span><%= partnerInfo.schedule.tuesday %></span></div>
+                <div class="day"><span>Mercredi: </span> <span><%= partnerInfo.schedule.wednesday %></span></div>
+                <div class="day"><span>Jeudi:</span> <span><%= partnerInfo.schedule.thursday %></span> </div>
+                <div class="day"><span>Vendredi: </span> <span><%= partnerInfo.schedule.friday %></span></div>
+                <div class="day"><span>Samedi:</span> <span> <%= partnerInfo.schedule.saturday %></span></div>
+                <div class="day"><span>Dimanche:</span> <span> <%= partnerInfo.schedule.sunday %></span></div>
+            </div>
 
             <% if(statusInfo.userStatus == 'admin' || statusInfo.partnerId == partnerInfo._id) {%>
-            <a class="col s3 offset-s2 btn green darken-1 " href="/updatePartner/<%= partnerInfo._id %>">Edit</a>
-            <%}
-            if(statusInfo.userStatus == 'admin') {%>
-                <a class="col s3 offset-s2 btn green darken-1 " href="/api/partner/delete/<%= partnerInfo._id %>">Delete</a>
-            <%}%>
-
-
+            <div class="admin-button row">
+                <a class="col s4 offset-s1" href="/updatePartner/<%= partnerInfo._id %>">Edit</a>
+                <a class="col s4 offset-s2 modal-trigger" href="#modal">Delete</a>
+            </div>
+            <div id="modal" class="modal">
+                <div class="modal-content">
+                    <h4>Supprimer partenaire ? </h4>
+                </div>
+                <div class="modal-footer">
+                    <a href="/api/partner/delete/<%= partnerInfo._id %>"
+                        class="modal-close waves-effect waves-green btn-flat danger">Confirmer</a>
+                    <a href="#" class="modal-close waves-effect waves-green btn-flat">Annuler</a>
+                </div>
+            </div>
+            <%} %>
         </div>
-    </div>
+    </main>
+    <!-- SCRIPTS -->
+    <script src="/js/bin/materialize.js"></script>
+    <script src="/js/bin/materialize-init.js"></script>
 </body>
 
 </html>

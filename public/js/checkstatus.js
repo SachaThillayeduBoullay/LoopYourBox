@@ -5,7 +5,7 @@ module.exports =
         try{
             const decodedToken = jwt.verify(token, process.env.JWT_PW)
             const userId = decodedToken.userId;
-            let url = `http://localhost:3000/api/user/${userId}`;
+            let url = `${process.env.DOMAIN}/api/user/${userId}`;
 
             myInit = {
                 headers: {
@@ -19,7 +19,7 @@ module.exports =
             let info = {userStatus: userInfo.status};
 
             if (userInfo.status === "partner"){
-                let urlPartner = `http://localhost:3000/api/partner/container/${userId}`;
+                let urlPartner = `${process.env.DOMAIN}/api/partner/container/${userId}`;
 
                 let partnerInfo = await fetch(urlPartner);
                 partnerInfo = await partnerInfo.json();

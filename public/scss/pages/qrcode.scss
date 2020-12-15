@@ -6,31 +6,52 @@
 @import "../base/global";
 @import "../layouts/navbar";
 
-
-
 body {
-  #canvas {
-     width: 100%;
-     height: 100%;
-  }
 
-  #navbar {
-     height: 6.8vh;
-      ul {
-         li {
-            &:nth-child(3) {
-               width: 7rem;
-               height: 5.5rem;
-               a {
-                  height: 96px;
-               }
-            }
-            a {
-               i {
-                  font-size: 2.9rem;
-               }
-            }
+   .container {
+      .canvas-wrapper {
+         width: 100%;
+         
+         #scanning-message {
+            color: darken($base-grey, 60%);
+            text-align: center;
+            font-size: 1.3rem;
+            padding: 1rem 0;
+         }
+         #canvas {
+            width: 100%;
+            margin: 10% auto;
+            border-radius: 5px;
          }
       }
-  }
+   }
+
+   #informations {
+      text-align: center;
+      .partner-info, .container-info {
+         @include flex(row, flex-start, center);
+         padding: 1rem 0;
+         margin: 1rem auto;
+         background: lighten($base-grey, 12%);
+         border-radius: 10px;
+      }
+      p {
+         font-weight: 500;
+         color: darken($base-grey, 50%);
+      }
+      #partner, #container {
+         margin-left: 1rem;
+         color: $primary-color;
+      }
+
+      #validation {
+         @extend %button-global;
+         padding: 0.7rem 2rem;
+         background: $primary-color;
+         color: $secondary-color;
+         margin-top: 3rem;
+         align-self: center;
+      }
+   }
+
 }

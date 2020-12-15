@@ -1,4 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+body #informations #validation {
+  letter-spacing: 2px;
+  font-size: 0.8rem;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+  border: none;
+}
+
 .container {
   width: calc(100vw - 10px);
   margin: 0 auto;
@@ -6,10 +16,28 @@
 
 .page-title {
   color: #43a047;
-  font-size: 2rem;
+  font-size: 1.5rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   text-transform: uppercase;
+}
+
+.sub_page-heading {
+  margin: 1rem auto;
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(203, 203, 203, 0.976);
+}
+
+.backBtn {
+  position: fixed;
+  top: 0.7rem;
+  left: 1rem;
+  border-radius: 100%;
+  background: rgba(236, 236, 236, 0.976);
+  color: #43a047;
+  padding: 0.9rem 1rem;
+  z-index: 1000;
 }
 
 .m-1 {
@@ -326,6 +354,12 @@
   display: block;
 }
 
+body {
+  position: relative;
+  background: rgba(246, 246, 246, 0.976);
+  font-family: "Montserrat", sans-serif;
+}
+
 #navbar {
   height: 50px;
   position: fixed;
@@ -403,25 +437,70 @@
   font-size: 1.2rem;
 }
 
-body #canvas {
+body .container .canvas-wrapper {
   width: 100%;
-  height: 100%;
 }
 
-body #navbar {
-  height: 6.8vh;
+body .container .canvas-wrapper #scanning-message {
+  color: rgba(50, 50, 50, 0.976);
+  text-align: center;
+  font-size: 1.3rem;
+  padding: 1rem 0;
 }
 
-body #navbar ul li:nth-child(3) {
-  width: 7rem;
-  height: 5.5rem;
+body .container .canvas-wrapper #canvas {
+  width: 100%;
+  margin: 10% auto;
+  border-radius: 5px;
 }
 
-body #navbar ul li:nth-child(3) a {
-  height: 96px;
+body #informations {
+  text-align: center;
 }
 
-body #navbar ul li a i {
-  font-size: 2.9rem;
+body #informations .partner-info, body #informations .container-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1rem 0;
+  margin: 1rem auto;
+  background: rgba(234, 234, 234, 0.976);
+  border-radius: 10px;
+}
+
+body #informations p {
+  font-weight: 500;
+  color: rgba(76, 76, 76, 0.976);
+}
+
+body #informations #partner, body #informations #container {
+  margin-left: 1rem;
+  color: #43a047;
+}
+
+body #informations #validation {
+  padding: 0.7rem 2rem;
+  background: #43a047;
+  color: #fff;
+  margin-top: 3rem;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 /*# sourceMappingURL=qrcode.css.map */
+
+#video {
+  width: 10%;
+}

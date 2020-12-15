@@ -1,25 +1,50 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>QR code scanner & generator</title>
+  <title>Loop Your Box</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="/js/jsQR.js"></script>
+  <link rel="stylesheet" href="/css/qrcode.css">
+  <script src="https://kit.fontawesome.com/ade53cd309.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div id="loadingMessage">Unable to access video stream</div>
-  <canvas id="canvas" hidden></canvas>
+  <!-- NARBAR -->
+  <%- include('../../layouts/navbar.ejs') -%>
+  <!-- MAIN -->
+  <main class="container">
+    <div hidden id="loadingMessage">Caméra inaccessible</div>
+    <div class="canvas-wrapper">
+      <h2 class="sub_page-heading">Veuillez scanner le QR code</h2>
+      <canvas id="canvas" hidden></canvas>
+    </div>
+    <div>
+      <video id="video" autoplay muted playsinline style="position:absolute;opacity:0;top:0;z-index:-1000"></video>
+    </div>
+  
+    
+      <!-- <span id="action"></span>
+      <div class="partner-info">
+        <p>Partenaire:</p>
+        <span id="partner"> The Barn Restaunrant</span>
+      </div>
+      <div class="container-info">
+        <p>Contenant:</p>
+        <span id="container"> Green Lunch Box </span>
+      </div> -->
+      <div id="informations" hidden>
+        <span id="action"></span>
+        <div>
+          <p>Partenaire</p>
+          <span id="partner"></span>
+        </div>
+        <div>
+          <p>Contenant</p>
+          <span id="container"></span>
+        </div>
+        <button onclick="validation()" id="validation">Confirmer</button>
+    </div>
 
-  <div id="informations" hidden>
-    <span id="action"></span>
-    <div>
-      <p>Partenaire</p>
-      <span id="partner"></span>
-    </div>
-    <div>
-      <p>Contenant</p>
-      <span id="container"></span>
-    </div>
-    <button onclick="validation()" id="validation">Confirmer</button>
-</div>
+  </main>
 
   <script src="/js/QR.js"></script>
 </body>

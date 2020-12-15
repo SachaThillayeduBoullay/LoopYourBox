@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/materialize.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <a class="backBtn" onclick="window.history.back();">Retour</a>
+        </div>
+        <div class="title">Formulaire de contact</div>
+        <form id="form-register" action="api/contact" method="POST">
+            <label for="firstname">Prénom</label>
+            <input type="text" name="firstname" class="validate" required>
+            <label for="lastname">Nom</label>
+            <input type="text" name="lastname" class="validate" required>
+            <label for="email">Email</label>
+            <input type="email" name="email" class="validate" required>
+            <label for="object">Objet</label>
+            <input type="text" name="object" class="validate" required>
+            <label for="message">Message</label>
+            <textarea id="message" class="materialize-textarea" name="message" rows="5" cols="120"></textarea>
+            <button class="waves-effect waves-light btn blue-grey darken-3">Envoyer</button>
+        </form>
+    </div>
+    <script src="/js/bin/materialize.js"></script>
+    <script src="/js/bin/materialize-init.js"></script>
+</body>
+
+</html>

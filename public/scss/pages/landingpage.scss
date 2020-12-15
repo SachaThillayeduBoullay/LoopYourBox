@@ -1,29 +1,31 @@
-@import "../base/global";
 @import "../base/typography";
 @import "../utilities/variables";
 @import "../utilities/mixins";
 @import "../components/all-components";
+@import "../utilities/functions";
+@import "../base/global";
+@import "../layouts/navbar";
 
-// FROM MATERIALIZE======================
-
-// @import "../extensions/components/buttons";
 
 .container {
-    font-family: $primary-font;
     height: 100vh;
     .wrapper {
         display: grid;
-        grid-template-rows: calc(100vh - 30vh) 30vh;
+        grid-template-rows: 60vh 40vh;
 
         .logo {
             grid-area: 0/0/1/1;
             @include flex(row, center, center);
 
-            font-size: 2rem;
+            img {
+                width: 50%;
+                height: auto;
+                border-radius: 100%;
+            }
         }
 
         .button {
-            grid-area: 1/0/1/1;
+            grid-area: 0/1/1/1;
             @include flex(row, space-around, center);
 
 
@@ -31,7 +33,7 @@
                 letter-spacing: 2px;
                 font-size: 0.7rem;
                 padding: 0.5rem;
-                width: 45%;
+                width: 40%;
                 text-align: center;
                 border-radius: 0.5rem;
                 text-transform: uppercase;
@@ -50,6 +52,18 @@
                 background: $primary-color;
                 color: $secondary-color;
             }
+        }
+    }
+
+    .error {
+        padding: 12rem 0 0 0;
+        color: black;
+        text-align: center;
+        font-size: 1.3rem;
+        &-message {
+            color: red;
+            font-size: 2rem;
+            padding: 2rem 0;
         }
     }
 }

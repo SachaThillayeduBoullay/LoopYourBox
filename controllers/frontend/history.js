@@ -11,7 +11,7 @@ exports.historyDetailsPage = async (req, res) => {
             }
         };
 
-        let url = `http://localhost:3000/api/history/${req.params.reference}`;
+        let url = `${process.env.DOMAIN}/api/history/${req.params.reference}`;
 
         let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();

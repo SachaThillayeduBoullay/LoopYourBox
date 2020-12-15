@@ -29,7 +29,7 @@ document.getElementById("updatePartnerForm").addEventListener("submit", async (e
 },}
     //data.append("header", JSON.stringify(option))
  
-    let url = `http://localhost:3000/api/partner/${partnerId}`;
+    let url = `${process.env.DOMAIN}/api/partner/${partnerId}`;
     console.log([...data])
     await fetch(url, {
         method: "PUT",
