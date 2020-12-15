@@ -15,7 +15,7 @@
    <%- include('../../layouts/navbar.ejs') -%>
    <!-- MAIN --> 
    <a class="backBtn" 
-   <% if (status=="admin){%>
+   <% if (status=="admin"){%>
       href="/dashboard/container"
    <%} else if (status =="partner") {%>
       href="/mycontainer/<%= containerInfo.partnerId %>"
