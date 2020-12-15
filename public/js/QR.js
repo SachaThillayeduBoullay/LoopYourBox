@@ -15,13 +15,13 @@ function getCookie(cname) {
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
     for(var i = 0; i <ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
         c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
+        }
+        if (c.indexOf(name) == 0) {
         return c.substring(name.length, c.length);
-      }
+        }
     }
     return "";
 }
@@ -37,8 +37,9 @@ function drawLine(begin, end, color) {
 // Use facingMode: environment to attemt to get the front camera on phones
 navigator.mediaDevices.getUserMedia({ audio: false, video: {facingMode: "environment"} }).then(function(stream) {
     video.srcObject = stream;
-    video.muted = true;
+    video.seAttrubute("muted" , true);
     video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
+    video.setAttribute("autoplay" , true);
     video.play();
     requestAnimationFrame(tick);
 });
