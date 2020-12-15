@@ -18,7 +18,7 @@
    <% if (status=="admin"){%>
       href="/dashboard/container"
    <%} else if (status =="partner") {%>
-      href="/mycontainer/<%= containerInfo.partnerId %>"
+      href="/mycontainer/<%= userInfo._id %>"
    <%}%>><i class="fas fa-arrow-left"></i></a>
    <main class="container">
       <div class="row">
