@@ -41,7 +41,7 @@ exports.login = (req, res, next) => {
           const token = jwt.sign ({userId: user._id}, process.env.JWT_PW, {
             expiresIn: '24h',
           });
-          res.cookie ('token', token, { maxAge: 1000*60*60*24*7*30*12 });
+          res.cookie ('token', token, { maxAge: 1000*60*60*24*30*12 });
           res.status(200).redirect ('/partner');
         })
         .catch (error => res.status(500).render('pages/error',{ error: `Cryptage du mot de passe raté`}));
