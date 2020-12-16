@@ -36,6 +36,11 @@
                         Modifier mes informations <i class="fas fa-chevron-right"></i>
                     </div>
                 </a>
+                <a class="" href="/changepassword/<%= userInfo._id %>">
+                    <div class="link padding">
+                        Modifier mon mot de passe <i class="fas fa-chevron-right"></i>
+                    </div>
+                </a>
                 <a class="modal-trigger" href="#modal">
                     <div class="link padding">
                         Supprimer mon compte <i class="fas fa-chevron-right"></i>
@@ -70,40 +75,7 @@
                     </div>
                 </div>
          
-
-            <div>
-                <h5 class="user_account-heading padding">Informations</h5>
-                <a href="/cgv">
-                <div class="link padding">
-                    Conditions générales de vente 
-                    <i class="fas fa-chevron-right"></i>
-                </div></a>
-                <a href="/faq">
-                <div class="link padding">
-                    FAQ
-                    <i class="fas fa-chevron-right"></i>
-                </div></a> 
-                <a href="/contact">
-                <div class="link padding">
-                    Contact
-                    <i class="fas fa-chevron-right"></i>
-                </div></a> 
-                <a href="/aboutus">
-                <div class="link padding">
-                    A propos
-                    <i class="fas fa-chevron-right"></i>
-                </div></a>
-         
-        
-            </div>
-
-
-                 
-
-                    <!-- ============ -->
-
-                    
-                    <% if(userInfo.status =="partner") {%>
+                <% if(userInfo.status =="partner") {%>
                     <div class="partner_account">
                         <div class="partner_account-heading padding">Mon Partenaire</div>
                         <% if (!partnerInfo) {%>
@@ -149,6 +121,40 @@
                         </div></a>
                     </div>
                     <%}%>
+
+            <div>
+                <h5 class="user_account-heading padding">Informations</h5>
+                <a href="/cgv">
+                <div class="link padding">
+                    Conditions générales de vente 
+                    <i class="fas fa-chevron-right"></i>
+                </div></a>
+                <a href="/faq">
+                <div class="link padding">
+                    FAQ
+                    <i class="fas fa-chevron-right"></i>
+                </div></a> 
+                <a href="/contact">
+                <div class="link padding">
+                    Contact
+                    <i class="fas fa-chevron-right"></i>
+                </div></a> 
+                <a href="/aboutus">
+                <div class="link padding">
+                    A propos
+                    <i class="fas fa-chevron-right"></i>
+                </div></a>
+         
+        
+            </div>
+
+
+                 
+
+                    <!-- ============ -->
+
+                    
+
     
             <div class="padding" id="logout" style="margin-bottom: 70px;">
                 <a href="/api/logout">Déconnexion</a> 
