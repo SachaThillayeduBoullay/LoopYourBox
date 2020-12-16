@@ -30,7 +30,32 @@
 
         <div class="setting-wrapper">
             <div class="user_account">
+                <% if(userInfo.status =="admin") {%>
+                    <div class="admin_account">
+                        <div class="admin_account-heading padding">Dashboard</div>
+                        <a href="/dashboard">
+                        <div class="link padding">
+                            Dashboard <i class="fas fa-chevron-right"></i>
+                        </div></a>
+                    </div>
+                    <%}%>
                 <div class="user_account-heading padding">Mon Compte</div>
+                <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
+                    <a href="/mycontainer/<%= userInfo._id %>">
+                        <div class="link padding">
+                            Mes contenants<i
+                            class="fas fa-chevron-right"></i>
+                        </div>
+                    </a> 
+                    <% } %>
+                    <% if(userInfo.status != "admin") {%>
+                    <a href="/myhistory/<%= userInfo._id %>">
+                        <div class="link padding">
+                            Mon historique <i
+                            class="fas fa-chevron-right"></i>
+                        </div>
+                    </a>
+                    <%}%> 
                 <a class="" href="/updateUser/<%= userInfo._id %>">
                     <div class="link padding">
                         Modifier mes informations <i class="fas fa-chevron-right"></i>
@@ -46,22 +71,7 @@
                         Supprimer mon compte <i class="fas fa-chevron-right"></i>
                     </div>
                 </a>
-                <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
-                <a href="/mycontainer/<%= userInfo._id %>">
-                    <div class="link padding">
-                        Mes contenants<i
-                        class="fas fa-chevron-right"></i>
-                    </div>
-                </a> 
-                <% } %>
-                <% if(userInfo.status != "admin") {%>
-                <a href="/myhistory/<%= userInfo._id %>">
-                    <div class="link padding">
-                        Mon historique <i
-                        class="fas fa-chevron-right"></i>
-                    </div>
-                </a>
-                <%}%> 
+
                 
                 <!-- Modal Structure -->
                 <div id="modal" class="modal">
@@ -112,15 +122,7 @@
                     <!-- ====== -->
 
 
-                 <% if(userInfo.status =="admin") {%>
-                    <div class="admin_account">
-                        <div class="admin_account-heading padding">Dashboard</div>
-                        <a href="/dashboard">
-                        <div class="link padding">
-                            Dashboard <i class="fas fa-chevron-right"></i>
-                        </div></a>
-                    </div>
-                    <%}%>
+
 
             <div>
                 <h5 class="user_account-heading padding">Informations</h5>
