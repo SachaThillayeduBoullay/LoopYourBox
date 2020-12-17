@@ -1,5 +1,6 @@
 const Container = require('../../models/container');
 const User = require('../../models/user');
+const Partner = require('../../models/partner');
 const joi = require('joi-oid');
 const fs = require('fs');
 
@@ -30,12 +31,15 @@ exports.createContainer = (req, res, next) => {
         ...req.body,
     });
 
-    let redirect =`/mycontainer/${req.body.partnerId}`
+    let redirect ="";
 
     User.findOne({_id : req.body.partnerId})
         .then(user => {
             if (user && user.status == "admin") {
                 redirect = "/dashboard/container"
+            } else {
+                Partner.findOne({_id : req.body.partnerId})
+                .then(partner => {redirect =`/mycontainer/${partner.idUser}`})
             }
         })
         
