@@ -108,30 +108,27 @@ exports.updateContainer = (req, res, next) => {
 };
 
 exports.deleteContainer = async (req, res, next) => {
-    Container.findOne({_id:req.params.containerId})
-    .then(container => {
+    try {
+        const container = await Container.findOne({_id:req.params.containerId})
+    
         if ((container.image != "noImage" && container.basedOnDefault == false) || (container.image != "noImage" && container.default == true)) {
             fs.unlink(`./public/img/container/${JSON.parse(container.image).filename}`, () => {});
         } 
 
         let redirect ="";
-        try {
+        const user = await User.findOne({_id : container.partnerId})
         
-            const user = await User.findOne({_id : req.body.partnerId})
-            
-            if (user && user.status == "admin") {
-                redirect = "/dashboard/container"
-            } else {
-                const partner = await Partner.findOne({_id : req.body.partnerId})
-                    redirect =`/mycontainer/${partner.idUser}`;
-            }
-        } catch {res.status(400).render('pages/error',{ error: "Le contenant n'a pas été créé"} )}
-            
-        Container.deleteOne({_id: req.params.containerId})
-                .then(()=> res.status(200).redirect(redirect))
-                .catch(() => res.status(400).render('pages/error',{ error: "Le contenant n'a pas pu être supprimé"} ));
-    })
-    .catch(error => res.status(404).json({error}));
+        if (user && user.status == "admin") {
+            redirect = "/dashboard/container"
+        } else {
+            const partner = await Partner.findOne({_id : container.partnerId})
+            redirect =`/mycontainer/${partner.idUser}`;
+        }
+        await Container.deleteOne({_id: req.params.containerId})
+        res.status(200).redirect(redirect)
+    } catch {
+        res.status(400).render('pages/error',{ error: "Le contenant n'a pas été supprimé"})
+    }
 };
 
 exports.getAllPartnerContainer = (req, res, next) => {
