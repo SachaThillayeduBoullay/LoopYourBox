@@ -4,7 +4,7 @@ const Partner = require('../../models/partner');
 const joi = require('joi-oid');
 const fs = require('fs');
 
-exports.createContainer = (req, res, next) => {
+exports.createContainer = async (req, res, next) => {
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         material: joi.string().trim().required(),
@@ -31,18 +31,19 @@ exports.createContainer = (req, res, next) => {
         ...req.body,
     });
 
+   
     let redirect ="";
+try {
 
-    User.findOne({_id : req.body.partnerId})
-        .then(user => {
-            if (user && user.status == "admin") {
-                redirect = "/dashboard/container"
-            } else {
-                Partner.findOne({_id : req.body.partnerId})
-                .then(partner => {redirect =`/mycontainer/${partner.idUser}`})
-            }
-        })
-        
+    const user = await User.findOne({_id : req.body.partnerId})
+    
+    if (user && user.status == "admin") {
+        redirect = "/dashboard/container"
+    } else {
+        const partner = await Partner.findOne({_id : req.body.partnerId})
+            redirect =`/mycontainer/${partner.idUser}`;
+    }
+} catch {res.status(400).render('pages/error',{ error: "Le contenant n'a pas été créé"} )}
     
     container.save()
         .then(() => res.status(201).redirect(redirect))
@@ -106,21 +107,25 @@ exports.updateContainer = (req, res, next) => {
     .catch(error => res.status(400).render('pages/error',{ error: "Le contenant n'a pas pu être modifié"} ));
 };
 
-exports.deleteContainer = (req, res, next) => {
+exports.deleteContainer = async (req, res, next) => {
     Container.findOne({_id:req.params.containerId})
     .then(container => {
         if ((container.image != "noImage" && container.basedOnDefault == false) || (container.image != "noImage" && container.default == true)) {
             fs.unlink(`./public/img/container/${JSON.parse(container.image).filename}`, () => {});
         } 
 
-        let redirect ="/mycontainer"
-
-        User.findOne({_id : container.partnerId})
-            .then(user => {
-                if (user) {
-                    redirect = "/dashboard/container"
-                }
-            })
+        let redirect ="";
+        try {
+        
+            const user = await User.findOne({_id : req.body.partnerId})
+            
+            if (user && user.status == "admin") {
+                redirect = "/dashboard/container"
+            } else {
+                const partner = await Partner.findOne({_id : req.body.partnerId})
+                    redirect =`/mycontainer/${partner.idUser}`;
+            }
+        } catch {res.status(400).render('pages/error',{ error: "Le contenant n'a pas été créé"} )}
             
         Container.deleteOne({_id: req.params.containerId})
                 .then(()=> res.status(200).redirect(redirect))
