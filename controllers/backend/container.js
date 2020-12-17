@@ -30,7 +30,7 @@ exports.createContainer = (req, res, next) => {
         ...req.body,
     });
 
-    let redirect ="/mycontainer"
+    let redirect =`/mycontainer/${req.body.partnerId}`
 
     User.findOne({_id : req.body.partnerId})
         .then(user => {
