@@ -17,7 +17,7 @@
    <a class="backBtn" 
    <% if (status=="admin"){%>
       href="/dashboard/container"
-   <%} else if (status =="partner") {%>
+   <%} else if (status =="partner" || status =="member") {%>
       href="/mycontainer/<%= userInfo._id %>"
    <%}%>><i class="fas fa-arrow-left"></i></a>
    <main class="container">
