@@ -120,7 +120,7 @@ exports.deleteContainer = async (req, res, next) => {
             fs.unlink(`./public/img/container/${JSON.parse(container.image).filename}`, () => {});
     } 
         let redirect ="";
-        const user = await User.findOne({_id : container.partnerId})
+        const user = await User.findOne({_id : req.params.userId})
         
         if (user && user.status == "admin") {
             redirect = "/dashboard/container"

@@ -32,7 +32,7 @@ router.get('/container/partner/:default', containerCtrl.getAllDefaultContainer);
 router.get('/containerpartner/:id', containerCtrl.getAllPartnerContainer);
 router.get('/container/:id', containerCtrl.getOneContainer);
 router.put('/container/:containerId/:id', authOwnPartnerBack, multer, containerCtrl.updateContainer);
-router.get('/container/delete/:containerId/:id', authOwnPartnerBack, containerCtrl.deleteContainer);
+router.get('/container/delete/:containerId/:id/:userId', authOwnPartnerBack, containerCtrl.deleteContainer);
 
 //USER routes
 router.post('/signup', userCtrl.signup);
