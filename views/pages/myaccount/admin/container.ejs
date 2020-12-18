@@ -24,7 +24,7 @@
       <% containerInfo.forEach((container) => { %>
         <a href="/container/<%= container._id %>">
         <div class="list-item">
-          <%= container.name %>  <% if (container.default) {%> <%= X %><% }%> 
+          <%= container.name %>  <% if (container.default) {%> X <% }%> 
           <i class="fas fa-chevron-right"></i>
         </div>
       </a>
