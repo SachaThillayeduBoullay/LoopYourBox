@@ -89,7 +89,6 @@ exports.createContainerPage = async (req, res) => {
 
 exports.updateContainerPage = async (req, res) => { 
     try {
-        //const token = req.cookies['token'];
         let url = `${process.env.DOMAIN}/api/container/${req.params.id}`;
 
         let containerInfo = await fetch(url);

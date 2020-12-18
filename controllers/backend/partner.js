@@ -1,10 +1,10 @@
 const Partner = require("../../models/partner");
-const User = require("../../models/user");
 const joi = require("joi-oid");
 const fs = require("fs");
 const jwt = require('jsonwebtoken');
 
 exports.createPartner = (req, res, next) => {
+  //JOI form validation
   const schemaSchedule = joi.object().keys({
     monday: joi.string().trim(),
     tuesday: joi.string().trim(),
@@ -26,9 +26,9 @@ exports.createPartner = (req, res, next) => {
     chain: joi.string().trim().empty(""),
   });
 
-  const result = schema.validate(req.body, { allowUnknown: true }); //need to change
+  const result = schema.validate(req.body, { allowUnknown: true }); //remove allowUnknown when schedule validation is working
   if (result.error) {
-    if (req.file) {
+    if (req.file) { // delete uploaded img from form if validation failed
       fs.unlink(`./public/img/partner/${req.file.filename}`, () => {});
     }
     res.status(400).render('pages/error',{ error: result.error.details[0].message});
@@ -71,7 +71,7 @@ exports.getOnePartner = (req, res, next) => {
 };
 
 exports.updatePartner = async (req, res, next) => {
-
+  //JOI form validation
   const schemaSchedule = joi.object().keys({
     monday: joi.string().trim(),
     tuesday: joi.string().trim(),
@@ -92,9 +92,9 @@ exports.updatePartner = async (req, res, next) => {
     chain: joi.string().trim().empty(""),
   });
 
-  const result = schema.validate(req.body, { allowUnknown: true }); //need to change
+  const result = schema.validate(req.body, { allowUnknown: true }); //remove allowUnknown when schedule validation is working
   if (result.error) {
-    if (req.file) {
+    if (req.file) { // delete old img if new img is uploaded
       fs.unlink(`./public/img/partner/${req.file.filename}`, () => {});
     }
     res.status(400).render('pages/error',{ error: result.error.details[0].message});
@@ -114,7 +114,7 @@ exports.updatePartner = async (req, res, next) => {
   }
 
   let partner = { ...req.body };
-  if (req.file) {
+  if (req.file) { //delete old img if new one is uploaded
     fs.unlink(`./public/img/partner/${req.body.oldImage}`, () => {});
     partner = {
       ...req.body,
@@ -138,7 +138,7 @@ exports.updatePartner = async (req, res, next) => {
 exports.deletePartner = (req, res, next) => {
   Partner.findOne({ _id: req.params.id })
     .then((partner) => {
-      if (partner.image != "noImage") {
+      if (partner.image != "noImage") { //delete img if there's an img
         fs.unlink(
           `./public/img/partner/${JSON.parse(partner.image).filename}`,
           () => {}
@@ -153,17 +153,21 @@ exports.deletePartner = (req, res, next) => {
 
 exports.getAllPartner = (req, res, next) => {
   let match = {};
+  //create match object from queries for aggrate below
 
+  //match properties for material
   if (req.query.material && req.query.material != "all") {
+    //check if at least one of the container material of a partner is the same as the query data
     match = {
       containerInfo: {
-        $elemMatch: {
+        $elemMatch: { 
           material: req.query.material,
         },
       },
     };
   }
 
+  //match properties for the other properties
   for (const filter in req.query) {
     let propertyName = filter;
     if (req.query[filter] != "all" && filter != "material") {

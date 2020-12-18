@@ -3,7 +3,7 @@ var geocoder = new MapboxGeocoder({
 accessToken: mapboxgl.accessToken,
 countries: 'be'
 });
-    
+
 geocoder.addTo('#geocoder');
 
 const address = document.getElementById('address');
@@ -14,7 +14,7 @@ geocoder.on('result', function(data) {
         if (element.id.split('.')[0] == "postcode" || 
             element.id.split('.')[0] == "place" || 
             element.id.split('.')[0] == "country" )
-               {return element.text}
+                {return element.text}
             })
 
         .filter(element=> {if(element) return element});
@@ -27,8 +27,7 @@ geocoder.on('result', function(data) {
         country: cleanContext[2],
         place_name: data.result.place_name
     }
-    //console.log(addressInfo)
-    //console.log(data.result)
+
     address.value = JSON.stringify(addressInfo); 
 })
 

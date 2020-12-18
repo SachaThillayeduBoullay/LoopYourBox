@@ -17,7 +17,7 @@ const partnerSchema = mongoose.Schema({
         sunday:{ type: String, default:"none" },
     },
     foodType: { type: String, default:"Autres" },
-    idUser: { type: String, required: true, unique: true }, //change to ObjectId
+    idUser: { type: String, required: true, unique: true },
     chain: { type: String, default:"noChain" }
 });
 

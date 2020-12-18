@@ -54,7 +54,7 @@ exports.confirmationPage = async (req, res) => {
         historyInfo = await historyInfo.json();
         historyInfo = historyInfo[0];
 
-        //const localNow = new Date (historyInfo.date.getTime() -  ( historyInfo.timeOffset * 60000 ));
+        //create date string to display
         let date = historyInfo.date.split('T')[0].split('-');
         let dateString = `${date[2]}/${date[1]}/${date[0]}`;
         let hour = historyInfo.date.split("T")[1].slice(0,2);
@@ -64,14 +64,12 @@ exports.confirmationPage = async (req, res) => {
         
         const result = {
             date: `${dateString} - ${time}`,
-            
             partner: {
                 name: historyInfo.partnerInfo.name,
                 city: historyInfo.partnerInfo.address.city
             },
             containerName: historyInfo.containerInfo.name,
             action: historyInfo.action,
-            //time: localNow
         }
 
         res.render('pages/qrcode/confirmation', {result});
@@ -80,6 +78,8 @@ exports.confirmationPage = async (req, res) => {
     }
 }
 
+
+//Not used cuz this case is in qrCodePage when status is partner
 exports.qrCodePartnerPage = async (req, res) => { 
     try {
         const token = req.cookies["token"];

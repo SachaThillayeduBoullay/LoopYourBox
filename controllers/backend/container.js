@@ -5,6 +5,8 @@ const joi = require('joi-oid');
 const fs = require('fs');
 
 exports.createContainer = async (req, res, next) => {
+
+    //JOI form validation
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         material: joi.string().trim().required(),
@@ -15,6 +17,7 @@ exports.createContainer = async (req, res, next) => {
     const result = schema.validate(req.body, { allowUnknown: true });
     if (result.error) {
         if (req.file) {
+            //delete uploaded img from form because validation failed
             fs.unlink(`./public/img/container/${req.file.filename}`, () => {});
         }
         res.status(400).render('pages/error', {error: result.error.details[0].message});
@@ -26,25 +29,26 @@ exports.createContainer = async (req, res, next) => {
     }
     if (req.body.default == "on"){
         req.body.default = true
-    }else{req.body.default = false}
-    const container = new Container({
-        ...req.body,
-    });
-
-   
-    let redirect ="";
-try {
-
-    const user = await User.findOne({_id : req.body.partnerId})
-    
-    if (user && user.status == "admin") {
-        redirect = "/dashboard/container"
     } else {
-        const partner = await Partner.findOne({_id : req.body.partnerId})
-            redirect =`/mycontainer/${partner.idUser}`;
+        req.body.default = false
     }
-} catch {res.status(400).render('pages/error',{ error: "Le contenant n'a pas été créé"} )}
     
+    const container = new Container({...req.body});
+
+    let redirect ="";
+
+    try {
+        const user = await User.findOne({_id : req.body.partnerId})
+        
+        if (user && user.status == "admin") {
+            redirect = "/dashboard/container"
+        } else {
+            const partner = await Partner.findOne({_id : req.body.partnerId})
+                redirect =`/mycontainer/${partner.idUser}`;
+        }
+    } catch {
+        res.status(400).render('pages/error',{ error: "Le contenant n'a pas été créé"} )
+    }
     container.save()
         .then(() => res.status(201).redirect(redirect))
         .catch(() => res.status(400).render('pages/error',{ error: "Le contenant n'as pas pu être sauvé"} ));
@@ -71,6 +75,7 @@ exports.getOneContainer = (req, res, next) => {
 
 exports.updateContainer = (req, res, next) => {
 
+    //JOI form validation
     const schema = joi.object().keys({
         name: joi.string().trim().required(),
         material: joi.string().trim().required(),
@@ -80,6 +85,7 @@ exports.updateContainer = (req, res, next) => {
     const result = schema.validate(req.body, { allowUnknown: true });
     if (result.error) {
         if (req.file) {
+            //delete uploaded img from form because validation failed
             fs.unlink(`./public/img/container/${req.file.filename}`, () => {});
         }
         res.status(400).render('pages/error',{ error: result.error.details[0].message});
@@ -87,34 +93,32 @@ exports.updateContainer = (req, res, next) => {
     }
 
     let container = {...req.body}
+
     if (req.file) {
+        //delete old img
         fs.unlink(`./public/img/container/${req.body.oldImage}`, () => {});
         container =  {
             ...req.body,
             image: JSON.stringify(req.file)
-
         }
     }
+
     Container.updateOne({_id: req.params.containerId}, {        
         ...container, 
         _id: req.params.containerId,
-        
     })
-    .then(() => {
-
-        res.status(200).redirect(`/container/${req.params.containerId}`);
-    })
+    .then(() => {res.status(200).redirect(`/container/${req.params.containerId}`)})
     .catch(error => res.status(400).render('pages/error',{ error: "Le contenant n'a pas pu être modifié"} ));
 };
 
 exports.deleteContainer = async (req, res, next) => {
     try {
-        const container = await Container.findOne({_id:req.params.containerId})
+        const container = await Container.findOne({_id:req.params.containerId});
     
         if ((container.image != "noImage" && container.basedOnDefault == false) || (container.image != "noImage" && container.default == true)) {
+            //delete img
             fs.unlink(`./public/img/container/${JSON.parse(container.image).filename}`, () => {});
-        } 
-
+    } 
         let redirect ="";
         const user = await User.findOne({_id : container.partnerId})
         

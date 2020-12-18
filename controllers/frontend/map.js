@@ -1,6 +1,5 @@
 global.fetch = require("node-fetch");
 
-
 exports.mapPage = async (req, res) => { 
     try {
         let url = `${process.env.DOMAIN}/api/partner/`;
@@ -8,6 +7,7 @@ exports.mapPage = async (req, res) => {
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
         
+        //create arrays with each value only appearing once
         let foodType = Array.from(new Set(partnerInfo.map(element => element.foodType)));
         let chain = Array.from(new Set(partnerInfo.map(element => element.chain)));
         let postcode = Array.from(new Set(partnerInfo.map(element => element.address.postcode)));
@@ -19,8 +19,6 @@ exports.mapPage = async (req, res) => {
             postcode: postcode,
             city: city
         };
-
-        //console.log(selectInfo)
 
         res.render('pages/map/map', {partnerInfo, selectInfo})
     } catch {

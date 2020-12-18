@@ -1,5 +1,4 @@
 global.fetch = require("node-fetch");
-const jwt = require('jsonwebtoken');
 
 exports.historyDetailsPage = async (req, res) => { 
     try {
@@ -16,6 +15,7 @@ exports.historyDetailsPage = async (req, res) => {
         let historyInfo = await fetch(url, myInit);
         historyInfo = await historyInfo.json();
 
+        //create date string to display
         let date = historyInfo[0].date.split('T')[0].split('-');
         let dateString = `${date[2]}/${date[1]}/${date[0]}`;
         let hour = historyInfo[0].date.split("T")[1].slice(0,2);

@@ -64,7 +64,7 @@ exports.myContainerPage = async (req, res) => {
       res.render('pages/myaccount/mycontainer', {containerInfo, status});
 
   } catch {
-  res.status(401).render('pages/error',{ error: `Requête invalide`});
+    res.status(401).render('pages/error',{ error: `Requête invalide`});
   }
 }
 
@@ -94,13 +94,13 @@ exports.myHistoryPage = async (req, res) => {
 
       } else if( status == "member") {
         urlHistory = `${process.env.DOMAIN}/api/history/userId/${userId}`;
-      
       }
 
       let historyInfo = await fetch(urlHistory, myInit);
       historyInfo = await historyInfo.json();
 
       historyInfo.forEach( history => {
+        //create date string to dispay
         let date = history.date.split('T')[0].split('-');
         let dateString = `${date[2]}/${date[1]}/${date[0]}`;
         let hour = history.date.split("T")[1].slice(0,2);
@@ -110,8 +110,6 @@ exports.myHistoryPage = async (req, res) => {
 
         history.date = `${dateString} - ${time}`;
       })
-
-
       res.render('pages/myaccount/myhistory', {historyInfo});
 
   } catch {
@@ -119,6 +117,8 @@ exports.myHistoryPage = async (req, res) => {
   }
 }
 
+
+//Blank pages waiting for contents from clients
 exports.cgvPage = async (req, res) => { 
   res.render('pages/myaccount/CGV')
 };

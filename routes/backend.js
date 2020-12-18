@@ -17,9 +17,7 @@ const authUserBack = require("../middleware/authUserBack");
 const authOwnPartnerBack = require("../middleware/authOwnPartnerBack");
 const multer = require('../middleware/multer-config');
 
-
-
-
+//PARTNER routes
 router.post('/partner', authPartnerBack, multer, partnerCtrl.createPartner);
 router.get('/partner/container/:userId', partnerCtrl.getPartnerFromUserId);
 router.get('/partner', partnerCtrl.getAllPartner);
@@ -27,7 +25,7 @@ router.get('/partner/:id', partnerCtrl.getOnePartner);
 router.put('/partner/:id', authOwnPartnerBack, multer, partnerCtrl.updatePartner); 
 router.get('/partner/delete/:id', authOwnPartnerBack, partnerCtrl.deletePartner);
 
-
+//CONTAINER routes
 router.post('/container/:id', authOwnPartnerBack, multer, containerCtrl.createContainer);
 router.get('/container', containerCtrl.getAllContainer);
 router.get('/container/partner/:default', containerCtrl.getAllDefaultContainer);
@@ -36,6 +34,7 @@ router.get('/container/:id', containerCtrl.getOneContainer);
 router.put('/container/:containerId/:id', authOwnPartnerBack, multer, containerCtrl.updateContainer);
 router.get('/container/delete/:containerId/:id', authOwnPartnerBack, containerCtrl.deleteContainer);
 
+//USER routes
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.get('/user', authAdminBack, userCtrl.getAllUser);
@@ -48,26 +47,26 @@ router.get('/user/delete/:id',  authUserBack, userCtrl.deleteUser);
 router.post('/lostpwd', userCtrl.lostPwd);
 router.get('/logout', userCtrl.getLogout);
 
+//HISTORY routes
 router.get('/history', authAdminBack, historyCtrl.getAllHistory);
 router.post('/history', authMemberBack, historyCtrl.createHistory);
 router.get('/history/:reference', historyCtrl.getOneHistory); // custom auth in controller
 router.get('/history/:param/:id', historyCtrl.getAllHistoryForOneUser); // custom auth in controller
-/*router.put('/history/:id', historyCtrl.updateHistory);
-router.get('/history/delete/:id', historyCtrl.deleteHistory);*/
 
+//CONTACT routes
 router.post('/contact', contactCtrl.sendEmail); 
 
+//QRCODE routes
 router.post('/qrcode', authPartnerBack, qrcodeCtrl.saveQrcode);
 router.get('/qrcode/:reference', authMemberBack, qrcodeCtrl.getOneQrcode);
 
+//POINT routes
 router.get('/point/:id', authUserBack, pointCtrl.getOneUserPoint);
 router.put('/point/:userId', pointCtrl.updateOneUserPoint); //à supprimer plus tard
 
-
-
+//USER CONTAINER routes
 router.get('/userContainer/:id', authUserBack, userContainerCtrl.getAllUserContainer);
 router.get('/userContainer/:containerId/:id', authUserBack, userContainerCtrl.getOneUserContainer);
-
 
 
 module.exports = router;

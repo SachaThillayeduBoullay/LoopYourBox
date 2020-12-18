@@ -5,14 +5,13 @@ const checkStatus = require('../../public/js/checkstatus');
 exports.partnerPage = async (req, res) => { 
     let url;
 
-    if (req.query) {
+    if (req.query) { //create url with queries to fetch below
         let urlStringFilter = "?";
         for (let property in req.query) {
             urlStringFilter += `${property}=${req.query[property]}&`
         }
         urlStringFilter = urlStringFilter.slice(0, urlStringFilter.length-1)
         url = `${process.env.DOMAIN}/api/partner${urlStringFilter}`;
-    
     }
     
     try {
@@ -30,6 +29,7 @@ exports.partnerPage = async (req, res) => {
             }
         })
 
+        //create arrays with each value appearing only once for the select filters
         let foodType = Array.from(new Set(partnerInfoForSelect.map(element => element.foodType))).sort();
         let chain = Array.from(new Set(partnerInfoForSelect.map(element => element.chain))).sort();
         let postcode = Array.from(new Set(partnerInfoForSelect.map(element => element.address.postcode))).sort();
@@ -87,7 +87,6 @@ exports.createPartnerPage = (req, res) => {
     } catch {
         res.status(401).render('pages/noaccess');
     }
-    
 };
 
 exports.updatePartnerPage = async (req, res) => { 

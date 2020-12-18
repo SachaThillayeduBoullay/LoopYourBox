@@ -17,22 +17,3 @@ function getCookie(cname) {
 const inputToken = document.getElementById('token');
 inputToken.value = getCookie('token');
 
-/*const form = document.forms.updatePartnerForm;
-
-document.getElementById("updatePartnerForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
-    let data = new FormData(document.getElementById("updatePartnerForm"));
-    const token = getCookie("token");
-    const partnerId = window.location.href.split('/')[4];
-    let option = { headers: {
-        Authorization: "Bearer " + token,
-},}
-    //data.append("header", JSON.stringify(option))
- 
-    let url = `${process.env.DOMAIN}/api/partner/${partnerId}`;
-    console.log([...data])
-    await fetch(url, {
-        method: "PUT",
-        body: data
-    });
-});*/

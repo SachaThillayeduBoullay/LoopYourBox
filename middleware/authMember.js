@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+//must be at least member to acces frontend routes
 module.exports = async (req, res, next) => {
     try {
         const token = req.cookies['token'];

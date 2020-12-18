@@ -34,12 +34,10 @@ function drawLine(begin, end, color) {
     canvas.strokeStyle = color;
     canvas.stroke();
 }
-// Use facingMode: environment to attemt to get the front camera on phones
+
+//ask user to use camera and play the video
 navigator.mediaDevices.getUserMedia({ audio: false, video: {facingMode: "environment"} }).then(function(stream) {
     video.srcObject = stream;
-    /*video.setAttribute("muted", true);
-    video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-    video.setAttribute("autoplay", true);*/
     video.play();
     requestAnimationFrame(tick);
 });
@@ -52,21 +50,24 @@ async function tick() {
 
         canvasElement.height = video.videoHeight;
         canvasElement.width = video.videoWidth;
-        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-        let imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
+        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height); //display video in a canvas
+        let imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height); //take a picture of the canvas
+
+        //decode the QRcode
         let code = jsQR(imageData.data, imageData.width, imageData.height, {
             inversionAttempts: "dontInvert",
         });
+
         if (code) {
+            //draw a square around the QRcode when detected
             drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
             drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
             drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
             drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
     
             info = code.data;
- 
-            try {
 
+            try {
                 let urlQrcode = `https://loopyourbox.herokuapp.com/api/qrcode/${info}`   
                 myInit = {
                         method: "GET",
@@ -78,7 +79,7 @@ async function tick() {
                 let qrcodeInfo = await fetch(urlQrcode , myInit);
                 qrcodeInfo = await qrcodeInfo.json();
                     
-                if (qrcodeInfo){
+                if (qrcodeInfo) {
                     let urlContainer = `https://loopyourbox.herokuapp.com/api/container/${qrcodeInfo.containerId}`;
                     let containerInfo = await fetch(urlContainer);
                     containerInfo = await containerInfo.json();
@@ -90,8 +91,7 @@ async function tick() {
                     action.innerHTML = qrcodeInfo.action ;
                     partner.innerHTML = partnerInfo.name ;
                     container.innerHTML = `${containerInfo.name} ${containerInfo.credit} credits`;
-                }else{
-                    
+                } else {
                     informations.innerHTML = "Oooops, ce qrcode n'existe pas !!"
                 }
                 informations.hidden = false;
@@ -100,7 +100,6 @@ async function tick() {
             } catch { 
                 console.log('cant fetch Info')
             }
-
             cancelAnimationFrame(stream);
         } 
     }
@@ -124,11 +123,10 @@ async function validation() {
     };
 
     try {
-        
         let data = await fetch(url, myInit); 
         data = await data.json();
         
-        //if save in history & and delete qrcode successful
+        //if save in history & delete qrcode successful
         if (data) {
             if (data.hasOwnProperty('error')) {
                 window.location.replace(`/`); //changer url quand pas assez de credit

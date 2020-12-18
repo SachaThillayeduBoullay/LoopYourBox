@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require ('../models/user');
 
+//must be partner or admin to acces backend routes (/api/...)
 module.exports = async (req, res, next) => {
     try {
         const token = req.cookies.token;
@@ -12,7 +13,6 @@ module.exports = async (req, res, next) => {
         if (!userInfo || userInfo.status == 'member') {
             throw `Vous n'êtes pas partenaire`;
         } else {
-            
             next();
         }
     } catch (error) {
