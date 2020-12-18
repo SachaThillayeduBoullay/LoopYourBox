@@ -40,15 +40,14 @@
                     </div>
                     <%}%>
                 <div class="user_account-heading padding">Mon Compte</div>
-                <% if(userInfo.status =="partner" || userInfo.status =="member") {%>
+                <% if((userInfo.status =="partner" && partnerInfo) || userInfo.status =="member") {%>
                     <a href="/mycontainer/<%= userInfo._id %>">
                         <div class="link padding">
                             Mes contenants<i
                             class="fas fa-chevron-right"></i>
                         </div>
                     </a> 
-                    <% } %>
-                    <% if(userInfo.status != "admin") {%>
+                    
                     <a href="/myhistory/<%= userInfo._id %>">
                         <div class="link padding">
                             Mon historique <i
