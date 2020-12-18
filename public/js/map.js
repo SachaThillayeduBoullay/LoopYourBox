@@ -1,5 +1,5 @@
 let currentPosition = [4.352418, 50.846772];
-mapboxgl.accessToken = 'pk.eyJ1IjoiYmVjb2RlbmV0cCIsImEiOiJja2gyNngzbHYwOW1pMnBwY2hkODZuenlqIn0.gh5aASyG_4J54nUTh9LMyA';
+mapboxgl.accessToken = 'pk.eyJ1IjoiYmVjb2RlbHliIiwiYSI6ImNraXVjMWJiYzA5N3QzM213cjA1dWsxaWsifQ.Q35H35nD8UjPwx_yMzhEsA';
 let map;
 
 map = new mapboxgl.Map({
