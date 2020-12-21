@@ -11,6 +11,7 @@ exports.updateOneUserPoint = (req, res, next) => {
     .then((point) => {
         let {credit, loyaltyPoint, environmentalImpact} = point;
         
+        //credit calculations
         req.body.credit != "" &&  (credit += parseInt(req.body.credit));
         req.body.loyaltyPoint != "" &&  (loyaltyPoint += parseInt(req.body.loyaltyPoint));
         req.body.environmentalImpact != "" &&  (environmentalImpact = parseFloat(environmentalImpact) + parseFloat(req.body.environmentalImpact));
@@ -21,6 +22,5 @@ exports.updateOneUserPoint = (req, res, next) => {
         })
         .catch(() => res.status(404).render('pages/error',{ error: `Les points n'ont pas pu être modifiés`}));
     })
-    
-      .catch(() => res.status(400).render('pages/error',{ error: `Les points n'ont pas pu être trouvés`} ));
+    .catch(() => res.status(400).render('pages/error',{ error: `Les points n'ont pas pu être trouvés`} ));
   };

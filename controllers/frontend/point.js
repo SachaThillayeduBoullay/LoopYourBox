@@ -5,7 +5,7 @@ exports.pointPage = async (req, res) => {
         const token = req.cookies["token"];
         const decodedToken = jwt.verify(token, process.env.JWT_PW);
         const userId = decodedToken.userId;
-        let urlPoint = `http://localhost:3000/api/point/${userId}`;
+        let urlPoint = `${process.env.DOMAIN}/api/point/${userId}`;
 
         let myInit = {
             headers: {

@@ -17,12 +17,12 @@ exports.qrCodePage = async (req, res) => {
                     }
                 };
 
-                let url = `http://localhost:3000/api/partner/container/${userId}`;
+                let url = `${process.env.DOMAIN}/api/partner/container/${userId}`;
         
                 let partnerInfo = await fetch(url, myInit);
                 partnerInfo = await partnerInfo.json();
         
-                let urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
+                let urlContainer = `${process.env.DOMAIN}/api/containerpartner/${partnerInfo._id}`;
                 let containerInfo = await fetch(urlContainer);
                 containerInfo = await containerInfo.json();
         
@@ -42,7 +42,7 @@ exports.confirmationPage = async (req, res) => {
         const reference = req.query.ref;
         const token = req.cookies["token"];
 
-        let url = `http://localhost:3000/api/history/${reference}`;
+        let url = `${process.env.DOMAIN}/api/history/${reference}`;
 
         let myInit = {
             headers: {
@@ -54,7 +54,7 @@ exports.confirmationPage = async (req, res) => {
         historyInfo = await historyInfo.json();
         historyInfo = historyInfo[0];
 
-        //const localNow = new Date (historyInfo.date.getTime() -  ( historyInfo.timeOffset * 60000 ));
+        //create date string to display
         let date = historyInfo.date.split('T')[0].split('-');
         let dateString = `${date[2]}/${date[1]}/${date[0]}`;
         let hour = historyInfo.date.split("T")[1].slice(0,2);
@@ -64,14 +64,12 @@ exports.confirmationPage = async (req, res) => {
         
         const result = {
             date: `${dateString} - ${time}`,
-            
             partner: {
                 name: historyInfo.partnerInfo.name,
                 city: historyInfo.partnerInfo.address.city
             },
             containerName: historyInfo.containerInfo.name,
             action: historyInfo.action,
-            //time: localNow
         }
 
         res.render('pages/qrcode/confirmation', {result});
@@ -80,13 +78,15 @@ exports.confirmationPage = async (req, res) => {
     }
 }
 
+
+//Not used cuz this case is in qrCodePage when status is partner
 exports.qrCodePartnerPage = async (req, res) => { 
     try {
         const token = req.cookies["token"];
         const decodedToken = jwt.verify(token, process.env.JWT_PW);
         const userId = decodedToken.userId;
 
-        let url = `http://localhost:3000/api/partner/container/${userId}`;
+        let url = `${process.env.DOMAIN}/api/partner/container/${userId}`;
 
         let myInit = {
             headers: {
@@ -97,7 +97,7 @@ exports.qrCodePartnerPage = async (req, res) => {
         let partnerInfo = await fetch(url, myInit);
         partnerInfo = await partnerInfo.json();
 
-        let urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
+        let urlContainer = `${process.env.DOMAIN}/api/containerpartner/${partnerInfo._id}`;
         let containerInfo = await fetch(urlContainer);
         containerInfo = await containerInfo.json();
 

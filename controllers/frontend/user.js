@@ -1,12 +1,10 @@
 global.fetch = require("node-fetch");
 const jwt = require('jsonwebtoken');
 
-
-
 exports.userDetailsPage = async (req, res) => { 
     try {
         const token = req.cookies['token'];
-        let url = `http://localhost:3000/api/user/${req.params.id}`;
+        let url = `${process.env.DOMAIN}/api/user/${req.params.id}`;
 
         let myInit = {
             headers: {
@@ -28,7 +26,7 @@ exports.createUserPage = (req, res) => { res.render('pages/user/register')};
 exports.updateUserPage = async (req, res) => { 
     try {
         const token = req.cookies['token'];
-        let url = `http://localhost:3000/api/user/${req.params.id}`;
+        let url = `${process.env.DOMAIN}/api/user/${req.params.id}`;
 
         let myInit = {
             headers: {
@@ -51,17 +49,6 @@ exports.changePasswordPage = async (req, res) => {
         const token = req.cookies['token'];
         const decodedToken = jwt.verify(token, process.env.JWT_PW);
         const userId = decodedToken.userId;
-
-        //let url = `http://localhost:3000/api/user/${req.params.id}`;
-
-        /*let myInit = {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        };*/
-
-        //let userInfo = await fetch(url /*, myInit*/);
-        //userInfo = await userInfo.json();
 
         res.render('pages/user/changepassword', {userId})
     } catch {

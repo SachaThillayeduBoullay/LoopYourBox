@@ -15,16 +15,11 @@ exports.getAllUser = (req, res, next) => {
     .catch (error => res.status(400).render('pages/error',{ error: `Membres introuvables`}));
 };
 
-
-
 exports.getOneUser = (req, res, next) => {
   User.findOne ({_id: req.params.id})
     .then (user => res.status(200).json(user))
     .catch (error => res.status(404).render('pages/error',{ error: `Membre introuvable`}));
 };
-
-
-
 
 exports.login = (req, res, next) => {
   User.findOne ({email: req.body.email.toLowerCase()})
@@ -38,10 +33,8 @@ exports.login = (req, res, next) => {
           if (!valid) {
             return res.status(401).render('pages/error', {error: 'Email ou mot de passe incorrect'});
           }
-          const token = jwt.sign ({userId: user._id}, process.env.JWT_PW, {
-            expiresIn: '24h',
-          });
-          res.cookie ('token', token);
+          const token = jwt.sign ({userId: user._id}, process.env.JWT_PW, {expiresIn: '24h'});
+          res.cookie ('token', token, { maxAge: 1000*60*60*24*30*12 });
           res.status(200).redirect ('/partner');
         })
         .catch (error => res.status(500).render('pages/error',{ error: `Cryptage du mot de passe raté`}));
@@ -50,9 +43,8 @@ exports.login = (req, res, next) => {
 };
 
 
-
-
 exports.signup = async (req, res, next) => {
+  //JOI validation form
   const schema = joi.object ().keys ({
     firstname: joi.string ().trim ().required (),
     lastname: joi.string ().trim ().required (),
@@ -93,7 +85,8 @@ exports.signup = async (req, res, next) => {
         userId: user._id,
       });
 
-      point.save ();
+      point.save(); //initialize point for the new user
+
       user
         .save ()
         .then (() => res.status(201).redirect ('/login'))
@@ -106,6 +99,7 @@ exports.signup = async (req, res, next) => {
 
 
 exports.updateUser = (req, res, next) => {
+  //JOI validation form
     const schema = joi.object ().keys ({
         firstname: joi.string ().trim ().required (),
         lastname: joi.string ().trim ().required (),
@@ -146,6 +140,7 @@ exports.updateUser = (req, res, next) => {
 };
 
 exports.updateUserStatus = (req, res, next) => {
+  //JOI validation form
   const schema = joi.object ().keys ({
       status: joi.string ().trim ().required (),
     });
@@ -157,28 +152,27 @@ exports.updateUserStatus = (req, res, next) => {
   }
 
 User.updateOne ({_id: req.params.id}, {...req.body})
-  .then (() => {
-    res.status(200).redirect ('/dashboard/user');
-  })
+  .then (() => {res.status(200).redirect ('/dashboard/user')})
   .catch (error => res.status(400).render('pages/error',{ error: `Membre non modifié`}));
 };
 
-
-
 exports.deleteUser = async (req, res, next) => {
   try {
-  await UserContainer.deleteMany ({userId: req.params.id})
-  await Point.deleteOne ({userId: req.params.id})
+    //delete containers & points of the user
+    await UserContainer.deleteMany ({userId: req.params.id})
+    await Point.deleteOne ({userId: req.params.id})
 
-  const partner = await Partner.findOne({idUser: req.params.id});
+    const partner = await Partner.findOne({idUser: req.params.id});
 
-  if (partner) {
-    await Container.deleteMany ({partnerId: partner._id})
-    await Partner.deleteOne ({_id: partner._id})
-  }
+    //if user is a partner, delete partner container then the partner
+    if (partner) {
+      await Container.deleteMany ({partnerId: partner._id})
+      await Partner.deleteOne ({_id: partner._id})
+    }
 
-  await User.deleteOne ({_id: req.params.id})
-  res.clearCookie('token').status(200).redirect('/')
+    //delete user then disconnect
+    await User.deleteOne ({_id: req.params.id})
+    res.clearCookie('token').status(200).redirect('/')
     
   } catch {
     res.status(400).render('pages/error',{ error: `Ce compte n'a pas pu être supprimé`});
@@ -206,11 +200,13 @@ exports.lostPwd = (req, res, next) => {
         from: 'noreply@loopyourbox.com',
         to: req.body.email.toLowerCase(),
         subject: 'Password reset',
+
+        //HTML mail
         html: `
             <h1>Loop Your Box</h1>
             <p>Please click on the link to change your password: </p>
             <p>
-                <a href="http://localhost:3000/passwordrecovery?id=${user._id}">Change password</a>
+                <a href="${process.env.DOMAIN}/passwordrecovery?id=${user._id}">Change password</a>
             </p>
             `,
       };
@@ -227,25 +223,20 @@ exports.lostPwd = (req, res, next) => {
     .catch (error => res.status(404).render('pages/error',{ error: `Membre introuvable`}));
 };
 
-
-
-
 exports.getLogout = (req, res) => {
   res.clearCookie ('token');
   res.redirect ('/');
 };
 
-
-
-
 exports.modifyPassword = (req, res, next) => {
+//JOI validation form
 const schema = joi.object ().keys ({
     oldPassword: joi
     .string ()
     .pattern (
-    new RegExp (
-        '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-    )
+      new RegExp (
+          '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+      )
     )
     .required (),
     password: joi
@@ -308,7 +299,8 @@ const schema = joi.object ().keys ({
 
 
 exports.recoveryPassword = (req, res, next) => {
-  const schema = joi.object ().keys ({
+  //JOI validation form
+  const schema = joi.object().keys ({
       password: joi
           .string ()
           .pattern (
@@ -327,12 +319,11 @@ exports.recoveryPassword = (req, res, next) => {
   
       const result = schema.validate (req.body);
       if (result.error) {
-      res.status(400).render('pages/error',{ error: result.error.details[0].message});
-      return;
+        res.status(400).render('pages/error',{ error: result.error.details[0].message});
+        return;
       }
   
     if (req.body.password == req.body.confirmPassword) {
- 
       User.findOne ({_id: req.params.id}).then (user => {
         if (!user) {
           return res.status(401).render('pages/error',{ error: `Membre introuvable`});

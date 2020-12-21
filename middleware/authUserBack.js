@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require ('../models/user');
 
+//must be member and the member himself or admin to acces backend routes (/api/...)
 module.exports = async (req, res, next) => {
     try {
         

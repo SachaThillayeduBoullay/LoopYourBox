@@ -28,7 +28,7 @@
          <div class="container-img">
             <% if (historyInfo[0].containerInfo.image!="noImage") {%>
             <img
-               src="http://localhost:3000/img/container/<%= JSON.parse(historyInfo[0].containerInfo.image).filename %>"
+               src="/img/container/<%= JSON.parse(historyInfo[0].containerInfo.image).filename %>"
                alt="<%= historyInfo[0].containerInfo.name %>">
          </div>
          <% } %>

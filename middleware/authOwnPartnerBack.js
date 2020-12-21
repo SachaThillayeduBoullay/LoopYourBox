@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const Partner = require("../models/partner");
 const User = require("../models/user");
 
-
+//must be partner and the partner itself or admin to acces backend routes (/api/...)
 module.exports = async (req, res, next) => {
   try {
     const token = req.cookies.token;

@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
 
+//must be partner or admin to acces frontend routes
 module.exports = async (req, res, next) => {
     try {
         const token = req.cookies['token'];
         const decodedToken = jwt.verify(token, process.env.JWT_PW)
         const userId = decodedToken.userId;
 
-        let url = `http://localhost:3000/api/user/${userId}`;
+        let url = `${process.env.DOMAIN}/api/user/${userId}`;
 
         let myInit = {
             headers: {

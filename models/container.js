@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const containerSchema = mongoose.Schema({
     name: { type: String, required: true },
     material: { type: String, required: true },
@@ -10,6 +9,5 @@ const containerSchema = mongoose.Schema({
     default: {type: Boolean, default: false},
     basedOnDefault: {type: Boolean, default: false}
 });
-
 
 module.exports = mongoose.model('Container', containerSchema);

@@ -21,6 +21,8 @@ exports.sendEmail = (req, res, next) => {
             from: `${req.body.email}`,
             to: 'francesca@loopyourbox.be',
             subject: `${req.body.object}`,
+
+            // Mail HTML
             html: `
                 <p>Prénom: ${req.body.firstname}</p>
                 <p>Nom: ${req.body.lastname}</p>

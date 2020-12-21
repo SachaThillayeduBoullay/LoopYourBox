@@ -7,7 +7,7 @@ exports.myAccountPage = async (req, res) => {
         const decodedToken = jwt.verify(token, process.env.JWT_PW);
         const userId = decodedToken.userId;
     
-        let url = `http://localhost:3000/api/user/${userId}`;
+        let url = `${process.env.DOMAIN}/api/user/${userId}`;
 
         myInit = {
           headers: {
@@ -18,7 +18,7 @@ exports.myAccountPage = async (req, res) => {
         let userInfo = await fetch(url, myInit);
         userInfo = await userInfo.json();
 
-        let urlPartner = `http://localhost:3000/api/partner/container/${userId}`;
+        let urlPartner = `${process.env.DOMAIN}/api/partner/container/${userId}`;
 
         let partnerInfo = await fetch(urlPartner, myInit);
         partnerInfo = await partnerInfo.json();
@@ -47,24 +47,24 @@ exports.myContainerPage = async (req, res) => {
 
       if (status == "partner") {
         
-        let url = `http://localhost:3000/api/partner/container/${userId}`;
+        let url = `${process.env.DOMAIN}/api/partner/container/${userId}`;
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
-        urlContainer = `http://localhost:3000/api/containerpartner/${partnerInfo._id}`;
+        urlContainer = `${process.env.DOMAIN}/api/containerpartner/${partnerInfo._id}`;
 
       } else if( status == "member") {
-        urlContainer = `http://localhost:3000/api/userContainer/${userId}`;
+        urlContainer = `${process.env.DOMAIN}/api/userContainer/${userId}`;
       }
 
 
       let containerInfo = await fetch(urlContainer, myInit);
       containerInfo = await containerInfo.json();
 
-      res.render('pages/myaccount/mycontainer', {containerInfo});
+      res.render('pages/myaccount/mycontainer', {containerInfo, status});
 
   } catch {
-  res.status(401).render('pages/error',{ error: `Requête invalide`});
+    res.status(401).render('pages/error',{ error: `Requête invalide`});
   }
 }
 
@@ -86,21 +86,21 @@ exports.myHistoryPage = async (req, res) => {
       };
 
       if (status == "partner") {
-        let url = `http://localhost:3000/api/partner/container/${userId}`;
+        let url = `${process.env.DOMAIN}/api/partner/container/${userId}`;
         let partnerInfo = await fetch(url);
         partnerInfo = await partnerInfo.json();
 
-        urlHistory = `http://localhost:3000/api/history/partnerId/${partnerInfo._id}`;
+        urlHistory = `${process.env.DOMAIN}/api/history/partnerId/${partnerInfo._id}`;
 
       } else if( status == "member") {
-        urlHistory = `http://localhost:3000/api/history/userId/${userId}`;
-      
+        urlHistory = `${process.env.DOMAIN}/api/history/userId/${userId}`;
       }
 
       let historyInfo = await fetch(urlHistory, myInit);
       historyInfo = await historyInfo.json();
 
       historyInfo.forEach( history => {
+        //create date string to dispay
         let date = history.date.split('T')[0].split('-');
         let dateString = `${date[2]}/${date[1]}/${date[0]}`;
         let hour = history.date.split("T")[1].slice(0,2);
@@ -110,8 +110,6 @@ exports.myHistoryPage = async (req, res) => {
 
         history.date = `${dateString} - ${time}`;
       })
-
-
       res.render('pages/myaccount/myhistory', {historyInfo});
 
   } catch {
@@ -119,6 +117,8 @@ exports.myHistoryPage = async (req, res) => {
   }
 }
 
+
+//Blank pages waiting for contents from clients
 exports.cgvPage = async (req, res) => { 
   res.render('pages/myaccount/CGV')
 };

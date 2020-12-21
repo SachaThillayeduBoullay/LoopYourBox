@@ -18,17 +18,21 @@
   <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
   <div class="container">
     <div class="row">
-      <h2 class="sub_page-heading">List of containers</h2>
+      <h2 class="sub_page-heading">Liste des contenants</h2>
     </div>
     <div class="list">
       <% containerInfo.forEach((container) => { %>
         <a href="/container/<%= container._id %>">
         <div class="list-item">
-          <%= container.name %> <i class="fas fa-chevron-right"></i>
+          <%= container.name %>  <% if (container.default) {%> X <% }%> 
+          <i class="fas fa-chevron-right"></i>
         </div>
       </a>
       <% }); %>
     </div>
+    <div class="row">
+      <a class="col s8 offset-s2 btn green darken-1" href="/createContainer">Add container</a>
+   </div>
   </div>
 
 </body>

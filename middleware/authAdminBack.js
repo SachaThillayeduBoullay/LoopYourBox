@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require ('../models/user');
 
+//must be admin to acces backtend routes (/api/...)
 module.exports = async (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1];

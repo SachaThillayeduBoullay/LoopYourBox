@@ -1,16 +1,12 @@
 global.fetch = require("node-fetch");
 const jwt = require('jsonwebtoken');
 
-
-
-
 exports.dashboardPage = (req, res) => { res.render("pages/myaccount/admin/dashboard");}
 
 exports.userPage = async (req, res) => { 
     try {
         const token = req.cookies["token"];
-
-        let url = `http://localhost:3000/api/user/`;
+        let url = `${process.env.DOMAIN}/api/user/`;
 
         let myInit = {
             headers: {
@@ -37,18 +33,17 @@ exports.partnerPage = async (req, res) => {
         }
     };
 
-    if (req.query) {
+    if (req.query) { //create url with queries to fetch below
         let urlStringFilter = "?";
         for (let property in req.query) {
             urlStringFilter += `${property}=${req.query[property]}&`
         }
         urlStringFilter = urlStringFilter.slice(0, urlStringFilter.length-1)
-        url = `http://localhost:3000/api/partner${urlStringFilter}`;
-    
+        url = `${process.env.DOMAIN}/api/partner${urlStringFilter}`;
     }
     
     try {
-        let urlSelect = `http://localhost:3000/api/partner`;
+        let urlSelect = `${process.env.DOMAIN}/api/partner`;
 
         let partnerInfoForSelect = await fetch(urlSelect, myInit);
         partnerInfoForSelect = await partnerInfoForSelect.json();
@@ -62,16 +57,17 @@ exports.partnerPage = async (req, res) => {
             }
         })
 
+        //create arrays with all values appearing only once for the select filters
         let foodType = Array.from(new Set(partnerInfoForSelect.map(element => element.foodType))).sort();
         let chain = Array.from(new Set(partnerInfoForSelect.map(element => element.chain))).sort();
         let postcode = Array.from(new Set(partnerInfoForSelect.map(element => element.address.postcode))).sort();
         let city = Array.from(new Set(partnerInfoForSelect.map(element => element.address.city))).sort();
 
-        let urlContainer = `http://localhost:3000/api/container/`;
+        let urlContainer = `${process.env.DOMAIN}/api/container/`;
 
         let containerInfo = await fetch(urlContainer, myInit);
         containerInfo = await containerInfo.json();
-       
+
         let material = Array.from(new Set(containerInfo.map(element => element.material))).sort();
         
         let selectInfo = {
@@ -81,9 +77,6 @@ exports.partnerPage = async (req, res) => {
             city: city,
             material: material
         };
-
-
-
         res.render('pages/myaccount/admin/partner', { selectInfo, containerInfo, partnerInfo})
     } catch {
         res.status(401).render('pages/error',{ error: `Requête invalide`});
@@ -93,7 +86,7 @@ exports.partnerPage = async (req, res) => {
 exports.containerPage = async (req, res) => { 
     try {
         const token = req.cookies["token"];
-        let url = `http://localhost:3000/api/container/`;
+        let url = `${process.env.DOMAIN}/api/container/`;
 
         let myInit = {
             headers: {
@@ -114,17 +107,17 @@ exports.historyPage = async (req, res) => {
     try {
         let url;
 
-        if (req.query) {
+        if (req.query) { //create url with queries to fetch below
             let urlStringFilter = "?";
             for (let property in req.query) {
                 urlStringFilter += `${property}=${req.query[property]}&`
             }
             urlStringFilter = urlStringFilter.slice(0, urlStringFilter.length-1)
-            url = `http://localhost:3000/api/history${urlStringFilter}`;
+            url = `${process.env.DOMAIN}/api/history${urlStringFilter}`;
         }
 
         const token = req.cookies["token"];
-        let urlAll = `http://localhost:3000/api/history/`;
+        let urlAll = `${process.env.DOMAIN}/api/history/`;
 
         let myInit = {
             headers: {
@@ -138,6 +131,7 @@ exports.historyPage = async (req, res) => {
         let selectInfo = await fetch(urlAll, myInit);
         selectInfo = await selectInfo.json();
 
+        //create arrays with all values appearing only once for the select filters
         let day = [... new Set(selectInfo.map( history => {
             if(history.day<10) {
                 return "0"+history.day

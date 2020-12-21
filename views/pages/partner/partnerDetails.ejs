@@ -14,11 +14,16 @@
     <!-- NARBAR -->
     <%- include('../../layouts/navbar.ejs') -%>
     <!-- MAIN -->
-    <a class="backBtn" onclick="window.history.back();"><i class="fas fa-arrow-left"></i></a>
+    <a class="backBtn" 
+    <% if(statusInfo.userStatus == 'admin') {%>
+        href="/dashboard/partner"
+    <%} else if (statusInfo.userStatus == 'partner') {%>
+        href="/partner"
+    <%}%>><i class="fas fa-arrow-left"></i></a>
     <main>
         <div class="hero-wrapper">
             <% if (partnerInfo.image!="noImage") {%>
-            <img src="http://localhost:3000/img/partner/<%= partnerInfo.image.filename %>"
+            <img src="/img/partner/<%= partnerInfo.image.filename %>"
                 alt="<%= partnerInfo.name %>">
             <% } %>
             <div class="partner_name"><%= partnerInfo.name %></div>
